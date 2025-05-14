@@ -1,0 +1,68 @@
+.transaction-item {
+    --inner-padding-end: 8px;
+    --min-height: 70px;
+  
+    .transaction-avatar {
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      margin-right: 12px;
+  
+      &.income {
+        background-color: rgba(var(--ion-color-success-rgb), 0.15);
+        .transaction-icon {
+          color: var(--ion-color-success-shade);
+        }
+      }
+  
+      &.expense {
+        background-color: rgba(var(--ion-color-danger-rgb), 0.1);
+        .transaction-icon {
+          color: var(--ion-color-danger-shade);
+        }
+      }
+    }
+  
+    .transaction-icon {
+      font-size: 1.6rem;
+    }
+  
+    .transaction-category {
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 2px;
+      color: var(--ion-color-dark-tint);
+    }
+  
+    .transaction-account {
+      font-size: 0.85rem;
+      color: var(--ion-color-medium-shade);
+    }
+  
+    .transaction-details {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+  
+    .transaction-amount {
+      font-weight: bold;
+      font-size: 1rem;
+      margin-bottom: 2px;
+  
+      &.income {
+        color: var(--ion-color-success-shade);
+      }
+      &.expense {
+        color: var(--ion-color-danger-shade);
+      }
+    }
+  
+    .transaction-date {
+      font-size: 0.75rem;
+      color: var(--ion-color-medium-shade);
+    }
+  }

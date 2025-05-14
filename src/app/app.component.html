@@ -1,21 +1,21 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
-    <ion-menu contentId="main-content" type="overlay">
+    <ion-menu contentId="main-content" type="overlay" *ngIf="display">
       <ion-header>
         <div class="img-container ion-padding">
           <img src="assets\icon\icon.png" />
         </div>
         <div class="user-container ion-padding">
           <ion-label class="labels">Welcome,</ion-label>
-          <ion-label class="user-name">luqman shamsul</ion-label>
+          <ion-label class="user-name">{{name}}</ion-label>
         </div>
       </ion-header>
       <ion-content>
         <div class="menu-container">
           <ion-list id="inbox-list">
-            @for (p of appPages; track p; let i = $index) {
+             @for (p of appPages; track p; let i = $index) {
               <ion-menu-toggle auto-hide="false">
-                <ion-item routerDirection="root" [routerLink]="[p.url]" (click)="comingSoon(p)" lines="none" detail="false" routerLinkActive="selected" class="menu-item">
+                <ion-item button routerDirection="root" [routerLink]="[p.url]" (click)="comingSoon(p)" lines="none" detail="false" routerLinkActive="selected" class="menu-item">
                   <ion-icon aria-hidden="true" slot="start" [name]="p.icon" class="menu-item-icon"></ion-icon>
                   <ion-label class="menu-item-label">{{ p.title }}</ion-label>
                 </ion-item>
@@ -34,7 +34,7 @@
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle auto-hide="false">
-            <ion-item button routerDirection="root" lines="none" detail="false" class="menu-item-footer menu-logout">
+            <ion-item button routerDirection="root" lines="none" detail="false" (click)="logout()" class="menu-item-footer menu-logout">
               <ion-icon aria-hidden="true" slot="start" name="log-out-outline" class="menu-item-icon"></ion-icon>
               <ion-label class="menu-item-label">Logout</ion-label>
             </ion-item>

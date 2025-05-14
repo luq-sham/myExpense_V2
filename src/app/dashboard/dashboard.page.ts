@@ -122,40 +122,6 @@ export class DashboardPage implements OnInit {
     this.router.navigate(['/transactions']);
   }
   budgetsList(){
-    this.router.navigate(['/account-list'], {
-      queryParams: { type: 'budget' },
-    });;
+    this.router.navigate(['/budgets']);
   }
-  
-  // printContent() {
-  //   const contentElement = document.getElementById('print-section');
-  //   const content = `
-  //     <html>
-  //       <body>
-  //         ${contentElement?.outerHTML || ''}
-  //       </body>
-  //     </html>
-  //   `;
-  
-  //   if (Capacitor.getPlatform() === 'web') {
-  //     // Web fallback
-  //     const printWindow = window.open('', '', 'width=800,height=600');
-  //     if (printWindow) {
-  //       printWindow.document.write(content);
-  //       printWindow.document.close();
-  //       printWindow.focus();
-  //       printWindow.print();
-  //     }
-  //   } else {
-  //     // Native
-  //     const options: PrintOptions = {
-  //       name: 'Test Print',
-  //     };
-  
-  //     this.printer.print(content, options).then(
-  //       () => console.log('Print successful'),
-  //       (err) => console.error('Print failed:', err)
-  //     );
-  //   }
-  // }
 }
