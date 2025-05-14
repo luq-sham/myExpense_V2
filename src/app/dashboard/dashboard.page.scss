@@ -1,0 +1,409 @@
+:host {
+  --card-border-radius: 16px;
+  --section-card-margin-horizontal: 12px;
+  --section-card-margin-vertical: 16px;
+}
+
+ion-content {
+  --background: linear-gradient(
+    to bottom,
+    var(--ion-color-light-tint),
+    var(--ion-color-light)
+  );
+}
+
+.section-card {
+  margin-left: var(--section-card-margin-horizontal);
+  margin-right: var(--section-card-margin-horizontal);
+  margin-top: var(--section-card-margin-vertical);
+  margin-bottom: var(--section-card-margin-vertical);
+  border-radius: var(--card-border-radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+
+  &.accounts-card {
+    margin-top: 0;
+  }
+}
+
+.section-header {
+  padding-top: 16px;
+  padding-bottom: 8px;
+
+  ion-card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+}
+
+ion-card[color="fav"] .section-header ion-card-title {
+  --header-title-color: var(--ion-color-fav-contrast);
+}
+ion-card[color="sub-fav"] .section-header ion-card-title {
+  --header-title-color: var(--ion-color-sub-fav-contrast);
+}
+
+.text-muted {
+  color: #e0e0e0;
+  font-size: 0.9rem;
+}
+
+.placeholder-card {
+  opacity: 0.7;
+}
+
+.ripple-parent {
+  position: relative;
+  overflow: hidden;
+}
+
+.accounts-card ion-card-content {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.account-card {
+  --border-radius: 12px;
+  margin: 4px 0;
+  background: var(--ion-color-light-tint);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  min-height: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  ion-card-content {
+    padding: 12px 8px;
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.account-icon {
+  font-size: 2.2rem;
+  margin-bottom: 8px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.account-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ion-color-dark-shade);
+  margin: 0 0 4px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 4px;
+}
+
+.account-balance {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--ion-color-success-shade);
+}
+
+.add-account-card {
+  border: 2px dashed #e0e0e0;
+  background: transparent;
+  color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  ion-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 8px;
+  }
+
+  .add-icon {
+    font-size: 2.5rem;
+    margin-bottom: 6px;
+  }
+
+  .add-text {
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+}
+
+.transaction-list {
+  margin: 8px 16px;
+  background: transparent;
+}
+
+.transaction-item {
+  --inner-padding-end: 8px;
+  --min-height: 70px;
+
+  .transaction-avatar {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: 12px;
+
+    &.income {
+      background-color: rgba(var(--ion-color-success-rgb), 0.15);
+      .transaction-icon {
+        color: var(--ion-color-success-shade);
+      }
+    }
+
+    &.expense {
+      background-color: rgba(var(--ion-color-danger-rgb), 0.1);
+      .transaction-icon {
+        color: var(--ion-color-danger-shade);
+      }
+    }
+  }
+
+  .transaction-icon {
+    font-size: 1.6rem;
+  }
+
+  .transaction-category {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 2px;
+    color: var(--ion-color-dark-tint);
+  }
+
+  .transaction-account {
+    font-size: 0.85rem;
+    color: var(--ion-color-medium-shade);
+  }
+
+  .transaction-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .transaction-amount {
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 2px;
+
+    &.income {
+      color: var(--ion-color-success-shade);
+    }
+    &.expense {
+      color: var(--ion-color-danger-shade);
+    }
+  }
+
+  .transaction-date {
+    font-size: 0.75rem;
+    color: var(--ion-color-medium-shade);
+  }
+}
+
+.budget-list {
+  margin: 8px 0px;
+  background: transparent;
+}
+
+.budget-item {
+  --inner-padding-end: 8px;
+  --min-height: 90px;
+  align-items: flex-start;
+  border-radius: 20px;
+
+  .budget-icon {
+    font-size: 2rem;
+    margin-top: 4px;
+    margin-right: 12px;
+  }
+
+  ion-label {
+    width: 100%;
+
+    padding: 10px;
+  }
+
+  .budget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+
+  .budget-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ion-color-dark-tint);
+    margin: 0;
+  }
+
+  .budget-amount {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--ion-color-primary);
+    white-space: nowrap;
+    margin: 0;
+  }
+
+  .budget-type {
+    font-size: 0.85rem;
+    color: var(--ion-color-medium-shade);
+    margin-bottom: 10px;
+    text-transform: capitalize;
+  }
+
+  .budget-summary {
+    font-size: 0.85rem;
+    color: var(--ion-color-medium-shade);
+
+    .budget-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+
+      span:last-child {
+        font-weight: 500;
+        color: var(--ion-color-dark-tint);
+      }
+
+      .low-balance {
+        color: var(--ion-color-warning-shade);
+        font-weight: bold;
+      }
+    }
+  }
+
+  .budget-progress {
+    height: 8px;
+    border-radius: 4px;
+    margin: 8px 0;
+    --background: var(--ion-color-step-200, #e0e0e0);
+
+    &::part(progress) {
+      border-radius: 4px;
+    }
+  }
+
+  .update-date {
+    font-size: 0.75rem;
+    color: var(--ion-color-medium-shade);
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+
+    .update-icon {
+      font-size: 0.9rem;
+      margin-right: 4px;
+      vertical-align: middle;
+    }
+  }
+}
+
+.placeholder-avatar {
+  border-radius: 50%;
+  background-color: var(--ion-color-light-shade);
+  ion-skeleton-text {
+    border-radius: 50%;
+  }
+}
+
+.placeholder-amount ion-skeleton-text {
+  margin-left: auto;
+}
+
+.placeholder-budget {
+  .budget-summary-placeholder ion-skeleton-text {
+    margin-left: 0;
+  }
+  .budget-progress-placeholder {
+    border-radius: 4px;
+  }
+}
+
+.show-link {
+  margin: 24px 16px 16px 16px;
+
+  a {
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 576px) {
+  .account-title {
+    font-size: 0.85rem;
+  }
+  .account-balance {
+    font-size: 0.9rem;
+  }
+  .account-card {
+    min-height: 120px;
+  }
+  .add-account-card .add-icon {
+    font-size: 2rem;
+  }
+  .add-account-card .add-text {
+    font-size: 0.8rem;
+  }
+
+  .transaction-item {
+    --min-height: 65px;
+    .transaction-avatar {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+    .transaction-icon {
+      font-size: 1.4rem;
+    }
+    .transaction-category {
+      font-size: 0.9rem;
+    }
+    .transaction-account {
+      font-size: 0.8rem;
+    }
+    .transaction-amount {
+      font-size: 0.9rem;
+    }
+    .transaction-date {
+      font-size: 0.7rem;
+    }
+  }
+
+  .budget-item {
+    .budget-icon {
+      font-size: 1.8rem;
+      margin-right: 10px;
+    }
+    .budget-title {
+      font-size: 1rem;
+    }
+    .budget-amount {
+      font-size: 0.9rem;
+    }
+    .budget-type {
+      font-size: 0.8rem;
+      margin-bottom: 8px;
+    }
+    .budget-summary {
+      font-size: 0.8rem;
+    }
+    .budget-progress {
+      height: 6px;
+    }
+    .update-date {
+      font-size: 0.7rem;
+    }
+  }
+}
