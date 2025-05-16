@@ -1,0 +1,78 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="fav">
+    <ion-title>{{ title }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <div class="ion-padding" *ngIf="formID == 1">
+    <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
+      <ion-list lines="full">
+
+        <!-- Account Name -->
+        <div class="item-container">
+          <ion-item lines="none">
+            <ion-icon name="person-circle-outline" slot="start" class="icon" ></ion-icon>
+            <ion-label position="stacked">Account Name</ion-label>
+            <ion-input formControlName="account_name" type="text" placeholder="Enter name or service"></ion-input>
+          </ion-item>
+          <div *ngIf="isSubmitted && f['account_name'].errors?.['required']" class="error-message">
+            <ion-icon name="close-circle-outline" color="danger"></ion-icon>
+            Account name is required.
+          </div>
+        </div>
+
+        <!-- Type -->
+        <div class="item-container">
+          <ion-item lines="none">
+            <ion-icon name="list-circle-outline" slot="start" class="icon" ></ion-icon>
+            <ion-label position="stacked">Type</ion-label>
+            <ion-select placeholder="Select account type" interface="popover" formControlName="account_type">
+              <ion-select-option *ngFor="let type of types" [value]="type.type">
+                {{type.type}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div *ngIf="isSubmitted && f['account_type'].errors?.['required']" class="error-message">
+            <ion-icon name="close-circle-outline" color="danger"></ion-icon>
+            Type is required.
+          </div>
+        </div>
+
+        <!-- Amount -->
+        <div class="item-container">
+          <ion-item lines="none">
+            <ion-icon name="cash-outline" slot="start" class="icon" ></ion-icon>
+            <ion-label position="stacked">Initial Balance</ion-label>
+            <ion-input formControlName="balance" type="number" placeholder="Enter name or service"></ion-input>
+          </ion-item>
+          <div *ngIf="isSubmitted && f['balance'].errors?.['required']" class="error-message">
+            <ion-icon name="close-circle-outline" color="danger"></ion-icon>
+            Balance is required.
+          </div>
+        </div>
+
+      </ion-list>
+    </form>
+  </div>
+
+
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar style="padding-left: 8px; padding-right: 8px">
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">Dismiss</ion-button>
+    </ion-buttons>
+    <ion-button slot="end" color="primary" (click)="onSubmit()">
+      Submit
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

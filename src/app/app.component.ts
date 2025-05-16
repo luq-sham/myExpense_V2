@@ -17,7 +17,8 @@ export class AppComponent implements OnInit {
   allowedPaths: string[] = ['/login', '/register'];
   display: boolean = false;
 
-  name: string = '';
+  fname: string = '';
+  lname: string = '';
   email: string = '';
 
   public appPages = [
@@ -48,10 +49,12 @@ export class AppComponent implements OnInit {
     const storedUser = localStorage.getItem('userDetails');
     if (storedUser) {
       const userDetails = JSON.parse(storedUser);
-      this.name = userDetails.name;
+      this.fname = userDetails.first_name;
+      this.lname = userDetails.last_name;
       this.email = userDetails.email;
     } else {
-      this.name = '';
+      this.fname = '';
+      this.lname = '';
       this.email = '';
     }
   }

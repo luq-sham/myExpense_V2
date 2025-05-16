@@ -1,7 +1,10 @@
 <app-header title="Dashboard"></app-header>
 
 <ion-content>
-
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
   <!-- Account Section -->
   <ion-card class="ion-no-margin" color="fav" style="border-radius: 0;">
     <ion-card-header class="  section-header">
@@ -48,7 +51,7 @@
             </ng-container>
 
              <ion-col size="6" size-sm="4" size-md="3" size-lg="3">
-              <ion-card button="true" class="ion-activatable ripple-parent account-card add-account-card" role="button" aria-label="Add New Account">
+              <ion-card button="true" class="ion-activatable ripple-parent account-card add-account-card" role="button" aria-label="Add New Account" (click)="addAccount()">
                 <ion-card-content class="ion-text-center ion-justify-content-center ion-align-items-center">
                   <ion-icon name="add-circle" class="add-icon" color="light"></ion-icon>
                   <b class="add-text">Add Account</b>
@@ -109,14 +112,14 @@
               <p class="transaction-date">{{ record.date | date: 'MMM d, h:mm a' }}</p>
             </div>
           </ion-item>
+          <div class="show-link">
+            <a (click)="transactionsList()">Show More</a>
+          </div>
         </ion-list>
-        <div class="show-link">
-          <a (click)="transactionsList()">Show More</a>
-        </div>
 
         <ng-template #noTransactions>
           <div class="ion-padding ion-text-center text-muted" style="color:#000">
-            No recent transactions found. Add one using the button below!
+            No recent transactions found.
           </div>
         </ng-template>
       </ng-template>
@@ -192,7 +195,7 @@
                 </ion-label>
              </ion-item>
             </ion-list>
-            <div style="font-weight: bold;margin-top: 24px;margin-bottom: 4px;cursor: pointer;">
+            <div class="show-link">
               <a (click)="budgetsList()">Show More</a>
             </div>
         </ng-template>
@@ -201,3 +204,5 @@
   </ion-card>
 
 </ion-content>
+
+<app-fab></app-fab>

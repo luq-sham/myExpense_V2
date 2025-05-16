@@ -1,0 +1,124 @@
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 0;
+
+  .logo {
+    width: 450px;
+    margin-bottom: 16px;
+
+    @media (prefers-color-scheme: dark) {
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+
+    @media (prefers-color-scheme: light) {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: var(--ion-color-primary);
+  }
+
+  p {
+    color: var(--ion-color-medium);
+    margin: 0;
+  }
+}
+
+ion-card {
+  margin: 0;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  ion-card-content {
+    padding: 24px 16px;
+  }
+}
+
+ion-item {
+  --border-radius: 8px;
+  --padding-start: 0;
+  margin-bottom: 16px;
+
+  ion-icon {
+    color: var(--ion-color-medium);
+    margin-inline: 8px;
+  }
+
+  &:last-of-type {
+    margin-bottom: 8px;
+  }
+}
+
+ion-input,
+ion-select {
+  --padding-start: 8px;
+}
+
+.validation-error {
+  color: var(--ion-color-danger);
+  font-size: 0.8rem;
+  margin: 15px 10px;
+}
+
+.terms-container {
+  margin: 16px 0 24px;
+
+  a {
+    color: var(--ion-color-primary);
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+ion-button {
+  margin: 8px 0;
+  --border-radius: 8px;
+  height: 48px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 24px;
+
+  p {
+    margin-bottom: 42px;
+    color: var(--ion-color-medium);
+
+    a {
+      color: var(--ion-color-primary);
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+}
+
+ion-card {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-height: 700px) {
+  .register-container {
+    justify-content: center;
+  }
+}

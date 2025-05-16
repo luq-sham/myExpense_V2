@@ -1,13 +1,121 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>register</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content fullscreen="true" scroll="true" forceOverscroll="true">
+  <div class="register-container">
+    <div class="logo-container">
+      <img alt="Logo" class="logo" src="assets/icon/img.png" />
+      <h1>My Expenses</h1>
+      <p>Create a new account</p>
+    </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">register</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <div class="form-scroll">
+      <ion-grid>
+        <ion-row class="ion-display-flex ion-justify-content-center">
+          <ion-col size="12" [sizeMd]="4">
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+              <ion-card>
+                <ion-card-content>
+                  <ion-row>
+
+                    <ion-col size= 12 [sizeMd]="6">
+                      <ion-item>
+                        <ion-icon name="person" slot="start"></ion-icon>
+                        <ion-input type="text" formControlName="fname" placeholder="First Name"></ion-input>
+                      </ion-item>
+                      <div class="validation-error" *ngIf="(fname?.invalid && (fname?.dirty || fname?.touched))" >
+                        <div *ngIf="fname?.errors?.['required']">First name is required</div>
+                      </div>
+                    </ion-col>
+                      
+                    <ion-col size= 12 [sizeMd]="6">
+                      <ion-item>
+                        <ion-icon name="person" slot="start"></ion-icon>
+                        <ion-input type="text" formControlName="lname" placeholder="Last Name"></ion-input>
+                      </ion-item>
+                      <div class="validation-error" *ngIf="(lname?.invalid && (lname?.dirty || lname?.touched))" >
+                        <div *ngIf="lname?.errors?.['required']">Last name is required</div>
+                      </div>
+                    </ion-col>
+
+                  </ion-row>
+
+                  <ion-item>
+                    <ion-icon name="mail" slot="start"></ion-icon>
+                    <ion-input type="email" formControlName="email" placeholder="your@email.com" ></ion-input>
+                  </ion-item>
+                  <div class="validation-error" *ngIf="(email?.invalid && (email?.dirty || email?.touched))" >
+                    <div *ngIf="email?.errors?.['required']">Email is required</div>
+                    <div *ngIf="email?.errors?.['email']">Please enter a valid email</div>
+                  </div>
+
+                  <ion-item>
+                    <ion-icon name="call" slot="start"></ion-icon>
+                    <ion-input type="tel" formControlName="phone" placeholder="Phone Number" ></ion-input>
+                  </ion-item>
+                  <div class="validation-error" *ngIf="(phone?.invalid && (phone?.dirty || phone?.touched))" >
+                    <div *ngIf="phone?.errors?.['required']">Phone number is required</div>
+                    <div *ngIf="phone?.errors?.['pattern']">Please enter a valid phone number</div>
+                  </div>
+
+                  <ion-item>
+                    <ion-icon name="lock-closed" slot="start"></ion-icon>
+                    <ion-icon [name]="showPassword ? 'eye-outline' : 'eye-off-outline'" slot="end" (click)="togglePasswordVisibility('password')" ></ion-icon>
+                    <ion-input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Password" ></ion-input>
+                  </ion-item>
+                  <div class="validation-error" *ngIf="(password?.invalid && (password?.dirty || password?.touched))" >
+                    <div *ngIf="password?.errors?.['required']">Password is required</div>
+                    <div *ngIf="password?.errors?.['minlength']">Password must be at least 6 characters</div>
+                  </div>
+
+                  <ion-item>
+                    <ion-icon name="checkmark-done" slot="start"></ion-icon>
+                    <ion-icon [name]="showConfirmPassword ? 'eye-outline' : 'eye-off-outline'" slot="end" (click)="togglePasswordVisibility('confirmPassword')" ></ion-icon>
+                    <ion-input [type]="showConfirmPassword ? 'text' : 'password'" formControlName="confirmPassword" placeholder="Confirm Password" ></ion-input>
+                  </ion-item>
+                  <div class="validation-error" *ngIf="(confirmPassword?.invalid && (confirmPassword?.dirty || confirmPassword?.touched))" >
+                    <div *ngIf="confirmPassword?.errors?.['required']">Please confirm your password</div>
+                    <div *ngIf="confirmPassword?.errors?.['notMatching']">Passwords do not match</div>
+                  </div>
+
+                  <ion-item>
+                    <ion-icon name="cash" slot="start"></ion-icon>
+                    <ion-select formControlName="currency" placeholder="Select Currency" interface="action-sheet" >
+                      <ion-select-option value="MYR">MYR (RM)</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                  <div class="validation-error" *ngIf="(currency?.invalid && (currency?.dirty || currency?.touched))">
+                    <div *ngIf="currency?.errors?.['required']">
+                      Currency is required
+                    </div>
+                  </div>
+
+                  <div class="terms-container">
+                    <ion-checkbox formControlName="termsAccepted" labelPlacement="end">I agree to the <a (click)="showTerms()">Terms & Conditions</a></ion-checkbox>
+                  </div>
+                  <div class="validation-error" *ngIf="(termsAccepted?.invalid && (termsAccepted?.dirty || termsAccepted?.touched))">
+                    <div *ngIf="termsAccepted?.errors?.['requiredTrue']">You must accept the terms and conditions</div>
+                  </div>
+
+                  <ion-button expand="block" type="submit" [disabled]="registerForm.invalid" color="fav">
+                    <ion-icon name="person-add" slot="start"></ion-icon>
+                    Create Account
+                  </ion-button>
+                </ion-card-content>
+              </ion-card>
+            </form>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <div class="login-link">
+        <p>Already have an account? <a (click)="goToLogin()">Sign In</a></p>
+      </div>
+    </div>
+  </div>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title size="small" class="ion-text-center">
+      © 2025 My Expenses - All rights reserved
+    </ion-title>
+  </ion-toolbar>
+</ion-footer>

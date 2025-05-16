@@ -1,22 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonCard, IonContent, IonCardContent, IonRow, IonCol, IonIcon, IonAvatar, IonSkeletonText, IonItem, IonLabel, IonNote, IonList, IonProgressBar, IonCardHeader, IonCardTitle, IonRippleEffect, IonGrid, } from '@ionic/angular/standalone';
+import { IonCard, IonContent, IonCardContent, IonRow, IonCol, IonIcon, IonAvatar, IonSkeletonText, IonItem, IonLabel, IonNote, IonList, IonProgressBar, IonCardHeader, IonCardTitle, IonRippleEffect, IonGrid, IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
 import { MenuController } from '@ionic/angular/standalone';
 import { HeaderComponent } from '../components/header/header.component';
+import { FabComponent } from '../components/fab/fab.component';
 import { ApiService } from '../services/api.service';
 
-import {Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AlertService } from '../services/alert.service';
+import { ModalController} from '@ionic/angular/standalone'
+import { AddComponent } from '../forms/add/add.component';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
   standalone: true,
-  imports: [ IonGrid, IonRippleEffect, IonCardTitle, IonCardHeader, IonProgressBar, IonList, IonNote, IonLabel, IonItem,  IonSkeletonText,  IonAvatar, IonIcon, IonCol, IonRow, IonCardContent, IonCard, IonContent, CommonModule, FormsModule, HeaderComponent],
+  imports: [IonRefresherContent, IonRefresher,  IonGrid, IonRippleEffect, IonCardTitle, IonCardHeader, IonProgressBar, IonList, IonNote, IonLabel, IonItem,  IonSkeletonText,  IonAvatar, IonIcon, IonCol, IonRow, IonCardContent, IonCard, IonContent, CommonModule, FormsModule, HeaderComponent, FabComponent],
 })
-export class DashboardPage implements OnInit {
+export class DashboardPage {
   doughnutChart: any;
   data: any[] = [];
   password: string = '';
@@ -39,7 +42,8 @@ export class DashboardPage implements OnInit {
     private menu: MenuController,
     private router: Router,
     private api: ApiService,
-    private alert: AlertService
+    private alert: AlertService,
+    private modal: ModalController
   ) {}
 
   ngOnInit() {
@@ -47,6 +51,10 @@ export class DashboardPage implements OnInit {
   }
 
   getData() {
+    this.loading_account = true;
+    this.loading_transaction = true;
+    this.loading_budget = true;
+
     const token = {
       user_id: localStorage.getItem('token'),
     };
@@ -100,6 +108,23 @@ export class DashboardPage implements OnInit {
     })
   }
 
+  async addAccount(){
+    const param = {
+      formID: 1,
+      title: 'New Account',
+    };
+    const modal = await this.modal.create({
+      component: AddComponent,
+      componentProps: param,
+    });
+    await modal.present();
+    const { data } = await modal.onDidDismiss();
+
+    if (data) {
+      this.getData();
+    }
+  }
+
   openBudget(budget: any) {
     console.log(budget);
   }
@@ -112,16 +137,23 @@ export class DashboardPage implements OnInit {
       return 'warning';
     else return 'danger';
   }
-
-  
-  ionViewDidEnter(): void {
-    this.menu.enable(true);
-  }
   
   transactionsList(){
     this.router.navigate(['/transactions']);
   }
+
   budgetsList(){
     this.router.navigate(['/budgets']);
+  }
+  
+  handleRefresh(event: any) {
+    setTimeout(() => {
+      event.target.complete();
+      window.location.reload();
+    }, 1000);
+  }
+
+  ionViewDidEnter(): void {
+    this.menu.enable(true);
   }
 }

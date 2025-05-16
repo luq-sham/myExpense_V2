@@ -1,0 +1,27 @@
+ion-item{
+    --background: var(--ion-color-light);
+    border-radius: 15px;
+    border: 1px solid #000;
+    margin-bottom: 8px;
+}
+.item-container{
+    margin-bottom: 16px;
+}
+.icon{
+    padding-left: 8px;
+    font-size: 32px;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  color: #eb445a; // Ionic 'danger' color
+  font-size: 0.875rem; // smaller text size
+  margin-top: 4px;
+  gap: 4px;
+
+  ion-icon {
+    font-size: 1.1rem;
+    color: #eb445a; // consistent with text
+  }
+}

@@ -7,7 +7,7 @@
         </div>
         <div class="user-container ion-padding">
           <ion-label class="labels">Welcome,</ion-label>
-          <ion-label class="user-name">{{name}}</ion-label>
+          <ion-label class="user-name">{{fname}} {{lname}}</ion-label>
         </div>
       </ion-header>
       <ion-content>
@@ -29,7 +29,7 @@
         <div class="menu-footer">
           <ion-menu-toggle auto-hide="false">
             <ion-item button routerDirection="root" lines="none" detail="false" (click)="settings()" routerLinkActive="selected" class="menu-item-footer">
-              <ion-icon aria-hidden="true" slot="start" name="settings-outline" class="menu-item-icon"></ion-icon>
+              <ion-icon aria-hidden="true" slot="start" name="settings" class="menu-item-icon"></ion-icon>
               <ion-label class="menu-item-label">Settings</ion-label>
             </ion-item>
           </ion-menu-toggle>
