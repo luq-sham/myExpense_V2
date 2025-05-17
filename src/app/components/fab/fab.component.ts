@@ -3,6 +3,7 @@ import { IonFab, IonFabButton, IonIcon, IonFabList } from "@ionic/angular/standa
 import { ModalController } from '@ionic/angular/standalone'
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/alert.service';
+import { AddComponent } from 'src/app/forms/add/add.component';
 
 @Component({
   selector: 'app-fab',
@@ -21,7 +22,23 @@ export class FabComponent  implements OnInit {
   ngOnInit() {}
 
   async addExpensesModal(){
-    
+    const param={
+      formID:2,
+      title:'New Transactions'
+    }
+
+    const modal = await this.modal.create({
+      component:AddComponent,
+      componentProps:param
+    })
+
+    await modal.present()
+    const {data} = await modal.onDidDismiss()
+
+    if(data){
+      window.location.href = '/';
+    }
+
   }
 
   async manageTransaction(){

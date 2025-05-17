@@ -85,4 +85,9 @@ export class ApiService {
     const api = this.url + 'api/get_budget_by_user';
     return this.http.post(api, data);
   }
+
+  getIcons():Observable<any>{
+    const api = this.url + 'api/get_icons';
+    return this.http.get(api);
+  }
 }

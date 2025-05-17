@@ -25,6 +25,7 @@ import {
   IonIcon,
   IonTextarea,
   IonFooter,
+  IonSearchbar,
 } from '@ionic/angular/standalone';
 import { ModalController } from '@ionic/angular/standalone';
 import { ApiService } from 'src/app/services/api.service';
@@ -37,6 +38,7 @@ import { AlertService } from 'src/app/services/alert.service';
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss'],
   imports: [
+    // IonSearchbar,
     CommonModule,
     ReactiveFormsModule,
     IonHeader,
@@ -67,9 +69,12 @@ export class AddComponent implements OnInit {
   title: any;
   formID: any;
 
-  types:any = [];
+  types: any = [];
 
-  params:any
+  // iconNames: any = [];
+  // selectedIcon: string | null = null;
+
+  params: any;
 
   constructor(
     private modalController: ModalController,
@@ -77,7 +82,7 @@ export class AddComponent implements OnInit {
     private api: ApiService,
     private loading: LoadingService,
     private toast: ToastService,
-    private alert: AlertService,
+    private alert: AlertService
   ) {}
 
   ngOnInit() {
@@ -85,30 +90,41 @@ export class AddComponent implements OnInit {
     this.getData();
   }
 
-  getData(){
+  // getIcons(){
+  //   this.api.getIcons().subscribe((data) => {
+  //     this.iconNames = data.return_data;
+  //   });
+  // }
 
+  // selectIcon(name: string) {
+  //   this.selectedIcon = name;
+  // }
+
+  getData() {
     //New Account API
-    if(this.formID == 1){
-      this.api.getAccountType().subscribe(res=>{
-        this.types = res.return_data
-      })
+    if (this.formID == 1) {
+      this.api.getAccountType().subscribe((res) => {
+        this.types = res.return_data;
+      });
     }
-
-
   }
 
   formBuilder() {
-
     //New Account API
-    if(this.formID == 1){
+    if (this.formID == 1) {
       this.transactionForm = this.fb.group({
         account_name: ['', [Validators.required]],
         account_type: ['', Validators.required],
-        balance: [ 0, Validators.required],
+        balance: [0, Validators.required],
       });
     }
-
-
+    if (this.formID == 2) {
+      this.transactionForm = this.fb.group({
+        account_name: ['', [Validators.required]],
+        account_type: ['', Validators.required],
+        balance: [0, Validators.required],
+      });
+    }
   }
 
   get f() {
@@ -119,39 +135,59 @@ export class AddComponent implements OnInit {
     this.isSubmitted = true;
     const now = new Date();
     const offset = now.getTimezoneOffset() * 60000;
-    const localISOTime = new Date(now.getTime() - offset).toISOString().slice(0, -1);
+    const localISOTime = new Date(now.getTime() - offset)
+      .toISOString()
+      .slice(0, -1);
 
     if (this.transactionForm.invalid) {
       console.log('Form is invalid');
       return;
     }
 
-    if(this.formID == 1){
-      this.alert.customComfirmationAlert('New Account','Are you sure to added this account?').then(res=>{
-        if(res == 'confirm'){
-          this.loading.showLoading()
-          const param = {
-            ...this.transactionForm.value,
-            user_id: localStorage.getItem('token'),
-            created_at: localISOTime,
-            updated_at: localISOTime
-          };
-          this.api.postAddAccount(param).subscribe(res=>{
-            this.loading.hide()
-            if(res.status_code == 200){
-              this.toast.customToast('Account successfully been added',3000,'success')
-              this.modalController.dismiss(true)
-            }else{
-              this.toast.customToast('Account failed to been added. Please try again.',3000,'warning')
-            }
-          })
-          console.log('Account Data:', param);
-        }
-      })
-      
+    if (this.formID == 1) {
+      this.alert
+        .customComfirmationAlert(
+          'New Account',
+          'Are you sure to added this account?'
+        )
+        .then((res) => {
+          if (res == 'confirm') {
+            this.loading.showLoading();
+            const param = {
+              ...this.transactionForm.value,
+              user_id: localStorage.getItem('token'),
+              created_at: localISOTime,
+              updated_at: localISOTime,
+            };
+            this.api.postAddAccount(param).subscribe((res) => {
+              this.loading.hide();
+              if (res.status_code == 200) {
+                this.toast.customToast(
+                  'Account successfully been added',
+                  3000,
+                  'success'
+                );
+                this.modalController.dismiss(true);
+              } else {
+                this.toast.customToast(
+                  'Account failed to been added. Please try again.',
+                  3000,
+                  'warning'
+                );
+              }
+            });
+            console.log('Account Data:', param);
+          }
+        });
+    }
+
+    if(this.formID == 2){
     }
   }
 
+  onClick(){
+    console.log('click')
+  }
   dismiss() {
     this.modalController.dismiss();
   }

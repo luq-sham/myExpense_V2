@@ -1,15 +1,15 @@
-ion-item{
-    --background: var(--ion-color-light);
-    border-radius: 15px;
-    border: 1px solid #000;
-    margin-bottom: 8px;
+ion-item {
+  --background: var(--ion-color-light);
+  border-radius: 15px;
+  border: 1px solid #000;
+  margin-bottom: 8px;
 }
-.item-container{
-    margin-bottom: 16px;
+.item-container {
+  margin-bottom: 16px;
 }
-.icon{
-    padding-left: 8px;
-    font-size: 32px;
+.icon {
+  padding-left: 8px;
+  font-size: 32px;
 }
 
 .error-message {
@@ -25,3 +25,17 @@ ion-item{
     color: #eb445a; // consistent with text
   }
 }
+
+// .icon-grid {
+//   display: grid;
+//   grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+//   gap: 10px;
+// }
+// .icon-grid ion-icon {
+//   font-size: 32px;
+//   cursor: pointer;
+//   transition: transform 0.2s;
+// }
+// .icon-grid ion-icon:hover {
+//   transform: scale(1.2);
+// }

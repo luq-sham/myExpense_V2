@@ -172,10 +172,10 @@
                    </div>
                    <p class="budget-type">{{ budget.accounts }}</p>
                    <div class="budget-summary">
-                      <!-- <div class="budget-row">
+                      <div class="budget-row">
                          <span>Used:</span>
                          <span>{{ budget.used_amount | currency: 'MYR ' }}</span>
-                      </div> -->
+                      </div>
                       <div class="budget-row">
                          <span>Remaining:</span>
                          <span [ngClass]="{'low-balance': (budget.balance_budget / budget.amount) < 0.1}">

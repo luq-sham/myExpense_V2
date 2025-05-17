@@ -58,11 +58,45 @@
           </div>
         </div>
 
+        <!-- <div class="icon-grid">
+          <ion-icon
+            *ngFor="let icon of iconNames"
+            [name]="icon.name"
+            (click)="selectIcon(icon.name)"
+            [class.selected]="selectedIcon === icon.name"
+          ></ion-icon>
+        </div>
+
+        <div *ngIf="selectedIcon" class="selected-info">
+          <h2>Selected Icon:</h2>
+          <ion-icon [name]="selectedIcon" style="font-size: 48px;"></ion-icon>
+          <p>{{ selectedIcon }}</p>
+        </div> -->
+
       </ion-list>
     </form>
   </div>
 
+  <div class="ion-padding" *ngIf="formID == 2">
+    <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
+      <ion-list lines="full">
 
+        <!-- Account Name -->
+        <div class="item-container">
+          <ion-item lines="none">
+            <ion-icon name="person-circle-outline" slot="start" class="icon" ></ion-icon>
+            <ion-label position="stacked">Account Name</ion-label>
+            <ion-input formControlName="account_name" type="text" placeholder="Enter name or service" readonly (click)="onClick()"><ion-icon name="chevron-down" slot="end"></ion-icon></ion-input>
+          </ion-item>
+          <div *ngIf="isSubmitted && f['account_name'].errors?.['required']" class="error-message">
+            <ion-icon name="close-circle-outline" color="danger"></ion-icon>
+            Account name is required.
+          </div>
+        </div>
+
+      </ion-list>
+    </form>
+  </div>
 
 </ion-content>
 
