@@ -70,10 +70,6 @@ export class AddComponent implements OnInit {
   formID: any;
 
   types: any = [];
-
-  // iconNames: any = [];
-  // selectedIcon: string | null = null;
-
   params: any;
 
   constructor(
@@ -90,16 +86,6 @@ export class AddComponent implements OnInit {
     this.getData();
   }
 
-  // getIcons(){
-  //   this.api.getIcons().subscribe((data) => {
-  //     this.iconNames = data.return_data;
-  //   });
-  // }
-
-  // selectIcon(name: string) {
-  //   this.selectedIcon = name;
-  // }
-
   getData() {
     //New Account API
     if (this.formID == 1) {
@@ -112,13 +98,6 @@ export class AddComponent implements OnInit {
   formBuilder() {
     //New Account API
     if (this.formID == 1) {
-      this.transactionForm = this.fb.group({
-        account_name: ['', [Validators.required]],
-        account_type: ['', Validators.required],
-        balance: [0, Validators.required],
-      });
-    }
-    if (this.formID == 2) {
       this.transactionForm = this.fb.group({
         account_name: ['', [Validators.required]],
         account_type: ['', Validators.required],
@@ -180,14 +159,8 @@ export class AddComponent implements OnInit {
           }
         });
     }
-
-    if(this.formID == 2){
-    }
   }
 
-  onClick(){
-    console.log('click')
-  }
   dismiss() {
     this.modalController.dismiss();
   }

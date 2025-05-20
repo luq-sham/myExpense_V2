@@ -86,7 +86,7 @@
           <ion-item lines="none">
             <ion-icon name="person-circle-outline" slot="start" class="icon" ></ion-icon>
             <ion-label position="stacked">Account Name</ion-label>
-            <ion-input formControlName="account_name" type="text" placeholder="Enter name or service" readonly (click)="onClick()"><ion-icon name="chevron-down" slot="end"></ion-icon></ion-input>
+            <ion-input formControlName="account_name" type="text" placeholder="Enter name or service" readonly id="ikan"><ion-icon name="chevron-down" slot="end"></ion-icon></ion-input>
           </ion-item>
           <div *ngIf="isSubmitted && f['account_name'].errors?.['required']" class="error-message">
             <ion-icon name="close-circle-outline" color="danger"></ion-icon>
@@ -94,6 +94,7 @@
           </div>
         </div>
 
+        
       </ion-list>
     </form>
   </div>

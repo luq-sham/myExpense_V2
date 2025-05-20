@@ -1,11 +1,11 @@
 {
   "name": "myExpenses",
   "short_name": "myexpense",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "theme_color": "#264653",
+  "background_color": "#264653",
   "display": "standalone",
-  "scope": "./",
-  "start_url": "./",
+  "scope": "/",
+  "start_url": "/",
   "icons": [
     {
       "src": "icons/icon-72x72.png",
