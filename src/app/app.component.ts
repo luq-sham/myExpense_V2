@@ -4,6 +4,9 @@ import { Router, NavigationEnd, RouterLink, RouterLinkActive } from '@angular/ro
 import { IonApp, IonSplitPane, IonMenu, IonContent, IonLabel, IonList, IonMenuToggle, IonIcon, IonItem, IonRouterOutlet, IonHeader, IonFooter } from '@ionic/angular/standalone'
 import { AlertService } from './services/alert.service';
 import { filter } from 'rxjs/operators';
+import { App } from '@capacitor/app';
+import { Platform } from '@ionic/angular';
+import { ToastService } from './services/toast.service';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +16,8 @@ import { filter } from 'rxjs/operators';
   imports: [IonFooter, IonHeader,  CommonModule, RouterLink, RouterLinkActive, IonApp, IonSplitPane, IonMenu, IonContent, IonLabel, IonList, IonMenuToggle, IonIcon, IonItem, IonRouterOutlet ],
 })
 export class AppComponent implements OnInit {
+  private lastTimeBackPress = 0;
+  private timePeriodToExit = 2000; // 2 seconds
 
   allowedPaths: string[] = ['/login', '/register'];
   display: boolean = false;
@@ -32,8 +37,30 @@ export class AppComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private alert: AlertService
+    private alert: AlertService,
+    private platform: Platform,
+    private toast: ToastService
   ) {
+    this.initializeApp();
+  }
+
+  initializeApp() {
+    this.platform.ready().then(() => {
+      App.addListener('backButton', () => {
+        if (this.router.url === '/dashboard' || this.router.url === '/') {
+          const currentTime = new Date().getTime();
+
+          if (currentTime - this.lastTimeBackPress < this.timePeriodToExit) {
+            App.exitApp(); // Exit app
+          } else {
+            this.toast.customToast('Please press back again',2000,'light');
+            this.lastTimeBackPress = currentTime;
+          }
+        } else {
+          window.history.back(); // Navigate back
+        }
+      });
+    });
   }
 
   ngOnInit() {
