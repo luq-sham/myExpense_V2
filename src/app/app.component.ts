@@ -7,6 +7,7 @@ import { filter } from 'rxjs/operators';
 import { App } from '@capacitor/app';
 import { Platform } from '@ionic/angular';
 import { ToastService } from './services/toast.service';
+import { StatusBar, Style } from '@capacitor/status-bar';
 
 @Component({
   selector: 'app-root',
@@ -46,6 +47,9 @@ export class AppComponent implements OnInit {
 
   initializeApp() {
     this.platform.ready().then(() => {
+      StatusBar.show();
+      StatusBar.setBackgroundColor({ color: '#264653' });
+      StatusBar.setStyle({ style: Style.Dark });
       App.addListener('backButton', () => {
         if (this.router.url === '/dashboard' || this.router.url === '/') {
           const currentTime = new Date().getTime();
