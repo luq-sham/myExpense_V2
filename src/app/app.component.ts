@@ -47,11 +47,12 @@ export class AppComponent implements OnInit {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      StatusBar.show();
-      StatusBar.setBackgroundColor({ color: '#264653' });
+      StatusBar.setOverlaysWebView({ overlay: false });
       StatusBar.setStyle({ style: Style.Dark });
+      StatusBar.setBackgroundColor({ color: '#264653' });
+      StatusBar.show();
       App.addListener('backButton', () => {
-        if (this.router.url === '/dashboard' || this.router.url === '/') {
+        if (this.router.url === '/dashboard' || this.router.url === '/' || this.router.url === '/login') {
           const currentTime = new Date().getTime();
 
           if (currentTime - this.lastTimeBackPress < this.timePeriodToExit) {
