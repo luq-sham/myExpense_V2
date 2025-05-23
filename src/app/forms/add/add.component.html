@@ -9,28 +9,38 @@
   </ion-toolbar>
 </ion-header>
 
+@if(formID == 2){
+  <div [formGroup]="transactionForm" (ionChange)="getCategory($event)">
+    <ion-segment formControlName="transaction_type">
+      <ion-segment-button value="income">
+        <ion-label>Income</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="expenses">
+        <ion-label>Expenses</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+}
+
 <ion-content class="ion-padding">
 
   <div class="ion-padding" *ngIf="formID == 1">
-    <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="AccountForm" (ngSubmit)="onSubmit()">
       <ion-list lines="full">
 
         <!-- Account Name -->
         <div class="item-container">
-          <ion-item lines="none">
+          <ion-item lines="none" class="form">
             <ion-icon name="person-circle-outline" slot="start" class="icon" ></ion-icon>
             <ion-label position="stacked">Account Name</ion-label>
-            <ion-input formControlName="account_name" type="text" placeholder="Enter name or service"></ion-input>
+            <ion-input formControlName="account_name" type="text" placeholder="Enter name"></ion-input>
           </ion-item>
-          <div *ngIf="isSubmitted && f['account_name'].errors?.['required']" class="error-message">
-            <ion-icon name="close-circle-outline" color="danger"></ion-icon>
-            Account name is required.
-          </div>
+          <app-error-message *ngFor="let val of validations.accountName" [field]="AccountForm.get('account_name')!" [error]="val.error" [message]="val.message" [submitted]="isSubmitted"></app-error-message>
         </div>
 
         <!-- Type -->
         <div class="item-container">
-          <ion-item lines="none">
+          <ion-item lines="none" class="form">
             <ion-icon name="list-circle-outline" slot="start" class="icon" ></ion-icon>
             <ion-label position="stacked">Type</ion-label>
             <ion-select placeholder="Select account type" interface="popover" formControlName="account_type">
@@ -39,39 +49,19 @@
               </ion-select-option>
             </ion-select>
           </ion-item>
-          <div *ngIf="isSubmitted && f['account_type'].errors?.['required']" class="error-message">
-            <ion-icon name="close-circle-outline" color="danger"></ion-icon>
-            Type is required.
-          </div>
+          <app-error-message *ngFor="let val of validations.type" [field]="AccountForm.get('account_type')!" [error]="val.error" [message]="val.message" [submitted]="isSubmitted"></app-error-message>
         </div>
 
         <!-- Amount -->
         <div class="item-container">
-          <ion-item lines="none">
+          <ion-item lines="none" class="form">
             <ion-icon name="cash-outline" slot="start" class="icon" ></ion-icon>
             <ion-label position="stacked">Initial Balance</ion-label>
-            <ion-input formControlName="balance" type="number" placeholder="Enter name or service"></ion-input>
+            <ion-input formControlName="balance" type="number" placeholder="Enter Amount"></ion-input>
+            <ion-note slot="end" color="medium">MYR</ion-note>
           </ion-item>
-          <div *ngIf="isSubmitted && f['balance'].errors?.['required']" class="error-message">
-            <ion-icon name="close-circle-outline" color="danger"></ion-icon>
-            Balance is required.
-          </div>
+          <app-error-message *ngFor="let val of validations.balance" [field]="AccountForm.get('balance')!" [error]="val.error" [message]="val.message" [submitted]="isSubmitted"></app-error-message>
         </div>
-
-        <!-- <div class="icon-grid">
-          <ion-icon
-            *ngFor="let icon of iconNames"
-            [name]="icon.name"
-            (click)="selectIcon(icon.name)"
-            [class.selected]="selectedIcon === icon.name"
-          ></ion-icon>
-        </div>
-
-        <div *ngIf="selectedIcon" class="selected-info">
-          <h2>Selected Icon:</h2>
-          <ion-icon [name]="selectedIcon" style="font-size: 48px;"></ion-icon>
-          <p>{{ selectedIcon }}</p>
-        </div> -->
 
       </ion-list>
     </form>
@@ -81,19 +71,30 @@
     <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
       <ion-list lines="full">
 
-        <!-- Account Name -->
+        <!-- Amount -->
         <div class="item-container">
-          <ion-item lines="none">
-            <ion-icon name="person-circle-outline" slot="start" class="icon" ></ion-icon>
-            <ion-label position="stacked">Account Name</ion-label>
-            <ion-input formControlName="account_name" type="text" placeholder="Enter name or service" readonly id="ikan"><ion-icon name="chevron-down" slot="end"></ion-icon></ion-input>
+          <ion-item lines="none" class="form">
+            <ion-icon name="cash-outline" slot="start" class="icon" ></ion-icon>
+            <ion-label position="stacked">Amount (RM)</ion-label>
+            <ion-input formControlName="transaction_amount" type="number" placeholder="Enter Amount"></ion-input>
+            <ion-note slot="end" color="medium">MYR</ion-note>
           </ion-item>
-          <div *ngIf="isSubmitted && f['account_name'].errors?.['required']" class="error-message">
-            <ion-icon name="close-circle-outline" color="danger"></ion-icon>
-            Account name is required.
-          </div>
+          <app-error-message *ngFor="let val of validations.amount" [field]="transactionForm.get('transaction_amount')!" [error]="val.error" [message]="val.message" [submitted]="isSubmitted"></app-error-message>
         </div>
 
+        <!-- Categories -->
+        <div class="item-container">
+          <ion-item lines="none" class="form">
+            <ion-icon name="list-circle-outline" slot="start" class="icon" ></ion-icon>
+            <ion-label position="stacked">Categories ({{label}})</ion-label>
+            <ion-select placeholder="Select account type" formControlName="transaction_category">
+              <ion-select-option *ngFor="let category of categories" [value]="category.name">
+                {{category.name}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+          <app-error-message *ngFor="let val of validations.type" [error]="val.error" [message]="val.message" [submitted]="isSubmitted"></app-error-message>
+        </div>
         
       </ion-list>
     </form>

@@ -1,7 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, NavigationEnd, RouterLink, RouterLinkActive } from '@angular/router';
-import { IonApp, IonSplitPane, IonMenu, IonContent, IonLabel, IonList, IonMenuToggle, IonIcon, IonItem, IonRouterOutlet, IonHeader, IonFooter } from '@ionic/angular/standalone'
+import {
+  Router,
+  NavigationEnd,
+  RouterLink,
+  RouterLinkActive,
+} from '@angular/router';
+import {
+  IonApp,
+  IonSplitPane,
+  IonMenu,
+  IonContent,
+  IonLabel,
+  IonList,
+  IonMenuToggle,
+  IonIcon,
+  IonItem,
+  IonRouterOutlet,
+  IonHeader,
+  IonFooter,
+} from '@ionic/angular/standalone';
 import { AlertService } from './services/alert.service';
 import { filter } from 'rxjs/operators';
 import { App } from '@capacitor/app';
@@ -14,7 +32,23 @@ import { StatusBar, Style } from '@capacitor/status-bar';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [IonFooter, IonHeader,  CommonModule, RouterLink, RouterLinkActive, IonApp, IonSplitPane, IonMenu, IonContent, IonLabel, IonList, IonMenuToggle, IonIcon, IonItem, IonRouterOutlet ],
+  imports: [
+    IonFooter,
+    IonHeader,
+    CommonModule,
+    RouterLink,
+    RouterLinkActive,
+    IonApp,
+    IonSplitPane,
+    IonMenu,
+    IonContent,
+    IonLabel,
+    IonList,
+    IonMenuToggle,
+    IonIcon,
+    IonItem,
+    IonRouterOutlet,
+  ],
 })
 export class AppComponent implements OnInit {
   private lastTimeBackPress = 0;
@@ -32,8 +66,8 @@ export class AppComponent implements OnInit {
     { title: 'Transactions', url: '/transactions', icon: 'list' },
     { title: 'Accounts', url: '/accounts', icon: 'wallet' },
     { title: 'Budgets', url: '/budgets', icon: 'calculator' },
-    { title: 'Savings Goals', url: '/.', icon: 'flag', comingSoon: true},
-    { title: 'Reports', url: '/.', icon: 'bar-chart', comingSoon: true},
+    { title: 'Savings Goals', url: '/.', icon: 'flag', comingSoon: true },
+    { title: 'Reports', url: '/.', icon: 'bar-chart', comingSoon: true },
   ];
 
   constructor(
@@ -47,34 +81,34 @@ export class AppComponent implements OnInit {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      StatusBar.setOverlaysWebView({ overlay: false });
-      StatusBar.setStyle({ style: Style.Dark });
-      StatusBar.setBackgroundColor({ color: '#264653' });
-      StatusBar.show();
-      App.addListener('backButton', () => {
-        if (this.router.url === '/dashboard' || this.router.url === '/' || this.router.url === '/login') {
-          const currentTime = new Date().getTime();
-
-          if (currentTime - this.lastTimeBackPress < this.timePeriodToExit) {
-            App.exitApp(); // Exit app
+      const isDesktop = this.platform.is('desktop');
+      if (!isDesktop) {
+        StatusBar.setOverlaysWebView({ overlay: false });
+        StatusBar.setStyle({ style: Style.Dark });
+        StatusBar.setBackgroundColor({ color: '#264653' });
+        StatusBar.show();
+        App.addListener('backButton', () => {
+          if ( this.router.url === '/dashboard' || this.router.url === '/' || this.router.url === '/login') {
+            const currentTime = new Date().getTime();
+            if (currentTime - this.lastTimeBackPress < this.timePeriodToExit) {
+              App.exitApp();
+            } else {
+              this.toast.customToast('Please press back again', 2000, 'light');
+              this.lastTimeBackPress = currentTime;
+            }
           } else {
-            this.toast.customToast('Please press back again',2000,'light');
-            this.lastTimeBackPress = currentTime;
+            window.history.back(); // Navigate back
           }
-        } else {
-          window.history.back(); // Navigate back
-        }
-      });
+        });
+      }
     });
   }
 
   ngOnInit() {
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
         this.display = !this.allowedPaths.includes(event.urlAfterRedirects);
         this.loadUserDetails();
-      });
+    });
   }
 
   loadUserDetails() {
@@ -91,20 +125,14 @@ export class AppComponent implements OnInit {
     }
   }
 
-  async comingSoon(page:any){
-    if(page.comingSoon){
-      this.alert.customAlert('Coming Soon', 'This feature is not available yet. Kindly check back later.');
+  async comingSoon(page: any) {
+    if (page.comingSoon) {
+      this.alert.customAlert('Coming Soon','This feature is not available yet. Kindly check back later.');
     }
   }
 
   async logout(): Promise<void> {
-    const res = await this.alert.customComfirmationAlert(
-      'Logout',
-      'Are you sure to logout',
-      'Logout',
-      'Cancel',
-      'confirm-red'
-    );
+    const res = await this.alert.customComfirmationAlert('Logout','Are you sure to logout','Logout','Cancel','confirm-red');
     if (res === 'confirm') {
       localStorage.clear();
       this.router.navigateByUrl('/login', { replaceUrl: true });
@@ -112,10 +140,6 @@ export class AppComponent implements OnInit {
   }
 
   settings() {
-    this.alert.customAlert('Settings', 'This feature is not available yet. Kindly check back later.');
+    this.alert.customAlert('Settings','This feature is not available yet. Kindly check back later.');
   }
-    
-  
-  
-
 }

@@ -1,4 +1,4 @@
-ion-item {
+ion-item.form {
   --background: var(--ion-color-light);
   border-radius: 15px;
   border: 1px solid #000;
@@ -44,3 +44,4 @@ ion-popover {
 .icon-grid ion-icon:hover {
   transform: scale(1.2);
 }
+

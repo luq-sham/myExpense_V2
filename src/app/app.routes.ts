@@ -48,4 +48,8 @@ export const routes: Routes = [
     canActivate:[loginGuard],
     loadComponent: () => import('./auth/register/register.page').then( m => m.RegisterPage)
   },
+  {
+    path: 'error-message',
+    loadComponent: () => import('./components/error-message/error-message.page').then( m => m.ErrorMessagePage)
+  },
 ];
