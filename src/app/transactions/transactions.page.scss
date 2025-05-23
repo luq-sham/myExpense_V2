@@ -18,7 +18,7 @@
         }
       }
   
-      &.expense {
+      &.expenses {
         background-color: rgba(var(--ion-color-danger-rgb), 0.1);
         .transaction-icon {
           color: var(--ion-color-danger-shade);
@@ -51,12 +51,13 @@
     .transaction-amount {
       font-weight: bold;
       font-size: 1rem;
-      margin-bottom: 2px;
+      margin-bottom: auto;
+      margin-top: auto;
   
       &.income {
         color: var(--ion-color-success-shade);
       }
-      &.expense {
+      &.expenses {
         color: var(--ion-color-danger-shade);
       }
     }

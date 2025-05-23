@@ -25,9 +25,31 @@ export class ValidationTextService {
           ],
 
           //New Transaction
-          amount:[
+          transaction_amount:[
             {label: 'Transaction Amount', error: 'required', message: 'Transaction amount is required.'},
-          ]
+          ],
+          transaction_category:[
+            {label: 'Transaction Category', error: 'required', message: 'Transaction category is required.'},
+          ],
+          transaction_account:[
+            {label: 'Transaction Account', error: 'required', message: 'Transaction account is required.'},
+          ],
+
+          //new Budget
+          budget_name:[
+            {label: 'Budget Name', error: 'required', message: 'Budget name is required.'}
+          ],
+          budget_amount:[
+            {label: 'Budget Amount', error: 'required', message: 'Budget amount is required.'}
+          ],
+          budget_category:[
+            {label: 'Budget Category', error: 'required', message: 'Budget category is required.'}
+          ],
+          budget_account:[
+            {label: 'Budget Account', error: 'required', message: 'Budget account is required.'}
+          ],
+          
+
         }
       }
       default: {

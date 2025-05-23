@@ -158,42 +158,44 @@
              You haven't set up any budgets yet.
           </div>
         </ion-list>
-
+        
+        
         <ng-template #budgetList>
           <ion-list lines="full" class="budget-list">
-             <ion-item *ngFor="let budget of budgets" (click)="openBudget(budget)" class="budget-item" button detail="false">
-                <ion-icon name="wallet" slot="start" color="secondary" class="budget-icon" style="padding-top: 12px ;"></ion-icon>
-                <ion-label>
-                   <div class="budget-header">
-                      <h2 class="budget-title">{{ budget.budget_name | titlecase }}</h2>
-                      <ion-note class="budget-amount">
-                         <b>{{ budget.amount | currency: 'MYR ' }}</b>
-                      </ion-note>
-                   </div>
-                   <p class="budget-type">{{ budget.accounts }}</p>
-                   <div class="budget-summary">
-                      <div class="budget-row">
-                         <span>Used:</span>
-                         <span>{{ budget.used_amount | currency: 'MYR ' }}</span>
-                      </div>
-                      <div class="budget-row">
-                         <span>Remaining:</span>
-                         <span [ngClass]="{'low-balance': (budget.balance_budget / budget.amount) < 0.1}">
-                            {{ budget.balance_budget | currency: 'MYR ' }}
-                         </span>
-                      </div>
-                      <ion-progress-bar
-                         class="budget-progress"
-                         [value]="budget.used_amount / budget.amount"
-                         [color]="getProgressColor(budget)">
-                      </ion-progress-bar>
-                       <p class="update-date">
-                         <ion-icon name="time-outline" class="update-icon"></ion-icon>
-                         Updated: {{ budget.updated_at | date:'short' }}
-                      </p>
-                   </div>
+            <ion-item *ngFor="let budget of budgets" (click)="openBudget(budget)" class="budget-item" button detail="false">
+              <ion-icon name="wallet" slot="start" color="secondary" class="budget-icon" style="padding-top: 12px ;"></ion-icon>
+              <ion-label>
+                <div class="budget-header">
+                  <h2 class="budget-title">
+                    {{ budget.budget_name | titlecase }}
+                    <ion-badge *ngIf="budget.balance_budget < 0" color="danger" class="overbudget-label" style="margin-left:8px;">
+                      Overbudget
+                    </ion-badge>
+                  </h2>
+                  <ion-note class="budget-amount">
+                    <b>{{ budget.amount | currency: 'MYR ' }}</b>
+                  </ion-note>
+                </div>
+                <p class="budget-type">{{ budget.accounts }}</p>
+                <div class="budget-summary">
+                    <div class="budget-row">
+                      <span>Used:</span>
+                      <span>{{ budget.used_amount | currency: 'MYR ' }}</span>
+                    </div>
+                    <div class="budget-row">
+                      <span>Remaining:</span>
+                      <span [ngClass]="{'low-balance': (budget.balance_budget / budget.amount) < 0.1, 'overbudget': (budget.balance_budget / budget.amount) < 1}">
+                        {{ budget.balance_budget | currency: 'MYR ' }}
+                      </span>
+                    </div>
+                    <ion-progress-bar class="budget-progress" [value]="budget.used_amount / budget.amount" [color]="getProgressColor(budget)"></ion-progress-bar>
+                    <p class="update-date">
+                      <ion-icon name="time-outline" class="update-icon"></ion-icon>
+                      Updated: {{ budget.updated_at | date:'short' }}
+                    </p>
+                  </div>
                 </ion-label>
-             </ion-item>
+              </ion-item>
             </ion-list>
             <div class="show-link">
               <a (click)="budgetsList()">Show More</a>

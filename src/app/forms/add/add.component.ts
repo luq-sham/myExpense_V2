@@ -6,32 +6,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonList,
-  IonItem,
-  IonLabel,
-  IonInput,
-  IonSelect,
-  IonSelectOption,
-  IonDatetime,
-  IonDatetimeButton,
-  IonModal,
-  IonButton,
-  IonButtons,
-  IonIcon,
-  IonTextarea,
-  IonFooter,
-  IonSearchbar,
-  IonNote,
-  IonRadioGroup,
-  IonRadio,
-  IonSegment,
-  IonSegmentButton,
-} from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonDatetime, IonButton, IonButtons, IonIcon, IonTextarea, IonFooter, IonNote, IonSegment, IonSegmentButton,  IonPopover  } from '@ionic/angular/standalone';
 import { ModalController } from '@ionic/angular/standalone';
 import { ApiService } from 'src/app/services/api.service';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -44,33 +19,7 @@ import { ValidationTextService } from 'src/app/services/validation-text.service'
   selector: 'app-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss'],
-  imports: [
-    IonSegmentButton,
-    IonSegment,
-    IonNote,
-    // IonSearchbar,
-    CommonModule,
-    ReactiveFormsModule,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-    IonList,
-    IonItem,
-    IonLabel,
-    IonInput,
-    IonSelect,
-    IonSelectOption,
-    // IonDatetime,
-    // IonDatetimeButton,
-    // IonModal,
-    IonButton,
-    IonIcon,
-    // IonTextarea,
-    IonButtons,
-    IonFooter,
-    ErrorMessagePage,
-  ],
+  imports: [IonPopover, IonSegmentButton, IonSegment, IonNote, CommonModule, ReactiveFormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonButton, IonIcon, IonButtons, IonFooter, ErrorMessagePage, IonTextarea, IonDatetime ],
 })
 export class AddComponent implements OnInit {
   title: any;
@@ -79,16 +28,21 @@ export class AddComponent implements OnInit {
   isSubmitted = false;
   AccountForm!: FormGroup;
   transactionForm!: FormGroup;
+  BudgetForm!: FormGroup;
   params: any;
   label:any
   formDisable:any
 
   
-  currentDate: string = new Date().toISOString();
+  now = new Date();
+  offset = this.now.getTimezoneOffset() * 60000;
+  currentDate = new Date(this.now.getTime() - this.offset).toISOString().slice(0, -1);
+
   types: any = [];
   income:any
   expenses:any
   categories:any
+  accounts:any
 
   transaction_type:any
 
@@ -109,18 +63,35 @@ export class AddComponent implements OnInit {
   }
 
   getData() {
+    let param = {
+      user_id:localStorage.getItem('token')
+    }
     //New Account API
     if (this.formID == 1) {
       this.api.getAccountType().subscribe((res) => {
         this.types = res.return_data;
       });
     }
+
+    //New Transaction
     if (this.formID == 2) {
-      this.api.getTransactionCategories().subscribe((res)=>{
+      this.api.getCategories().subscribe((res)=>{
         this.income = res.income
         this.expenses = res.expense
         this.categories = res.expense
         this.label = 'Expenses'
+      });
+      this.api.postAccountByUser(param).subscribe((res)=>{
+        this.accounts = res.return_data
+      });
+    }
+
+    if(this.formID == 3){
+      this.api.getCategories().subscribe((res)=>{
+        this.categories = res.expense
+      });
+      this.api.postAccountByUser(param).subscribe((res)=>{
+        this.accounts = res.return_data
       })
     }
   }
@@ -134,81 +105,55 @@ export class AddComponent implements OnInit {
         balance: [0, Validators.required],
       });
     }
+
+    //New Transactions
     if (this.formID == 2) {
       this.transactionForm = this.fb.group({
         transaction_amount: ['', [Validators.required]],
         transaction_type: ['expenses', [Validators.required]],
         transaction_category: ['', [Validators.required]],
+        transaction_account: ['', [Validators.required]],
+        transaction_description: [''],
+        transaction_date: [this.currentDate.split('T')[0]],
       });
     }
-  }
 
-  getCategory(values: any) {
-    const value = values.detail.value;
-    this.formDisable = false;
-
-    if (value == 'income') {
-      this.label = 'Income';
-      this.categories = this.income;
-    } else if (value == 'expenses') {
-      this.label = 'expenses';
-      this.categories = this.expenses;
+    if(this.formID == 3){
+      this.BudgetForm = this.fb.group({
+        budget_name:['', Validators.required],
+        budget_amount:['', Validators.required],
+        budget_category:['', Validators.required],
+        budget_account:['', Validators.required],
+      })
     }
-  }
-
-  get accounts() {
-    return this.AccountForm.controls;
-  }
-
-  get transactions() {
-    return this.transactionForm.controls;
   }
 
   onSubmit() {
     this.isSubmitted = true;
 
-    const now = new Date();
-    const offset = now.getTimezoneOffset() * 60000;
-    const localISOTime = new Date(now.getTime() - offset)
-      .toISOString()
-      .slice(0, -1);
-
     //New Account Form
     if (this.formID == 1) {
       if (this.AccountForm.invalid) {
-        console.log('Form is invalid');
+        console.log('Accounnt Form is invalid');
         return;
       }
 
-      this.alert
-        .customComfirmationAlert(
-          'New Account',
-          'Are you sure to added this account?'
-        )
-        .then((res) => {
-          if (res == 'confirm') {
+      this.alert.customComfirmationAlert('New Account','Are you sure to added this account?').then((respons) => {
+          if (respons == 'confirm') {
             this.loading.showLoading();
             const param = {
               ...this.AccountForm.value,
               user_id: localStorage.getItem('token'),
-              created_at: localISOTime,
-              updated_at: localISOTime,
+              created_at: this.currentDate,
+              updated_at: this.currentDate,
             };
             this.api.postAddAccount(param).subscribe((res) => {
               this.loading.hide();
               if (res.status_code == 200) {
-                this.toast.customToast(
-                  'Account successfully been added',
-                  3000,
-                  'success'
-                );
+                this.toast.customToast('Account successfully been added',3000,'success');
                 this.modalController.dismiss(true);
               } else {
-                this.toast.customToast(
-                  'Account failed to been added. Please try again.',
-                  3000,
-                  'warning'
-                );
+                this.toast.customToast('Account failed to been added. Please try again.',3000,'warning');
               }
             });
             console.log('Account Data:', param);
@@ -219,9 +164,78 @@ export class AddComponent implements OnInit {
     //New Transaction
     if (this.formID == 2) {
       if (this.transactionForm.invalid) {
-        console.log('Form is invalid');
+        console.log('Transaction Form is invalid');
         return;
       }
+      this.alert.customComfirmationAlert('New Transaction','Are you sure to added this transaction?').then((respons) => {
+        if(respons == 'confirm'){
+          const dateOnly = this.transactionForm.value.transaction_date;
+          const now = new Date();
+          const fullDateTime = new Date(dateOnly + 'T' + now.toTimeString().slice(0,8));
+          const param = {
+            ...this.transactionForm.value,
+            transaction_date: fullDateTime.toISOString(), // full datetime
+            user_id: localStorage.getItem('token'),
+            created_at: this.currentDate,
+            updated_at: this.currentDate,
+          };
+          this.loading.showLoading()
+          this.api.postAddTransaction(param).subscribe((res)=>{
+            this.loading.hide();
+            if(res.status_code == 200){
+              this.toast.customToast('Transaction successfully been added',3000,'success');
+              this.modalController.dismiss(true);
+            }else{
+              this.toast.customToast('Transaction failed to been added',3000,'warning');
+            }
+          });
+          console.log('Account Data:', param);
+        }
+      })
+    }
+
+    if(this.formID == 3){
+      if(this.BudgetForm.invalid){
+        console.log('Budget Form is invalid');
+        return;
+      }
+
+      this.alert.customComfirmationAlert('New Budget','Are you sure to added this budget?').then((respons) => {
+        if(respons == 'confirm'){
+          this.loading.showLoading()
+          const param = {
+            ...this.BudgetForm.value,
+            user_id: localStorage.getItem('token'),
+            created_at: this.currentDate,
+            updated_at: this.currentDate,
+          }
+          this.api.postAddBudget(param).subscribe((res)=>{
+            if(res.status_code == 200){
+              this.loading.hide();
+              this.toast.customToast('Budget successfully been added',3000,'success');
+              this.modalController.dismiss(true)
+            }else{
+              this.loading.hide();
+              this.toast.customToast('Budget failed to been added',3000,'warning');
+            }
+          })
+          console.log('Budget Data',param)
+        }
+      });
+
+    }
+  }
+
+   getCategory(values: any) {
+    const value = values.detail.value;
+    this.formDisable = false;
+
+    if (value == 'income') {
+      this.label = 'Income';
+      this.categories = this.income;
+    } else if (value == 'expenses') {
+      this.label = 'Expenses';
+      this.categories = this.expenses;
     }
   }
 

@@ -161,7 +161,7 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
       }
     }
 
-    &.expense {
+    &.expenses {
       background-color: rgba(var(--ion-color-danger-rgb), 0.1);
       .transaction-icon {
         color: var(--ion-color-danger-shade);
@@ -199,7 +199,7 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
     &.income {
       color: var(--ion-color-success-shade);
     }
-    &.expense {
+    &.expenses {
       color: var(--ion-color-danger-shade);
     }
   }
@@ -211,7 +211,7 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
 }
 
 .budget-list {
-  margin: 8px 0px;
+  margin: 8px 0;
   background: transparent;
 }
 
@@ -229,7 +229,6 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
 
   ion-label {
     width: 100%;
-
     padding: 10px;
   }
 
@@ -238,21 +237,28 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 4px;
-  }
 
-  .budget-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--ion-color-dark-tint);
-    margin: 0;
-  }
+    .budget-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--ion-color-dark-tint);
+      margin: 0;
+      display: flex;
+      align-items: center;
 
-  .budget-amount {
-    font-size: 1rem;
-    font-weight: bold;
-    color: var(--ion-color-primary);
-    white-space: nowrap;
-    margin: 0;
+      ion-badge {
+        margin-left: 8px;
+        font-size: 0.75rem;
+      }
+    }
+
+    .budget-amount {
+      font-size: 1rem;
+      font-weight: bold;
+      color: var(--ion-color-primary);
+      white-space: nowrap;
+      margin: 0;
+    }
   }
 
   .budget-type {
@@ -274,37 +280,39 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
       span:last-child {
         font-weight: 500;
         color: var(--ion-color-dark-tint);
-      }
 
-      .low-balance {
-        color: var(--ion-color-warning-shade);
-        font-weight: bold;
+        &.low-balance {
+          color: var(--ion-color-warning-shade);
+          font-weight: bold;
+        }
+
+        &.overbudget {
+          color: var(--ion-color-danger-shade);
+          font-weight: bold;
+        }
       }
     }
-  }
 
-  .budget-progress {
-    height: 8px;
-    border-radius: 4px;
-    margin: 8px 0;
-    --background: var(--ion-color-step-200, #e0e0e0);
-
-    &::part(progress) {
+    .budget-progress {
+      height: 8px;
       border-radius: 4px;
+      margin: 8px 0;
+      --background: var(--ion-color-step-200, #e0e0e0);
+
+      &::part(progress) {
+        border-radius: 4px;
+      }
     }
-  }
 
-  .update-date {
-    font-size: 0.75rem;
-    color: var(--ion-color-medium-shade);
-    margin-top: 8px;
-    display: flex;
-    align-items: center;
+    .update-date {
+      font-size: 0.75rem;
+      color: var(--ion-color-medium);
+      display: flex;
+      align-items: center;
 
-    .update-icon {
-      font-size: 0.9rem;
-      margin-right: 4px;
-      vertical-align: middle;
+      .update-icon {
+        margin-right: 6px;
+      }
     }
   }
 }

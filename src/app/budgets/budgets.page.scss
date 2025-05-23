@@ -1,0 +1,142 @@
+.fab-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.fab-label {
+  margin-left: 10px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #333;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+ion-fab-button[data-desc] {
+  position: relative;
+}
+
+ion-fab-button[data-desc]::after {
+  content: attr(data-desc);
+  position: absolute;
+  z-index: 1;
+  right: 55px;
+  bottom: 4px;
+  background-color: #0163aa;
+  color: #fff;
+  padding: 9px 12px;
+  border-radius: 12px;
+  white-space: nowrap;
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+}
+
+.budget-list {
+  margin: 8px 0;
+  background: transparent;
+}
+
+.budget-item {
+  --inner-padding-end: 8px;
+  --min-height: 90px;
+  align-items: flex-start;
+  border-radius: 20px;
+  margin-bottom: 12px;
+  border: 1px solid #d8d8d8;
+
+  .budget-icon {
+    font-size: 2rem;
+    margin-top: 4px;
+    margin-right: 12px;
+  }
+
+  ion-label {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .budget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+
+    .budget-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--ion-color-dark-tint);
+      margin: 0;
+      display: flex;
+      align-items: center;
+
+      ion-badge {
+        margin-left: 8px;
+        font-size: 0.75rem;
+      }
+    }
+
+    .budget-amount {
+      font-size: 1rem;
+      font-weight: bold;
+      color: var(--ion-color-primary);
+      white-space: nowrap;
+      margin: 0;
+    }
+  }
+
+  .budget-type {
+    font-size: 0.85rem;
+    color: var(--ion-color-medium-shade);
+    margin-bottom: 10px;
+    text-transform: capitalize;
+  }
+
+  .budget-summary {
+    font-size: 0.85rem;
+    color: var(--ion-color-medium-shade);
+
+    .budget-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+
+      span:last-child {
+        font-weight: 500;
+        color: var(--ion-color-dark-tint);
+
+        &.low-balance {
+          color: var(--ion-color-warning-shade);
+          font-weight: bold;
+        }
+
+        &.overbudget {
+          color: var(--ion-color-danger-shade);
+          font-weight: bold;
+        }
+      }
+    }
+
+    .budget-progress {
+      height: 8px;
+      border-radius: 4px;
+      margin: 8px 0;
+      --background: var(--ion-color-step-200, #e0e0e0);
+
+      &::part(progress) {
+        border-radius: 4px;
+      }
+    }
+
+    .update-date {
+      font-size: 0.75rem;
+      color: var(--ion-color-medium);
+      display: flex;
+      align-items: center;
+
+      .update-icon {
+        margin-right: 6px;
+      }
+    }
+  }
+}

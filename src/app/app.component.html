@@ -11,19 +11,33 @@
         </div>
       </ion-header>
       <ion-content>
-        <div class="menu-container">
-          <ion-list id="inbox-list">
-             @for (p of appPages; track p; let i = $index) {
-              <ion-menu-toggle auto-hide="false">
-                <ion-item button routerDirection="root" [routerLink]="[p.url]" (click)="comingSoon(p)" lines="none" detail="false" routerLinkActive="selected" class="menu-item">
-                  <ion-icon aria-hidden="true" slot="start" [name]="p.icon" class="menu-item-icon"></ion-icon>
-                  <ion-label class="menu-item-label">{{ p.title }}</ion-label>
-                </ion-item>
-              </ion-menu-toggle>
-            }
-          </ion-list>
-
-        </div>
+        <ion-list id="inbox-list">
+          <div class="ion-padding" slot="content">
+            <ion-menu-toggle auto-hide="false">
+              <ion-item button routerDirection="root" routerLink="/dashboard" lines="none" detail="false" routerLinkActive="selected" class="menu-item">
+                <ion-icon aria-hidden="true" slot="start" name="stats-chart" class="menu-item-icon"></ion-icon>
+                <ion-label class="menu-item-label">Dashboard</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </div>
+          <ion-accordion-group color="fav" [value]="['main']" multiple="true">
+            <ion-accordion value="main">
+              <ion-item slot="header">
+                <ion-label>Financial Management</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">
+                @for (p of appPages; track p; let i = $index) {
+                  <ion-menu-toggle auto-hide="false">
+                    <ion-item button routerDirection="root" [routerLink]="[p.url]" (click)="comingSoon(p)" lines="none" detail="false" routerLinkActive="selected" class="menu-item">
+                      <ion-icon aria-hidden="true" slot="start" [name]="p.icon" class="menu-item-icon"></ion-icon>
+                      <ion-label class="menu-item-label">{{ p.title }}</ion-label>
+                    </ion-item>
+                  </ion-menu-toggle>
+                }
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+        </ion-list>
       </ion-content>
       <ion-footer>
         <div class="menu-footer">

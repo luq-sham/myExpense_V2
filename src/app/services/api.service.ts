@@ -41,7 +41,7 @@ export class ApiService {
     return this.http.post(api, data);
   }
 
-  getTransactionCategories(): Observable<any> {
+  getCategories(): Observable<any> {
     const api = this.url + 'api/get_categories';
     return this.http.get(api);
   }

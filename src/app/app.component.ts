@@ -18,8 +18,7 @@ import {
   IonItem,
   IonRouterOutlet,
   IonHeader,
-  IonFooter,
-} from '@ionic/angular/standalone';
+  IonFooter, IonAccordionGroup, IonAccordion } from '@ionic/angular/standalone';
 import { AlertService } from './services/alert.service';
 import { filter } from 'rxjs/operators';
 import { App } from '@capacitor/app';
@@ -32,7 +31,7 @@ import { StatusBar, Style } from '@capacitor/status-bar';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [
+  imports: [IonAccordion, IonAccordionGroup, 
     IonFooter,
     IonHeader,
     CommonModule,
@@ -62,7 +61,6 @@ export class AppComponent implements OnInit {
   email: string = '';
 
   public appPages = [
-    { title: 'Dashboard', url: '/dashboard', icon: 'stats-chart' },
     { title: 'Transactions', url: '/transactions', icon: 'list' },
     { title: 'Accounts', url: '/accounts', icon: 'wallet' },
     { title: 'Budgets', url: '/budgets', icon: 'calculator' },
