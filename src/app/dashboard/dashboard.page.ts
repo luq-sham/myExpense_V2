@@ -9,15 +9,17 @@ import { ApiService } from '../services/api.service';
 
 import { Router } from '@angular/router';
 import { AlertService } from '../services/alert.service';
-import { ModalController} from '@ionic/angular/standalone'
+import { ModalController } from '@ionic/angular/standalone';
 import { AddComponent } from '../forms/add/add.component';
+import { AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import Chart from 'chart.js/auto';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
   standalone: true,
-  imports: [IonBadge, IonRefresherContent, IonRefresher,  IonGrid, IonRippleEffect, IonCardTitle, IonCardHeader, IonProgressBar, IonList, IonNote, IonLabel, IonItem,  IonSkeletonText,  IonAvatar, IonIcon, IonCol, IonRow, IonCardContent, IonCard, IonContent, CommonModule, FormsModule, HeaderComponent, FabComponent],
+  imports: [ IonBadge, IonRefresherContent, IonRefresher, IonGrid, IonRippleEffect, IonCardTitle, IonCardHeader, IonProgressBar, IonList, IonNote, IonLabel, IonItem, IonSkeletonText, IonAvatar, IonIcon, IonCol, IonRow, IonCardContent, IonCard, IonContent, CommonModule, FormsModule, HeaderComponent, FabComponent, ],
 })
 export class DashboardPage {
   doughnutChart: any;
@@ -30,13 +32,15 @@ export class DashboardPage {
   loading_account: boolean = true;
   loading_transaction: boolean = true;
   loading_budget: boolean = true;
-  
+
   account_list: any[] = [];
   transactions: any[] = [];
   budgets: any[] = [];
-  
+
   acc_id: any = '';
 
+  @ViewChild('barCanvas') barCanvas!: ElementRef;
+  barChart: any;
 
   constructor(
     private menu: MenuController,
@@ -58,11 +62,11 @@ export class DashboardPage {
     const token = {
       user_id: localStorage.getItem('token'),
     };
-    
+
     // Accounts API
     this.api.postAccountByUser(token).subscribe({
       next: async (res) => {
-        if (res.status_code == 200){
+        if (res.status_code == 200) {
           this.loading_account = false;
           this.account_list = res.return_data;
         }
@@ -72,8 +76,8 @@ export class DashboardPage {
           'Loading Failed',
           'An error has occurred. Kindly try again.(account)'
         );
-      }
-    })
+      },
+    });
 
     // Transactions API
     this.api.getTransaction(token).subscribe({
@@ -89,7 +93,7 @@ export class DashboardPage {
           'An error has occurred. Kindly try again.(transaction)'
         );
       },
-    })
+    });
 
     // Budgets API
     this.api.getBudgetByUser(token).subscribe({
@@ -105,10 +109,60 @@ export class DashboardPage {
           'An error has occurred. Kindly try again.(budget)'
         );
       },
-    })
+    });
+
+    //Transaction Chart
+    this.api.getTransactionChart(token).subscribe((res: any) => {
+      const monthlyExpenses = res.chart_data;
+      const labels = monthlyExpenses.map((item: any) => item.category);
+      const data = monthlyExpenses.map((item: any) => item.total);
+
+      this.renderChart(labels, data);
+    });
   }
 
-  async addAccount(){
+  renderChart(labels: any, data: any) {
+    this.barChart = new Chart(this.barCanvas.nativeElement, {
+      type: 'doughnut',
+      data: {
+      labels: labels,
+      datasets: [
+        {
+        label: 'Sales',
+        data: data,
+        },
+      ],
+      },
+      options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+        position: 'bottom',
+        },
+        title: {
+        display: true,
+        text: 'Monthly Expenses',
+        font: {
+          size: 18,
+          weight: 'bold',
+        }
+        },
+        tooltip: {
+        callbacks: {
+          label: function(context: any) {
+          const label = context.label || '';
+          const value = context.parsed || 0;
+          return `${label}: RM${value}`;
+          }
+        }
+        }
+      },
+      },
+    });
+  }
+
+  async addAccount() {
     const param = {
       formID: 1,
       title: 'New Account',
@@ -131,21 +185,19 @@ export class DashboardPage {
 
   getProgressColor(budget: any): string {
     const progress = budget.used_amount / budget.amount;
-    if (progress < 0.5) 
-      return 'success';
-    else if (progress < 0.9) 
-      return 'warning';
+    if (progress < 0.5) return 'success';
+    else if (progress < 0.9) return 'warning';
     else return 'danger';
   }
-  
-  transactionsList(){
+
+  transactionsList() {
     this.router.navigate(['/transactions']);
   }
 
-  budgetsList(){
+  budgetsList() {
     this.router.navigate(['/budgets']);
   }
-  
+
   handleRefresh(event: any) {
     setTimeout(() => {
       event.target.complete();

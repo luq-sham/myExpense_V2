@@ -56,6 +56,11 @@ export class ApiService {
     return this.http.post(api, data);
   }
 
+  getTransactionChart(data: any): Observable<any> {
+    const api = this.url + 'api/get_transaction_chart';
+    return this.http.post(api, data);
+  }
+
   getTransactionFilter(data: any): Observable<any> {
     const api = this.url + 'api/get_transaction_filter';
     return this.http.post(api, data);

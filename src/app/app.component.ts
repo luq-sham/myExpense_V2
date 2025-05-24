@@ -1,24 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  Router,
-  NavigationEnd,
-  RouterLink,
-  RouterLinkActive,
-} from '@angular/router';
-import {
-  IonApp,
-  IonSplitPane,
-  IonMenu,
-  IonContent,
-  IonLabel,
-  IonList,
-  IonMenuToggle,
-  IonIcon,
-  IonItem,
-  IonRouterOutlet,
-  IonHeader,
-  IonFooter, IonAccordionGroup, IonAccordion } from '@ionic/angular/standalone';
+import { Router, NavigationEnd, RouterLink, RouterLinkActive } from '@angular/router';
+import { IonApp, IonSplitPane, IonMenu, IonContent, IonLabel, IonList, IonMenuToggle, IonIcon, IonItem, IonRouterOutlet, IonHeader, IonFooter, IonAccordionGroup, IonAccordion } from '@ionic/angular/standalone';
 import { AlertService } from './services/alert.service';
 import { filter } from 'rxjs/operators';
 import { App } from '@capacitor/app';
@@ -26,28 +9,13 @@ import { Platform } from '@ionic/angular';
 import { ToastService } from './services/toast.service';
 import { StatusBar, Style } from '@capacitor/status-bar';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [IonAccordion, IonAccordionGroup, 
-    IonFooter,
-    IonHeader,
-    CommonModule,
-    RouterLink,
-    RouterLinkActive,
-    IonApp,
-    IonSplitPane,
-    IonMenu,
-    IonContent,
-    IonLabel,
-    IonList,
-    IonMenuToggle,
-    IonIcon,
-    IonItem,
-    IonRouterOutlet,
-  ],
+  imports: [ IonAccordion, IonAccordionGroup, IonFooter, IonHeader, CommonModule, RouterLink, RouterLinkActive, IonApp, IonSplitPane, IonMenu, IonContent, IonLabel, IonList, IonMenuToggle, IonIcon, IonItem, IonRouterOutlet ],
 })
 export class AppComponent implements OnInit {
   private lastTimeBackPress = 0;
@@ -86,7 +54,11 @@ export class AppComponent implements OnInit {
         StatusBar.setBackgroundColor({ color: '#264653' });
         StatusBar.show();
         App.addListener('backButton', () => {
-          if ( this.router.url === '/dashboard' || this.router.url === '/' || this.router.url === '/login') {
+          if (
+            this.router.url === '/dashboard' ||
+            this.router.url === '/' ||
+            this.router.url === '/login'
+          ) {
             const currentTime = new Date().getTime();
             if (currentTime - this.lastTimeBackPress < this.timePeriodToExit) {
               App.exitApp();
@@ -103,10 +75,12 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
         this.display = !this.allowedPaths.includes(event.urlAfterRedirects);
         this.loadUserDetails();
-    });
+      });
   }
 
   loadUserDetails() {
@@ -125,12 +99,12 @@ export class AppComponent implements OnInit {
 
   async comingSoon(page: any) {
     if (page.comingSoon) {
-      this.alert.customAlert('Coming Soon','This feature is not available yet. Kindly check back later.');
+      this.alert.customAlert( 'Coming Soon', 'This feature is not available yet. Kindly check back later.' );
     }
   }
 
   async logout(): Promise<void> {
-    const res = await this.alert.customComfirmationAlert('Logout','Are you sure to logout','Logout','Cancel','confirm-red');
+    const res = await this.alert.customComfirmationAlert( 'Logout', 'Are you sure to logout', 'Logout', 'Cancel', 'confirm-red' );
     if (res === 'confirm') {
       localStorage.clear();
       this.router.navigateByUrl('/login', { replaceUrl: true });
@@ -138,6 +112,6 @@ export class AppComponent implements OnInit {
   }
 
   settings() {
-    this.alert.customAlert('Settings','This feature is not available yet. Kindly check back later.');
+    this.alert.customAlert( 'Settings', 'This feature is not available yet. Kindly check back later.' );
   }
 }

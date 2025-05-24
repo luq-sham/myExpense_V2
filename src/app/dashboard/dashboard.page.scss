@@ -349,7 +349,22 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
   }
 }
 
+.chart-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+canvas {
+  width: 50% !important;
+  max-width: 50%;
+}
+
 @media (max-width: 576px) {
+  canvas {
+    width: 100% !important;
+    max-width: 100%;
+  }
+
   .account-title {
     font-size: 0.85rem;
   }
