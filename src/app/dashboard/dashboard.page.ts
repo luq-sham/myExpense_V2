@@ -13,13 +13,14 @@ import { ModalController } from '@ionic/angular/standalone';
 import { AddComponent } from '../forms/add/add.component';
 import { AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import Chart from 'chart.js/auto';
+import { style } from '@angular/animations';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
   standalone: true,
-  imports: [ IonBadge, IonRefresherContent, IonRefresher, IonGrid, IonRippleEffect, IonCardTitle, IonCardHeader, IonProgressBar, IonList, IonNote, IonLabel, IonItem, IonSkeletonText, IonAvatar, IonIcon, IonCol, IonRow, IonCardContent, IonCard, IonContent, CommonModule, FormsModule, HeaderComponent, FabComponent, ],
+  imports: [ IonBadge, IonRefresherContent, IonRefresher, IonGrid, IonRippleEffect, IonCardTitle, IonCardHeader, IonProgressBar, IonList, IonNote, IonLabel, IonItem, IonSkeletonText, IonAvatar, IonIcon, IonCol, IonRow, IonCardContent, IonCard, IonContent, CommonModule, FormsModule, HeaderComponent, FabComponent ],
 })
 export class DashboardPage {
   doughnutChart: any;
@@ -28,10 +29,12 @@ export class DashboardPage {
   email: string = '';
   param: any = {};
   dataCerdencial: any;
+  monthlyExpensesData: any;
 
   loading_account: boolean = true;
   loading_transaction: boolean = true;
   loading_budget: boolean = true;
+  loading_chart: boolean = true;
 
   account_list: any[] = [];
   transactions: any[] = [];
@@ -39,7 +42,7 @@ export class DashboardPage {
 
   acc_id: any = '';
 
-  @ViewChild('barCanvas') barCanvas!: ElementRef;
+  @ViewChild('barCanvas', { static: false }) barCanvas!: ElementRef<HTMLCanvasElement>;
   barChart: any;
 
   constructor(
@@ -113,51 +116,57 @@ export class DashboardPage {
 
     //Transaction Chart
     this.api.getTransactionChart(token).subscribe((res: any) => {
+      this. loading_chart = false
+      this.monthlyExpensesData = res.totalCount
       const monthlyExpenses = res.chart_data;
+      const total_expenses = res.total_expenses
       const labels = monthlyExpenses.map((item: any) => item.category);
       const data = monthlyExpenses.map((item: any) => item.total);
 
-      this.renderChart(labels, data);
+      this.renderChart(labels, data,total_expenses);
     });
   }
 
-  renderChart(labels: any, data: any) {
+  renderChart(labels: any, data: any, total_expenses: any) {
     this.barChart = new Chart(this.barCanvas.nativeElement, {
       type: 'doughnut',
       data: {
-      labels: labels,
-      datasets: [
-        {
-        label: 'Sales',
-        data: data,
-        },
-      ],
+        labels: labels,
+        datasets: [
+          {
+            label: 'Sales',
+            data: data,
+          },
+        ],
       },
       options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-        position: 'bottom',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+          },
+          title: {
+            display: true,
+            text: 'Total Expenses: '+ total_expenses.toLocaleString('en-MY',{style:'currency', currency: 'MYR'}),
+            font: {
+              size: 18,
+              weight: 'bold',
+            },
+          },
+          tooltip: {
+            callbacks: {
+              label: function (context: any) {
+                const label = context.label || '';
+                const value = context.parsed || 0;
+                return `${label}: ${value.toLocaleString('en-MY', {
+                  style: 'currency',
+                  currency: 'MYR',
+                })}`;
+              },
+            },
+          },
         },
-        title: {
-        display: true,
-        text: 'Monthly Expenses',
-        font: {
-          size: 18,
-          weight: 'bold',
-        }
-        },
-        tooltip: {
-        callbacks: {
-          label: function(context: any) {
-          const label = context.label || '';
-          const value = context.parsed || 0;
-          return `${label}: RM${value}`;
-          }
-        }
-        }
-      },
       },
     });
   }

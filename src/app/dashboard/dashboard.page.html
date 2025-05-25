@@ -77,9 +77,6 @@
       <ion-card-title>Recent Transactions</ion-card-title>
     </ion-card-header>
     <ion-card-content class="ion-no-padding">
-      <div class="chart-wrapper">
-        <canvas #barCanvas></canvas>
-      </div>
       <ng-container *ngIf="loading_transaction; else transactionContent">
         <ion-list lines="none">
           <ion-item *ngFor="let i of [1, 2, 3]">
@@ -128,6 +125,23 @@
       </ng-template>
     </ion-card-content>
   </ion-card>
+
+  <ion-card class="section-card" color="">
+     <ion-card-header class="section-header">
+      <ion-card-title>Monthly Expenses</ion-card-title>
+    </ion-card-header>
+    <ion-card-content class="ion-no-padding">
+      <ng-container *ngIf="loading_chart">
+        <div class="chart-wrapper" style="height:200px; display:flex; align-items:center; justify-content:center;">
+          <ion-skeleton-text animated style="width: 90%; height: 160px; border-radius: 12px;"></ion-skeleton-text>
+        </div>
+      </ng-container>
+      <div class="chart-wrapper">
+        <canvas #barCanvas></canvas>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
 
   <!-- Budget Section -->
   <ion-card class="section-card" color="">

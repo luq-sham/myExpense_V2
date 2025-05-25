@@ -355,14 +355,16 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
 }
 
 canvas {
-  width: 50% !important;
-  max-width: 50%;
+  width: 20% !important;
+  max-width: 20%;
+  padding: 16px;
 }
 
 @media (max-width: 576px) {
   canvas {
     width: 100% !important;
     max-width: 100%;
+    padding: 16px;
   }
 
   .account-title {
