@@ -29,7 +29,10 @@ export class DashboardPage {
   email: string = '';
   param: any = {};
   dataCerdencial: any;
-  monthlyExpensesData: any;
+
+  monthlyExpenses:any
+  totalCount: any;
+  total_expenses:any;
 
   loading_account: boolean = true;
   loading_transaction: boolean = true;
@@ -117,13 +120,15 @@ export class DashboardPage {
     //Transaction Chart
     this.api.getTransactionChart(token).subscribe((res: any) => {
       this. loading_chart = false
-      this.monthlyExpensesData = res.totalCount
-      const monthlyExpenses = res.chart_data;
-      const total_expenses = res.total_expenses
-      const labels = monthlyExpenses.map((item: any) => item.category);
-      const data = monthlyExpenses.map((item: any) => item.total);
+      this.totalCount = res.totalCount
+      this.monthlyExpenses = res.chart_data;
+      this.total_expenses = res.total_expenses
+      const labels = this.monthlyExpenses.map((item: any) => item.category);
+      const data = this.monthlyExpenses.map((item: any) => item.total);
 
-      this.renderChart(labels, data,total_expenses);
+      if(this.totalCount > 0){
+        this.renderChart(labels, data,this.total_expenses);
+      }
     });
   }
 
@@ -192,8 +197,8 @@ export class DashboardPage {
     console.log(budget);
   }
 
-  getProgressColor(budget: any): string {
-    const progress = budget.used_amount / budget.amount;
+  getProgressColor(amount: any, total:any): string {
+    const progress = amount / total;
     if (progress < 0.5) return 'success';
     else if (progress < 0.9) return 'warning';
     else return 'danger';

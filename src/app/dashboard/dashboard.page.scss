@@ -360,6 +360,27 @@ canvas {
   padding: 16px;
 }
 
+.expenses-avatar {
+  background: #f4f4f4;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+}
+
+.expenses-progress {
+  height: 8px;
+  border-radius: 4px;
+  margin: 8px 0px;
+  --background: var(--ion-color-step-200, #e0e0e0);
+
+  &::part(progress) {
+    border-radius: 4px;
+  }
+}
+
 @media (max-width: 576px) {
   canvas {
     width: 100% !important;
@@ -431,5 +452,9 @@ canvas {
     .update-date {
       font-size: 0.7rem;
     }
+  }
+
+  .expenses-progress {
+    height: 6px;
   }
 }

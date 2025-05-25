@@ -4,31 +4,31 @@
   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  
+
   <!-- Account Section -->
-  <ion-card class="ion-no-margin" color="fav" style="border-radius: 0;">
-    <ion-card-header class="  section-header">
+  <ion-card class="ion-no-margin" color="fav" style="border-radius: 0">
+    <ion-card-header class="section-header">
       <ion-card-title>Your Accounts</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ng-container *ngIf="loading_account; else accountContent">
         <ion-grid fixed>
           <ion-row class="ion-justify-content-center">
-            <ion-col *ngFor="let i of [1, 2, 3]" size="6" size-sm="4" size-md="3" size-lg="2">
+            <ion-col *ngFor="let i of [1, 2, 3]" size="6" size-sm="4" size-md="3" size-lg="2" >
               <ion-card class="account-card placeholder-card">
                 <ion-card-content class="ion-text-center">
-                  <ion-skeleton-text animated style="width: 40px; height: 40px; border-radius: 50%; margin: 10px auto;"></ion-skeleton-text>
-                  <ion-skeleton-text animated style="width: 70%; height: 18px; margin: 5px auto;"></ion-skeleton-text>
-                  <ion-skeleton-text animated style="width: 50%; height: 16px; margin: 5px auto;"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 40px;height: 40px;border-radius: 50%;margin: 10px auto; " ></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 70%; height: 18px; margin: 5px auto" ></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 50%; height: 16px; margin: 5px auto" ></ion-skeleton-text>
                 </ion-card-content>
               </ion-card>
             </ion-col>
-             <ion-col size="6" size-sm="4" size-md="3" size-lg="2">
-               <ion-card class="account-card placeholder-card add-account-card">
-                  <ion-card-content class="ion-text-center ion-align-items-center ion-justify-content-center">
-                     <ion-skeleton-text animated style="width: 60%; height: 20px; margin: auto;"></ion-skeleton-text>
-                  </ion-card-content>
-               </ion-card>
+            <ion-col size="6" size-sm="4" size-md="3" size-lg="2">
+              <ion-card class="account-card placeholder-card add-account-card">
+                <ion-card-content class="ion-text-center ion-align-items-center ion-justify-content-center">
+                  <ion-skeleton-text animated style="width: 60%; height: 20px; margin: auto" ></ion-skeleton-text>
+                </ion-card-content>
+              </ion-card>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -38,20 +38,24 @@
         <ion-grid fixed>
           <ion-row class="ion-justify-content-center">
             <ng-container *ngIf="account_list.length > 0; else noAccounts">
-              <ion-col *ngFor="let item of account_list" size="6" size-sm="4" size-md="3" size-lg="3">
-                <ion-card button="true" class="account-card ion-activatable ripple-parent">
+              <ion-col *ngFor="let item of account_list" size="6" size-sm="4" size-md="3" size-lg="3" >
+                <ion-card button="true" class="account-card ion-activatable ripple-parent" >
                   <ion-card-content class="ion-text-center">
-                    <ion-icon [name]="item.icon || 'wallet'" class="account-icon" color="primary"></ion-icon>
-                    <h2 class="account-title">{{ item.account_name | titlecase }}</h2>
-                    <p class="account-balance">{{ item.balance | currency: 'MYR ' }}</p>
+                    <ion-icon [name]="item.icon || 'wallet'" class="account-icon" color="primary" ></ion-icon>
+                    <h2 class="account-title">
+                      {{ item.account_name | titlecase }}
+                    </h2>
+                    <p class="account-balance">
+                      {{ item.balance | currency: 'MYR ' }}
+                    </p>
                     <ion-ripple-effect></ion-ripple-effect>
                   </ion-card-content>
                 </ion-card>
               </ion-col>
             </ng-container>
 
-             <ion-col size="6" size-sm="4" size-md="3" size-lg="3">
-              <ion-card button="true" class="ion-activatable ripple-parent account-card add-account-card" role="button" aria-label="Add New Account" (click)="addAccount()">
+            <ion-col size="6" size-sm="4" size-md="3" size-lg="3">
+              <ion-card button="true" class="ion-activatable ripple-parent account-card add-account-card" role="button" aria-label="Add New Account" (click)="addAccount()" >
                 <ion-card-content class="ion-text-center ion-justify-content-center ion-align-items-center">
                   <ion-icon name="add-circle" class="add-icon" color="light"></ion-icon>
                   <b class="add-text">Add Account</b>
@@ -73,43 +77,54 @@
 
   <!-- Transaction Section -->
   <ion-card class="section-card" color="">
-     <ion-card-header class=" section-header">
+    <ion-card-header class="section-header">
       <ion-card-title>Recent Transactions</ion-card-title>
     </ion-card-header>
     <ion-card-content class="ion-no-padding">
       <ng-container *ngIf="loading_transaction; else transactionContent">
         <ion-list lines="none">
           <ion-item *ngFor="let i of [1, 2, 3]">
-             <ion-avatar slot="start" class="transaction-avatar placeholder-avatar">
-                <ion-skeleton-text animated style="width: 100%; height: 100%;"></ion-skeleton-text>
-              </ion-avatar>
+            <ion-avatar slot="start" class="transaction-avatar placeholder-avatar" >
+              <ion-skeleton-text animated style="width: 100%; height: 100%" ></ion-skeleton-text>
+            </ion-avatar>
             <ion-label>
-              <h2><ion-skeleton-text animated style="width: 60%; height: 16px;"></ion-skeleton-text></h2>
-              <p><ion-skeleton-text animated style="width: 40%; height: 14px;"></ion-skeleton-text></p>
+              <h2>
+                <ion-skeleton-text animated style="width: 60%; height: 16px" ></ion-skeleton-text>
+              </h2>
+              <p>
+                <ion-skeleton-text animated style="width: 40%; height: 14px" ></ion-skeleton-text>
+              </p>
             </ion-label>
             <div slot="end" class="ion-text-right placeholder-amount">
-               <ion-skeleton-text animated style="width: 70px; height: 16px; margin-bottom: 4px;"></ion-skeleton-text>
-               <ion-skeleton-text animated style="width: 50px; height: 12px;"></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 70px; height: 16px; margin-bottom: 4px" ></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 50px; height: 12px" ></ion-skeleton-text>
             </div>
           </ion-item>
         </ion-list>
       </ng-container>
 
       <ng-template #transactionContent>
-        <ion-list *ngIf="transactions.length > 0; else noTransactions" lines="full" class="transaction-list">
-          <ion-item *ngFor="let record of transactions" button detail="false" class="transaction-item">
-             <ion-avatar slot="start" class="transaction-avatar" [ngClass]="record.type">
-                <ion-icon [name]="record.icon || (record.type === 'income' ? 'arrow-up' : 'arrow-down')" class="transaction-icon"></ion-icon>
-              </ion-avatar>
+        <ion-list *ngIf="transactions.length > 0; else noTransactions" lines="full" class="transaction-list" >
+          <ion-item *ngFor="let record of transactions" button detail="false" class="transaction-item" >
+            <ion-avatar slot="start" class="transaction-avatar" [ngClass]="record.type" >
+              <ion-icon [name]="record.icon || (record.type === 'income' ? 'arrow-up' : 'arrow-down')" class="transaction-icon" ></ion-icon>
+            </ion-avatar>
             <ion-label>
-              <h2 class="transaction-category">{{ record.category | titlecase }}</h2>
-              <p class="transaction-account ion-text-capitalize">{{ record.account_name }}</p>
+              <h2 class="transaction-category">
+                {{ record.category | titlecase }}
+              </h2>
+              <p class="transaction-account ion-text-capitalize">
+                {{ record.account_name }}
+              </p>
             </ion-label>
             <div slot="end" class="ion-text-right transaction-details">
               <p class="transaction-amount" [ngClass]="record.type">
-                {{ record.type === 'income' ? '+' : '-' }}{{ record.amount | currency: 'MYR ' }}
+                {{ record.type === 'income' ? '+' : '-' }}{{ record.amount |
+                currency: 'MYR ' }}
               </p>
-              <p class="transaction-date">{{ record.date | date: 'MMM d, h:mm a' }}</p>
+              <p class="transaction-date">
+                {{ record.date | date: 'MMM d, h:mm a' }}
+              </p>
             </div>
           </ion-item>
           <div class="show-link">
@@ -118,7 +133,7 @@
         </ion-list>
 
         <ng-template #noTransactions>
-          <div class="ion-padding ion-text-center text-muted" style="color:#000">
+          <div class="ion-padding ion-text-center text-muted" style="color: #000" >
             No recent transactions found.
           </div>
         </ng-template>
@@ -126,66 +141,102 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card class="section-card" color="">
-     <ion-card-header class="section-header">
+  <!-- Monthly Expenses Section -->
+  <ion-card class="section-card">
+    <ion-card-header class="section-header">
       <ion-card-title>Monthly Expenses</ion-card-title>
     </ion-card-header>
     <ion-card-content class="ion-no-padding">
       <ng-container *ngIf="loading_chart">
-        <div class="chart-wrapper" style="height:200px; display:flex; align-items:center; justify-content:center;">
-          <ion-skeleton-text animated style="width: 90%; height: 160px; border-radius: 12px;"></ion-skeleton-text>
+        <div class="chart-wrapper" style="height: 200px; display: flex; align-items: center; justify-content: center;">
+          <ion-skeleton-text animated style="width: 90%; height: 160px; border-radius: 12px"></ion-skeleton-text>
         </div>
       </ng-container>
       <div class="chart-wrapper">
         <canvas #barCanvas></canvas>
       </div>
+
+      <ion-list lines="full">
+        <ion-item *ngFor="let record of monthlyExpenses" button detail="false">
+          <ion-avatar slot="start" class="expenses-avatar">
+            <ion-icon [name]="record.icon || 'pricetag-outline'" style="font-size: 22px;" color="secondary"></ion-icon>
+          </ion-avatar>
+          <ion-grid>
+            <ion-row>
+              <ion-label style="display: flex; flex-direction: column; align-items: flex-start; width: 100%; padding: 0;">
+                <h2 >{{ record.category | titlecase }}</h2>
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                  <p style="font-size: 0.95rem; color: #888; margin: 2px 12px 0 0; min-width: 48px; text-align: left;">
+                    {{ (record.total / total_expenses * 100) | number:'1.0-2' }}%
+                  </p>
+                  <p style="font-size: 0.95rem; color: #888; margin: 2px 0 0 12px; min-width: 80px; text-align: right;">
+                    {{ record.total | currency:'RM ' }}
+                  </p>
+                </div>
+              </ion-label>
+            </ion-row>
+            <ion-row style="padding: 0;">
+              <ion-progress-bar class="expenses-progress" [value]="record.total / total_expenses" [color]="getProgressColor(record.total,total_expenses)"></ion-progress-bar>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+      
+      <div style="padding: 12px 16px;font-weight: bold;cursor: pointer;width: fit-content;">
+        <a (click)="transactionsList()">Show More</a>
+      </div>
+      <div class="ion-padding ion-text-center text-muted" style="color: #888; font-size: 1rem;" *ngIf="totalCount <= 0">
+        No recent expenses found.
+      </div>
     </ion-card-content>
   </ion-card>
 
-
   <!-- Budget Section -->
   <ion-card class="section-card" color="">
-     <ion-card-header class=" section-header">
+    <ion-card-header class="section-header">
       <ion-card-title>Budget Overview</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ng-container *ngIf="loading_budget; else loadedBudgets">
         <ion-list lines="none" class="ion-no-padding budget-list">
-           <ion-item *ngFor="let i of [1, 2]" class="budget-item">
-             <ion-icon name="wallet-outline" slot="start" color="medium" size="large"></ion-icon>
-             <ion-label>
-               <h2><ion-skeleton-text animated style="width: 50%; height: 18px;"></ion-skeleton-text></h2>
-               <p><ion-skeleton-text animated style="width: 30%; height: 14px; margin-top: 4px;"></ion-skeleton-text></p>
-                <div class="budget-summary-placeholder">
-                   <ion-skeleton-text animated style="width: 90%; height: 12px; margin-top: 8px;"></ion-skeleton-text>
-                   <ion-skeleton-text animated style="width: 90%; height: 12px; margin-top: 4px;"></ion-skeleton-text>
-                   <ion-skeleton-text animated class="budget-progress-placeholder" style="height: 8px; margin-top: 8px;"></ion-skeleton-text>
-                </div>
-             </ion-label>
-              <ion-note slot="end" color="medium">
-                <ion-skeleton-text animated style="width: 60px; height: 16px"></ion-skeleton-text>
-              </ion-note>
-           </ion-item>
+          <ion-item *ngFor="let i of [1, 2]" class="budget-item">
+            <ion-icon name="wallet-outline" slot="start" color="medium" size="large" ></ion-icon>
+            <ion-label>
+              <h2>
+                <ion-skeleton-text animated style="width: 50%; height: 18px" ></ion-skeleton-text>
+              </h2>
+              <p>
+                <ion-skeleton-text animated style="width: 30%; height: 14px; margin-top: 4px" ></ion-skeleton-text>
+              </p>
+              <div class="budget-summary-placeholder">
+                <ion-skeleton-text animated style="width: 90%; height: 12px; margin-top: 8px" ></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 90%; height: 12px; margin-top: 4px" ></ion-skeleton-text>
+                <ion-skeleton-text animated class="budget-progress-placeholder" style="height: 8px; margin-top: 8px" ></ion-skeleton-text>
+              </div>
+            </ion-label>
+            <ion-note slot="end" color="medium">
+              <ion-skeleton-text animated style="width: 60px; height: 16px" ></ion-skeleton-text>
+            </ion-note>
+          </ion-item>
         </ion-list>
       </ng-container>
 
       <ng-template #loadedBudgets>
         <ion-list *ngIf="budgets?.length === 0; else budgetList" lines="none">
-          <div class="ion-padding ion-text-center text-muted" style="color:#000">
-             You haven't set up any budgets yet.
+          <div class="ion-padding ion-text-center text-muted" style="color: #000" >
+            You haven't set up any budgets yet.
           </div>
         </ion-list>
-        
-        
+
         <ng-template #budgetList>
           <ion-list lines="full" class="budget-list">
-            <ion-item *ngFor="let budget of budgets" (click)="openBudget(budget)" class="budget-item" button detail="false">
-              <ion-icon name="wallet" slot="start" color="secondary" class="budget-icon" style="padding-top: 12px ;"></ion-icon>
+            <ion-item *ngFor="let budget of budgets" (click)="openBudget(budget)" class="budget-item" button detail="false" >
+              <ion-icon name="wallet" slot="start" color="secondary" class="budget-icon" style="padding-top: 12px" ></ion-icon>
               <ion-label>
                 <div class="budget-header">
                   <h2 class="budget-title">
                     {{ budget.budget_name | titlecase }}
-                    <ion-badge *ngIf="budget.balance_budget < 0" color="danger" class="overbudget-label" style="margin-left:8px;">
+                    <ion-badge *ngIf="budget.balance_budget < 0" color="danger" class="overbudget-label" style="margin-left: 8px" >
                       Overbudget
                     </ion-badge>
                   </h2>
@@ -195,33 +246,32 @@
                 </div>
                 <p class="budget-type">{{ budget.accounts }}</p>
                 <div class="budget-summary">
-                    <div class="budget-row">
-                      <span>Used:</span>
-                      <span>{{ budget.used_amount | currency: 'MYR ' }}</span>
-                    </div>
-                    <div class="budget-row">
-                      <span>Remaining:</span>
-                      <span [ngClass]="{'low-balance': (budget.balance_budget / budget.amount) < 0.1, 'overbudget': (budget.balance_budget / budget.amount) < 1}">
-                        {{ budget.balance_budget | currency: 'MYR ' }}
-                      </span>
-                    </div>
-                    <ion-progress-bar class="budget-progress" [value]="budget.used_amount / budget.amount" [color]="getProgressColor(budget)"></ion-progress-bar>
-                    <p class="update-date">
-                      <ion-icon name="time-outline" class="update-icon"></ion-icon>
-                      Updated: {{ budget.updated_at | date:'short' }}
-                    </p>
+                  <div class="budget-row">
+                    <span>Used:</span>
+                    <span>{{ budget.used_amount | currency: 'MYR ' }}</span>
                   </div>
-                </ion-label>
-              </ion-item>
-            </ion-list>
-            <div class="show-link">
-              <a (click)="budgetsList()">Show More</a>
-            </div>
+                  <div class="budget-row">
+                    <span>Remaining:</span>
+                    <span [ngClass]="{'low-balance': (budget.balance_budget / budget.amount) < 0.1, 'overbudget': (budget.balance_budget / budget.amount) < 1}" >
+                      {{ budget.balance_budget | currency: 'MYR ' }}
+                    </span>
+                  </div>
+                  <ion-progress-bar class="budget-progress" [value]="budget.used_amount / budget.amount" [color]="getProgressColor(budget.used_amount,budget.amount)" ></ion-progress-bar>
+                  <p class="update-date">
+                    <ion-icon name="time-outline" class="update-icon" ></ion-icon>
+                    Updated: {{ budget.updated_at | date:'short' }}
+                  </p>
+                </div>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+          <div class="show-link">
+            <a (click)="budgetsList()">Show More</a>
+          </div>
         </ng-template>
       </ng-template>
     </ion-card-content>
   </ion-card>
-
 </ion-content>
 
 <app-fab></app-fab>
