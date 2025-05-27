@@ -6,14 +6,14 @@ import { MenuController, AlertController, LoadingController, ToastController, Io
 
 import { ApiService } from 'src/app/services/api.service';
 import * as CryptoJS from 'crypto-js';
-import { EmailComposer,EmailComposerOptions } from '@awesome-cordova-plugins/email-composer/ngx';
+import { EmailComposer, EmailComposerOptions } from '@awesome-cordova-plugins/email-composer/ngx';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [ IonTitle, IonToolbar, IonFooter, IonButton, IonItem, IonIcon, IonCard, IonCardContent, IonCol, IonRow, IonGrid, IonContent, IonInput, IonCheckbox, CommonModule, ReactiveFormsModule, ],
+  imports: [ IonTitle, IonToolbar, IonFooter, IonButton, IonItem, IonIcon, IonCard, IonCardContent, IonCol, IonRow, IonGrid, IonContent, IonInput, IonCheckbox, CommonModule, ReactiveFormsModule ],
 })
 export class LoginPage implements OnInit {
   loginForm!: FormGroup;
@@ -164,14 +164,32 @@ export class LoginPage implements OnInit {
               isHtml: true,
             };
 
-            this.emailComposer.isAvailable().then((available: boolean) => {
-              if (available) {
-                this.emailComposer.open(email);
-                this.presentToast('Reset link opened in your email app', 'success');
-              } else {
-                this.presentToast('No email client available on this device', 'danger');
-              }
-            });
+            // Check if running on Android/iOS
+            const isMobile = /android|iphone|ipad|ipod/i.test(
+              navigator.userAgent
+            );
+
+            if (isMobile) {
+              this.emailComposer.isAvailable().then((available: boolean) => {
+                if (available) {
+                  this.emailComposer.open(email);
+                  this.presentToast(
+                    'Reset link opened in your email app',
+                    'success'
+                  );
+                } else {
+                  this.presentToast(
+                    'No email client available on this device',
+                    'danger'
+                  );
+                }
+              });
+            } else {
+              this.presentToast(
+                'Email reset is only available on mobile devices.',
+                'warning'
+              );
+            }
 
             return true; // close the alert
           },
