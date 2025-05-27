@@ -1,70 +1,87 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="fav">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="javascript:history.back()"></ion-back-button>
+      <ion-back-button defaultHref="/budgets"></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button>
         <ion-icon name="pencil"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>{{ detailsData?.budget_name | titlecase}}</ion-title>
+    <ion-title>{{ detailsData?.budget_name | titlecase }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div class="card-content">
-    <ion-card>
-      <ion-card-content>
-        <span>{{detailsData?.created_at | date:'YYYY-MMMM-dd'}}</span>
-        <h1 class="text-bold">
-          {{detailsData?.budget_amount | currency:'RM '}}
-        </h1>
-        <ion-progress-bar [value]="detailsData?.used_amount / detailsData?.budget_amount" [color]="getProgressColor(detailsData?.used_amount,detailsData?.budget_amount)" ></ion-progress-bar>
-        <div class="spend-info">
-          <span>{{detailsData?.used_amount | currency:'RM '}}</span>
-          <ion-text [color]="getProgressColor(detailsData?.used_amount,detailsData?.budget_amount)" class="text-bold" >
-            {{detailsData?.budget_amount - detailsData?.used_amount |currency:'RM '}}
-          </ion-text>
-        </div>
+<ion-content class="">
+  <ion-grid fixed>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12">
+        <ion-card>
+          <ion-card-header>
+            <ion-label class="date-label">
+              {{detailsData?.created_at | date:'YYYY-MMMM-dd'}}
+            </ion-label>
+          </ion-card-header>
+          <ion-card-content>
+            <h1 class="budget-amount">{{detailsData?.budget_amount | currency:'RM '}}</h1>
 
-        <div class="ion-no-margin">
-          <div class="spend-info">
-            <span>Spent</span>
-            <ion-text [color]="getProgressColor(detailsData?.used_amount,detailsData?.budget_amount)" class="text-bold" > 
-              {{(detailsData?.budget_amount - detailsData?.used_amount) < 0 ?'Overspent' : 'Remaining' }}
-            </ion-text>
-          </div>
-        </div>
+            <ion-progress-bar
+              [value]="detailsData?.used_amount / detailsData?.budget_amount"
+              [color]="getProgressColor(detailsData?.used_amount, detailsData?.budget_amount)">
+            </ion-progress-bar>
 
-        <div>
-          Accounts:
-          <ion-chip *ngFor="let cat of detailsData?.accounts" color="primary" outline >
-            {{ cat | titlecase }}
-          </ion-chip>
-        </div>
-        <div>
-          Categories:
-          <ion-chip *ngFor="let cat of detailsData?.budget_category" color="primary" outline >
-            {{ cat }}
-          </ion-chip>
-        </div>
-      </ion-card-content>
-    </ion-card>
-  </div>
-  <div class="card-content">
-    <ion-card>
-      <ion-card-content>
-        <h1 class="text-bold">Trend</h1>
-        <div class="chart-wrapper">
-          <ion-skeleton-text
-            *ngIf="loading_chart"
-            animated
-            style="width: 100%; height: 200px"
-          ></ion-skeleton-text>
-          <canvas #lineCanvas *ngIf="!loading_chart"></canvas>
-        </div>
-      </ion-card-content>
-    </ion-card>
-  </div>
+            <div class="spend-info">
+              <span class="label">Used</span>
+              <ion-text [color]="getProgressColor(detailsData?.used_amount, detailsData?.budget_amount)" class="text-bold">
+                {{detailsData?.used_amount | currency:'RM '}}
+              </ion-text>
+            </div>
+
+            <div class="spend-info">
+              <span class="label">Remaining</span>
+              <ion-text [color]="getProgressColor(detailsData?.used_amount, detailsData?.budget_amount)" class="text-bold">
+                {{detailsData?.budget_amount - detailsData?.used_amount | currency:'RM '}}
+              </ion-text>
+            </div>
+
+            <div class="spend-status">
+              <ion-badge [color]="(detailsData?.budget_amount - detailsData?.used_amount) < 0 ? 'danger' : 'success'">
+                {{(detailsData?.budget_amount - detailsData?.used_amount) < 0 ? 'Overspent' : 'Remaining'}}
+              </ion-badge>
+            </div>
+
+            <div class="chips-group">
+              <span class="label">Accounts:</span>
+              <ion-chip *ngFor="let cat of detailsData?.accounts" color="tertiary" outline>
+                {{ cat | titlecase }}
+              </ion-chip>
+            </div>
+
+            <div class="chips-group">
+              <span class="label">Categories:</span>
+              <ion-chip *ngFor="let cat of detailsData?.budget_category" color="warning" outline>
+                {{ cat }}
+              </ion-chip>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="12">
+        <ion-card>
+          <ion-card-content>
+            <h2 class="text-bold">Trend</h2>
+            <div class="chart-wrapper">
+              <ion-skeleton-text
+                *ngIf="loading_chart"
+                animated
+                style="width: 100%; height: 200px">
+              </ion-skeleton-text>
+              <canvas #lineCanvas *ngIf="!loading_chart"></canvas>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

@@ -1,25 +1,56 @@
-.card-content {
-  display: flex;
-  justify-content: center;
-}
 ion-card {
-  width: 100%;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), 0 1.5px 6px rgba(0, 0, 0, 0.08);
-  height: fit-content;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
-.text-bold {
+
+.date-label {
+  font-size: 0.85rem;
+  color: var(--ion-color-medium);
+}
+
+.budget-amount {
   font-weight: bold;
+  font-size: clamp(1.5rem, 6vw, 2.5rem);
+  color: var(--ion-color-primary);
+  margin-bottom: 12px;
 }
+
 ion-progress-bar {
-  height: 8px;
+  height: 10px;
   border-radius: 4px;
-  margin-bottom: 8px;
+  margin: 8px 0;
 }
 
 .spend-info {
-  width: 100%;
   display: flex;
   justify-content: space-between;
+  padding: 4px 0;
+}
+
+.label {
+  font-weight: 500;
+  color: var(--ion-color-medium);
+  margin-right: 8px;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.spend-status {
+  margin: 10px 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.chips-group {
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+ion-chip {
+  margin: 4px 6px 4px 0;
+  font-size: 0.9rem;
 }
 
 .chart-wrapper {
@@ -29,22 +60,28 @@ ion-progress-bar {
 }
 
 canvas {
-  width: 60%;
-  max-width: 60%;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
 }
 
-@media (max-width: 790px) {
-  .chart-wrapper {
-    padding: 4px;
-    display: flex;
-    justify-content: center;
-  }
+@media (max-width: 768px) {
   canvas {
-    width: 100%;
+    width: 50%;
     height: 40vh;
     max-width: 100%;
   }
-  ion-card {
-    width: 100%;
+
+  .budget-amount {
+    font-size: 1.8rem;
+  }
+
+  .spend-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  ion-chip {
+    font-size: 0.8rem;
   }
 }
