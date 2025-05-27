@@ -133,7 +133,26 @@
         </ion-list>
 
         <ng-template #noTransactions>
-          <div class="ion-padding ion-text-center text-muted" style="color: #000" >
+          <ion-list lines="none">
+            <ion-item *ngFor="let i of [1, 2, 3]">
+              <ion-avatar slot="start" class="transaction-avatar placeholder-avatar">
+                <ion-skeleton-text style="width: 100%; height: 100%"></ion-skeleton-text>
+              </ion-avatar>
+              <ion-label>
+                <h2>
+                  <ion-skeleton-text style="width: 60%; height: 16px"></ion-skeleton-text>
+                </h2>
+                <p>
+                  <ion-skeleton-text style="width: 40%; height: 14px"></ion-skeleton-text>
+                </p>
+              </ion-label>
+              <div slot="end" class="ion-text-right placeholder-amount">
+                <ion-skeleton-text style="width: 70px; height: 16px; margin-bottom: 4px"></ion-skeleton-text>
+                <ion-skeleton-text style="width: 50px; height: 12px"></ion-skeleton-text>
+              </div>
+            </ion-item>
+          </ion-list>
+          <div class="ion-padding ion-text-center text-muted" style="color: #000">
             No recent transactions found.
           </div>
         </ng-template>
@@ -152,7 +171,15 @@
           <ion-skeleton-text animated style="width: 90%; height: 160px; border-radius: 12px"></ion-skeleton-text>
         </div>
       </ng-container>
-      <div class="chart-wrapper">
+      <div *ngIf="totalCount <= 0">
+        <div class="chart-wrapper" style="height: 200px; display: flex; align-items: center; justify-content: center;">
+          <ion-skeleton-text style="width: 90%; height: 160px; border-radius: 12px"></ion-skeleton-text>
+        </div>
+        <div class="ion-padding ion-text-center" style="color: #000;">
+          No recent expenses found.
+        </div>
+      </div>
+      <div class="chart-wrapper" >
         <canvas #barCanvas></canvas>
       </div>
 
@@ -183,9 +210,6 @@
       </ion-list>
       <div class="show-link" style="margin: 12px 16px;font-weight: bold;cursor: pointer;width: fit-content;" *ngIf="totalCount > 0">
         <a (click)="expensesList()">{{ show_expenses_label }}</a>
-      </div>
-      <div class="ion-padding ion-text-center" style="color: #000;" *ngIf="totalCount <= 0">
-        No recent expenses found.
       </div>
     </ion-card-content>
   </ion-card>
@@ -222,9 +246,28 @@
 
       <ng-template #loadedBudgets>
         <ion-list *ngIf="budgets?.length === 0; else budgetList" lines="none">
-          <div class="ion-padding ion-text-center text-muted" style="color: #000" >
-            You haven't set up any budgets yet.
-          </div>
+          <ion-item class="budget-item">
+            <ion-icon name="wallet-outline" slot="start" color="medium" size="large"></ion-icon>
+            <ion-label>
+              <h2>
+                <ion-skeleton-text style="width: 50%; height: 18px"></ion-skeleton-text>
+              </h2>
+              <p>
+                <ion-skeleton-text style="width: 30%; height: 14px; margin-top: 4px"></ion-skeleton-text>
+              </p>
+              <div class="budget-summary-placeholder">
+                <ion-skeleton-text style="width: 90%; height: 12px; margin-top: 8px"></ion-skeleton-text>
+                <ion-skeleton-text style="width: 90%; height: 12px; margin-top: 4px"></ion-skeleton-text>
+                <ion-skeleton-text class="budget-progress-placeholder" style="height: 8px; margin-top: 8px"></ion-skeleton-text>
+              </div>
+            </ion-label>
+            <ion-note slot="end" color="medium">
+              <ion-skeleton-text style="width: 60px; height: 16px"></ion-skeleton-text>
+            </ion-note>
+          </ion-item>
+          <ion-item lines="none" class="ion-text-center ion-padding">
+            <ion-label color="medium">No budget data available.</ion-label>
+          </ion-item>
         </ion-list>
 
         <ng-template #budgetList>

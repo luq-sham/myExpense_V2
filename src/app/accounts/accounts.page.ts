@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonNote, IonCardHeader, IonList, IonCard, IonItem, IonIcon, IonLabel, IonSkeletonText } from '@ionic/angular/standalone';
+import { IonContent, IonNote, IonList, IonCard, IonItem, IonIcon, IonLabel, IonSkeletonText, IonAvatar } from '@ionic/angular/standalone';
 import { HeaderComponent } from '../components/header/header.component';
 import { ApiService } from '../services/api.service';
 
@@ -10,7 +10,7 @@ import { ApiService } from '../services/api.service';
   templateUrl: './accounts.page.html',
   styleUrls: ['./accounts.page.scss'],
   standalone: true,
-  imports: [IonSkeletonText, IonLabel, IonIcon, IonItem, IonCard, IonList, IonCardHeader, IonNote, IonContent, CommonModule, FormsModule, HeaderComponent]
+  imports: [IonAvatar, IonSkeletonText, IonLabel, IonIcon, IonItem, IonCard, IonList, IonNote, IonContent, CommonModule, FormsModule, HeaderComponent]
 })
 export class AccountsPage {
   accounts: any[] = [];

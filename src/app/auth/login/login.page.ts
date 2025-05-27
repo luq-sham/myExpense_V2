@@ -1,23 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MenuController, AlertController, LoadingController, ToastController, IonContent, IonGrid, IonRow, IonCol, IonCardContent, IonCard, IonIcon, IonItem, IonButton, IonFooter, IonToolbar, IonTitle, IonInput, IonCheckbox } from '@ionic/angular/standalone';
 
 import { ApiService } from 'src/app/services/api.service';
 import * as CryptoJS from 'crypto-js';
+import { EmailComposer,EmailComposerOptions } from '@awesome-cordova-plugins/email-composer/ngx';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [ IonTitle, IonToolbar, IonFooter, IonButton, IonItem, IonIcon, IonCard, IonCardContent, IonCol, IonRow, IonGrid, IonContent, IonInput, IonCheckbox, CommonModule, ReactiveFormsModule ],
+  imports: [ IonTitle, IonToolbar, IonFooter, IonButton, IonItem, IonIcon, IonCard, IonCardContent, IonCol, IonRow, IonGrid, IonContent, IonInput, IonCheckbox, CommonModule, ReactiveFormsModule, ],
 })
 export class LoginPage implements OnInit {
   loginForm!: FormGroup;
@@ -33,7 +29,8 @@ export class LoginPage implements OnInit {
     private alertController: AlertController,
     private toastController: ToastController,
     private menu: MenuController,
-    private api: ApiService
+    private api: ApiService,
+    private emailComposer: EmailComposer
   ) {}
 
   ngOnInit() {
@@ -118,10 +115,10 @@ export class LoginPage implements OnInit {
           localStorage.clear();
           localStorage.setItem('token', res.return_data.user_id);
           localStorage.setItem('userDetails', JSON.stringify(res.return_data));
-          
+
           await this.presentToast('Login successful!', 'success');
           this.loginForm.reset();
-          
+
           this.router.navigate(['dashboard']);
         } else {
           await this.presentToast(res.error, 'warning');
@@ -155,10 +152,28 @@ export class LoginPage implements OnInit {
         {
           text: 'Send Reset Link',
           handler: (data) => {
-            if (data.email) {
-              // Implement reset service call here
-              this.presentToast('Reset link sent to your email');
+            if (!data.email) {
+              this.presentToast('Please enter a valid email address', 'danger');
+              return false; // prevent closing the alert
             }
+
+            const email: EmailComposerOptions = {
+              to: data.email,
+              subject: 'Reset Your Password',
+              body: 'Click the link to reset your password.',
+              isHtml: true,
+            };
+
+            this.emailComposer.isAvailable().then((available: boolean) => {
+              if (available) {
+                this.emailComposer.open(email);
+                this.presentToast('Reset link opened in your email app', 'success');
+              } else {
+                this.presentToast('No email client available on this device', 'danger');
+              }
+            });
+
+            return true; // close the alert
           },
         },
       ],

@@ -2,42 +2,47 @@
 
 <ion-content class="ion-padding">
 
-  <ion-list>
+  <ion-list lines="none">
 
     <!-- Skeleton Loader -->
     <ng-container *ngIf="isLoading">
-      <ion-card class="account-card" *ngFor="let item of [1,2,3]">
-        <ion-card-header>
-          <ion-item lines="none">
-            <ion-icon name="card" slot="start" color="tertiary"></ion-icon>
-            <ion-label>
-              <h2><ion-skeleton-text animated style="width: 80%"></ion-skeleton-text></h2>
-              <p><ion-skeleton-text animated style="width: 50%"></ion-skeleton-text></p>
-            </ion-label>
-            <ion-note slot="end" color="success">
-              <ion-skeleton-text animated style="width: 60px"></ion-skeleton-text>
-            </ion-note>
-          </ion-item>
-        </ion-card-header>
+      <ion-card class="account-card skeleton" *ngFor="let item of [1, 2, 3]">
+        <ion-item lines="none">
+          <ion-avatar slot="start">
+            <ion-skeleton-text animated style="width: 40px; height: 40px;"></ion-skeleton-text>
+          </ion-avatar>
+          <ion-label>
+            <h2><ion-skeleton-text animated style="width: 70%"></ion-skeleton-text></h2>
+            <p><ion-skeleton-text animated style="width: 50%"></ion-skeleton-text></p>
+          </ion-label>
+          <ion-note slot="end">
+            <ion-skeleton-text animated style="width: 60px"></ion-skeleton-text>
+          </ion-note>
+        </ion-item>
       </ion-card>
     </ng-container>
 
     <!-- Real Data -->
     <ng-container *ngIf="!isLoading">
-      <ion-card *ngFor="let account of accounts" class="account-card">
-        <ion-card-header>
-          <ion-item lines="none" class="account-item">
-            <ion-icon [name]="account.icon" slot="start" color="tertiary" class="account-icon"></ion-icon>
+      <ng-container *ngIf="(accounts?.length ?? 0) > 0; else noAccounts">
+        <ion-list style="padding: 16px;">
+            <ion-item button *ngFor="let acc of accounts" class="account-card">
+            <ion-icon [name]="acc.icon" slot="start" class="account-icon"></ion-icon>
             <ion-label>
-              <h2 class="account-name">{{ account.account_name | titlecase}}</h2>
-              <p class="balance-label">Available Balance</p>
+              <h2 class="account-name">{{ acc.account_name | titlecase }}</h2>
+              <p class="account-balance">{{ acc.balance | currency:'RM ':'symbol':'1.2-2' }}</p>
             </ion-label>
-            <ion-note slot="end" color="success" class="balance-note">
-              {{ account.balance | currency: 'MYR ' }}
-            </ion-note>
-          </ion-item>
-        </ion-card-header>
-      </ion-card>
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+            </ion-item>
+        </ion-list>
+      </ng-container>
+      <ng-template #noAccounts>
+        <ion-item lines="none">
+          <ion-label color="medium">
+            No accounts found.
+          </ion-label>
+        </ion-item>
+      </ng-template>
     </ng-container>
 
   </ion-list>

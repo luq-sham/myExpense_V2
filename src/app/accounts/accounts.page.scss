@@ -1,42 +1,25 @@
 .account-card {
-  margin: 12px 16px;
-  border-radius: 16px;
+  border: 1px solid #eeeeee;
+  border-radius: 12px;
+  margin-bottom: 12px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  padding: 20px;
 }
 
-.account-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+.account-icon{
+  font-size: 24px;
+  color: #4a90e2;
+  margin-left: 12px;
 }
 
-.account-item {
-  --inner-padding-end: 0;
-  --padding-start: 8px;
-  --min-height: 72px;
+.account-name{
+  font-size: 18px;
+  font-weight: bold;
+  color: #333333;
 }
 
-.account-icon {
-  font-size: 28px;
-  background-color: #eef4ff;
-  padding: 12px;
-  border-radius: 50%;
-}
-
-.account-name {
-  font-size: 1.1em;
+.account-balance{
+  font-size: 16px;
+  color: #4ae25e;
   font-weight: 600;
-  color: #2c3e50;
-  margin-bottom: 2px;
-}
-
-.balance-label {
-  font-size: 0.85em;
-  color: #7f8c8d;
-}
-
-.balance-note {
-  font-size: 14px;
-  font-weight: 700;
-  color: #2ecc71 !important;
 }

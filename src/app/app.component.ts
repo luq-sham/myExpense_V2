@@ -8,7 +8,7 @@ import { App } from '@capacitor/app';
 import { Platform } from '@ionic/angular';
 import { ToastService } from './services/toast.service';
 import { StatusBar, Style } from '@capacitor/status-bar';
-
+import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +16,7 @@ import { StatusBar, Style } from '@capacitor/status-bar';
   styleUrls: ['app.component.scss'],
   standalone: true,
   imports: [ IonAccordion, IonAccordionGroup, IonFooter, IonHeader, CommonModule, RouterLink, RouterLinkActive, IonApp, IonSplitPane, IonMenu, IonContent, IonLabel, IonList, IonMenuToggle, IonIcon, IonItem, IonRouterOutlet ],
+  providers: [EmailComposer],
 })
 export class AppComponent implements OnInit {
   private lastTimeBackPress = 0;
