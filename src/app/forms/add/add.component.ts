@@ -214,6 +214,9 @@ export class AddComponent implements OnInit {
               this.loading.hide();
               this.toast.customToast('Budget successfully been added',3000,'success');
               this.modalController.dismiss(true)
+            }else if(res.status_code == 400){
+              this.loading.hide();
+              this.toast.customToast(res.msg,3000,'warning');
             }else{
               this.loading.hide();
               this.toast.customToast('Budget failed to been added',3000,'warning');

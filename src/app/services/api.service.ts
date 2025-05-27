@@ -91,6 +91,16 @@ export class ApiService {
     return this.http.post(api, data);
   }
 
+  getBudgetByID(id:any): Observable<any>{
+    const api = this.url + 'api/get_budget_by_id';
+    return this.http.post(api, id);
+  }
+
+  getBudgetLineChart(data:any): Observable<any>{
+    const api = this.url + 'api/get_budget_chart';
+    return this.http.post(api, data);
+  }
+
   getIcons():Observable<any>{
     const api = this.url + 'api/get_icons';
     return this.http.get(api);

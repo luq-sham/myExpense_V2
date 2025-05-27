@@ -156,7 +156,7 @@
         <canvas #barCanvas></canvas>
       </div>
 
-      <ion-list lines="full">
+      <ion-list lines="full" *ngIf="show_expenses">
         <ion-item *ngFor="let record of monthlyExpenses" button detail="false">
           <ion-avatar slot="start" class="expenses-avatar">
             <ion-icon [name]="record.icon || 'pricetag-outline'" style="font-size: 22px;" color="secondary"></ion-icon>
@@ -181,11 +181,10 @@
           </ion-grid>
         </ion-item>
       </ion-list>
-      
-      <div style="padding: 12px 16px;font-weight: bold;cursor: pointer;width: fit-content;">
-        <a (click)="transactionsList()">Show More</a>
+      <div class="show-link" style="margin: 12px 16px;font-weight: bold;cursor: pointer;width: fit-content;" *ngIf="totalCount > 0">
+        <a (click)="expensesList()">{{ show_expenses_label }}</a>
       </div>
-      <div class="ion-padding ion-text-center text-muted" style="color: #888; font-size: 1rem;" *ngIf="totalCount <= 0">
+      <div class="ion-padding ion-text-center" style="color: #000;" *ngIf="totalCount <= 0">
         No recent expenses found.
       </div>
     </ion-card-content>
@@ -234,12 +233,12 @@
               <ion-icon name="wallet" slot="start" color="secondary" class="budget-icon" style="padding-top: 12px" ></ion-icon>
               <ion-label>
                 <div class="budget-header">
-                  <h2 class="budget-title">
-                    {{ budget.budget_name | titlecase }}
-                    <ion-badge *ngIf="budget.balance_budget < 0" color="danger" class="overbudget-label" style="margin-left: 8px" >
+                  <div class="budget-title">
+                    <span style="margin-right: 8px;">{{ budget.budget_name | titlecase }}</span>
+                    <ion-badge *ngIf="budget.balance_budget < 0" color="danger">
                       Overbudget
                     </ion-badge>
-                  </h2>
+                  </div>
                   <ion-note class="budget-amount">
                     <b>{{ budget.amount | currency: 'MYR ' }}</b>
                   </ion-note>
@@ -261,6 +260,11 @@
                     <ion-icon name="time-outline" class="update-icon" ></ion-icon>
                     Updated: {{ budget.updated_at | date:'short' }}
                   </p>
+                </div>
+                <div *ngIf="budget.category?.length">
+                  <ion-chip *ngFor="let cat of budget.category" color="primary" outline class="ion-no-margin" style="margin-right: 4px;">
+                    {{ cat }}
+                  </ion-chip>
                 </div>
               </ion-label>
             </ion-item>

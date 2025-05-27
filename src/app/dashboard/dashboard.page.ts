@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonCard, IonContent, IonCardContent, IonRow, IonCol, IonIcon, IonAvatar, IonSkeletonText, IonItem, IonLabel, IonNote, IonList, IonProgressBar, IonCardHeader, IonCardTitle, IonRippleEffect, IonGrid, IonRefresher, IonRefresherContent, IonBadge } from '@ionic/angular/standalone';
+import { IonCard, IonContent, IonCardContent, IonRow, IonCol, IonIcon, IonAvatar, IonSkeletonText, IonItem, IonLabel, IonNote, IonList, IonProgressBar, IonCardHeader, IonCardTitle, IonRippleEffect, IonGrid, IonRefresher, IonRefresherContent, IonBadge, IonChip } from '@ionic/angular/standalone';
 import { MenuController } from '@ionic/angular/standalone';
 import { HeaderComponent } from '../components/header/header.component';
 import { FabComponent } from '../components/fab/fab.component';
@@ -20,7 +20,7 @@ import { style } from '@angular/animations';
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
   standalone: true,
-  imports: [ IonBadge, IonRefresherContent, IonRefresher, IonGrid, IonRippleEffect, IonCardTitle, IonCardHeader, IonProgressBar, IonList, IonNote, IonLabel, IonItem, IonSkeletonText, IonAvatar, IonIcon, IonCol, IonRow, IonCardContent, IonCard, IonContent, CommonModule, FormsModule, HeaderComponent, FabComponent ],
+  imports: [IonChip,  IonBadge, IonRefresherContent, IonRefresher, IonGrid, IonRippleEffect, IonCardTitle, IonCardHeader, IonProgressBar, IonList, IonNote, IonLabel, IonItem, IonSkeletonText, IonAvatar, IonIcon, IonCol, IonRow, IonCardContent, IonCard, IonContent, CommonModule, FormsModule, HeaderComponent, FabComponent ],
 })
 export class DashboardPage {
   doughnutChart: any;
@@ -33,6 +33,8 @@ export class DashboardPage {
   monthlyExpenses:any
   totalCount: any;
   total_expenses:any;
+  show_expenses:boolean = false;
+  show_expenses_label = 'Show More'
 
   loading_account: boolean = true;
   loading_transaction: boolean = true;
@@ -194,6 +196,7 @@ export class DashboardPage {
   }
 
   openBudget(budget: any) {
+    this.router.navigate(['/budget-detail'], { queryParams: { id: budget.id } });
     console.log(budget);
   }
 
@@ -221,5 +224,14 @@ export class DashboardPage {
 
   ionViewDidEnter(): void {
     this.menu.enable(true);
+  }
+
+  expensesList(){
+    this.show_expenses = !this.show_expenses
+    if(this.show_expenses == true){
+      this.show_expenses_label = 'Show Less'
+    }else{
+      this.show_expenses_label = 'Show More'
+    }
   }
 }

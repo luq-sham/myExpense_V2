@@ -48,8 +48,18 @@ export const routes: Routes = [
     canActivate:[loginGuard],
     loadComponent: () => import('./auth/register/register.page').then( m => m.RegisterPage)
   },
+  // {
+  //   path: 'error-message',
+  //   loadComponent: () => import('./components/error-message/error-message.page').then( m => m.ErrorMessagePage)
+  // },
   {
-    path: 'error-message',
-    loadComponent: () => import('./components/error-message/error-message.page').then( m => m.ErrorMessagePage)
+    path: 'budget-detail',
+    canActivate:[authGuard],
+    loadComponent: () => import('./details/budget-detail/budget-detail.page').then( m => m.BudgetDetailPage)
+  },
+  {
+    path: 'transaction-detail',
+    canActivate:[authGuard],
+    loadComponent: () => import('./details/transaction-detail/transaction-detail.page').then( m => m.TransactionDetailPage)
   },
 ];

@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonFab, IonFabButton, IonIcon, IonFabList, IonItem, IonList, IonLabel, IonSkeletonText, IonNote, IonProgressBar, IonBadge } from '@ionic/angular/standalone';
+import { IonContent, IonFab, IonFabButton, IonIcon, IonFabList, IonItem, IonList, IonLabel, IonSkeletonText, IonNote, IonProgressBar, IonBadge, IonChip } from '@ionic/angular/standalone';
 import { HeaderComponent } from '../components/header/header.component';
 import { ModalController } from '@ionic/angular/standalone'
 import { AddComponent } from '../forms/add/add.component';
 import { ApiService } from '../services/api.service';
 import { AlertService } from '../services/alert.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-budgets',
   templateUrl: './budgets.page.html',
   styleUrls: ['./budgets.page.scss'],
-  imports: [IonBadge, IonProgressBar, IonNote, IonSkeletonText, IonLabel, IonList, IonItem, IonFabList, IonIcon, IonFabButton, IonFab, IonContent, CommonModule, FormsModule, HeaderComponent]
+  imports: [IonChip, IonBadge, IonProgressBar, IonNote, IonSkeletonText, IonLabel, IonList, IonItem, IonFabList, IonIcon, IonFabButton, IonFab, IonContent, CommonModule, FormsModule, HeaderComponent]
 })
 export class BudgetsPage implements OnInit {
   loading_budget: boolean = true;
@@ -23,6 +24,7 @@ export class BudgetsPage implements OnInit {
     private modalController: ModalController,
     private alert: AlertService,
     private api: ApiService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -70,6 +72,7 @@ export class BudgetsPage implements OnInit {
   }
 
   openBudget(budget: any) {
+    this.router.navigate(['/budget-detail'], { queryParams: { id: budget.id } });
     console.log(budget);
   }
 

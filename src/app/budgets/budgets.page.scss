@@ -33,7 +33,7 @@ ion-fab-button[data-desc]::after {
 }
 
 .budget-list {
-  margin: 8px 0;
+  padding: 10px 12px;
   background: transparent;
 }
 
@@ -43,7 +43,8 @@ ion-fab-button[data-desc]::after {
   align-items: flex-start;
   border-radius: 20px;
   margin-bottom: 12px;
-  border: 1px solid #d8d8d8;
+  border: 1px solid #eeeeee;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
 
   .budget-icon {
     font-size: 2rem;
@@ -58,6 +59,7 @@ ion-fab-button[data-desc]::after {
 
   .budget-header {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 4px;
@@ -69,9 +71,10 @@ ion-fab-button[data-desc]::after {
       margin: 0;
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
+      word-break: break-word;
 
       ion-badge {
-        margin-left: 8px;
         font-size: 0.75rem;
       }
     }
@@ -90,6 +93,7 @@ ion-fab-button[data-desc]::after {
     color: var(--ion-color-medium-shade);
     margin-bottom: 10px;
     text-transform: capitalize;
+    word-break: break-word;
   }
 
   .budget-summary {
@@ -100,6 +104,7 @@ ion-fab-button[data-desc]::after {
       display: flex;
       justify-content: space-between;
       margin-bottom: 4px;
+      flex-wrap: wrap;
 
       span:last-child {
         font-weight: 500;
@@ -136,6 +141,56 @@ ion-fab-button[data-desc]::after {
 
       .update-icon {
         margin-right: 6px;
+      }
+    }
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 790px) {
+  .budget-item {
+    --min-height: 80px;
+    flex-direction: column;
+    padding: 8px;
+
+    .budget-icon {
+      font-size: 1.6rem;
+      margin-right: 8px;
+    }
+
+    ion-label {
+      padding: 6px;
+    }
+
+    .budget-header {
+      flex-direction: column;
+      align-items: flex-start;
+
+      .budget-title {
+        font-size: 1rem;
+      }
+
+      .budget-amount {
+        font-size: 0.9rem;
+        margin-top: 4px;
+      }
+    }
+
+    .budget-type {
+      font-size: 0.8rem;
+    }
+
+    .budget-summary {
+      font-size: 0.8rem;
+
+      .budget-row {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 4px;
+      }
+
+      .update-date {
+        font-size: 0.7rem;
       }
     }
   }

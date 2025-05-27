@@ -211,7 +211,7 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
 }
 
 .budget-list {
-  margin: 8px 0;
+  padding: 10px 12px;
   background: transparent;
 }
 
@@ -234,6 +234,7 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
 
   .budget-header {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 4px;
@@ -245,9 +246,10 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
       margin: 0;
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
+      word-break: break-word;
 
       ion-badge {
-        margin-left: 8px;
         font-size: 0.75rem;
       }
     }
@@ -266,6 +268,7 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
     color: var(--ion-color-medium-shade);
     margin-bottom: 10px;
     text-transform: capitalize;
+    word-break: break-word;
   }
 
   .budget-summary {
@@ -276,6 +279,7 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
       display: flex;
       justify-content: space-between;
       margin-bottom: 4px;
+      flex-wrap: wrap;
 
       span:last-child {
         font-weight: 500;
@@ -355,8 +359,8 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
 }
 
 canvas {
-  width: 20% !important;
-  max-width: 20%;
+  width: 25% !important;
+  max-width: 25%;
   padding: 16px;
 }
 
@@ -429,28 +433,49 @@ canvas {
   }
 
   .budget-item {
+    --min-height: 80px;
+    flex-direction: column;
+    padding: 8px;
+
     .budget-icon {
-      font-size: 1.8rem;
-      margin-right: 10px;
+      font-size: 1.6rem;
+      margin-right: 8px;
     }
-    .budget-title {
-      font-size: 1rem;
+
+    ion-label {
+      padding: 6px;
     }
-    .budget-amount {
-      font-size: 0.9rem;
+
+    .budget-header {
+      flex-direction: column;
+      align-items: flex-start;
+
+      .budget-title {
+        font-size: 1rem;
+      }
+
+      .budget-amount {
+        font-size: 0.9rem;
+        margin-top: 4px;
+      }
     }
+
     .budget-type {
       font-size: 0.8rem;
-      margin-bottom: 8px;
     }
+
     .budget-summary {
       font-size: 0.8rem;
-    }
-    .budget-progress {
-      height: 6px;
-    }
-    .update-date {
-      font-size: 0.7rem;
+
+      .budget-row {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 4px;
+      }
+
+      .update-date {
+        font-size: 0.7rem;
+      }
     }
   }
 

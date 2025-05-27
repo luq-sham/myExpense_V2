@@ -44,7 +44,7 @@
             <ion-icon name="list-circle-outline" slot="start" class="icon" ></ion-icon>
             <ion-select label="Type" labelPlacement="stacked" placeholder="Select account type" interface="popover" formControlName="account_type">
               <ion-select-option *ngFor="let type of types" [value]="type.type">
-                {{type.type}}
+                {{type.type | titlecase}}
               </ion-select-option>
             </ion-select>
           </ion-item>
@@ -86,7 +86,7 @@
             <ion-icon name="list-circle-outline" slot="start" class="icon" ></ion-icon>
             <ion-select [label]="'Categories (' + label + ')'" labelPlacement="stacked" placeholder="Select category" formControlName="transaction_category">
               <ion-select-option *ngFor="let category of categories" [value]="category.name">
-                {{category.name}}
+                {{category.name | titlecase}}
               </ion-select-option>
             </ion-select>
           </ion-item>
@@ -99,7 +99,7 @@
             <ion-icon name="wallet-outline" slot="start" class="icon" ></ion-icon>
             <ion-select label="Account" labelPlacement="stacked" placeholder="Select account" formControlName="transaction_account">
               <ion-select-option *ngFor="let account of accounts" [value]="account.id">
-                {{account.account_name}}
+                {{account.account_name | titlecase}}
               </ion-select-option>
             </ion-select>
           </ion-item>
@@ -131,6 +131,7 @@
     </form>
   </div>
 
+  <!-- New Budget -->
   <div class="ion-padding" *ngIf="formID == 3">
     <form [formGroup]="BudgetForm" (ngSubmit)="onSubmit()">
       <ion-list lines="full">
@@ -160,7 +161,7 @@
             <ion-icon name="list-circle-outline" slot="start" class="icon" ></ion-icon>
             <ion-select label="Categories" labelPlacement="stacked" placeholder="Select category" formControlName="budget_category" multiple="true">
               <ion-select-option *ngFor="let category of categories" [value]="category.name">
-                {{category.name}}
+                {{category.name | titlecase}}
               </ion-select-option>
             </ion-select>
           </ion-item>
@@ -173,7 +174,7 @@
             <ion-icon name="wallet-outline" slot="start" class="icon" ></ion-icon>
             <ion-select label="Accounts" labelPlacement="stacked" placeholder="Select category" formControlName="budget_account" multiple="true">
               <ion-select-option *ngFor="let account of accounts" [value]="account.id">
-                {{account.account_name}}
+                {{account.account_name | titlecase}}
               </ion-select-option>
             </ion-select>
           </ion-item>
