@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="fav">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/budgets"></ion-back-button>
+      <ion-back-button defaultHref="javascript:history.back()"></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button>
@@ -20,21 +20,34 @@
         <h1 class="text-bold">
           {{detailsData?.budget_amount | currency:'RM '}}
         </h1>
-        <ion-progress-bar [value]="detailsData?.used_amount / detailsData?.budget_amount" [color]="getProgressColor(detailsData?.used_amount,detailsData?.budget_amount)"></ion-progress-bar>
+        <ion-progress-bar [value]="detailsData?.used_amount / detailsData?.budget_amount" [color]="getProgressColor(detailsData?.used_amount,detailsData?.budget_amount)" ></ion-progress-bar>
         <div class="spend-info">
           <span>{{detailsData?.used_amount | currency:'RM '}}</span>
-          <ion-text [color]="getProgressColor(detailsData?.used_amount,detailsData?.budget_amount)" class="text-bold">
+          <ion-text [color]="getProgressColor(detailsData?.used_amount,detailsData?.budget_amount)" class="text-bold" >
             {{detailsData?.budget_amount - detailsData?.used_amount |currency:'RM '}}
           </ion-text>
         </div>
 
-        <div *ngIf="!loading_chart">
+        <div class="ion-no-margin">
           <div class="spend-info">
             <span>Spent</span>
-            <ion-text [color]="getProgressColor(detailsData?.used_amount,detailsData?.budget_amount)" class="text-bold">
+            <ion-text [color]="getProgressColor(detailsData?.used_amount,detailsData?.budget_amount)" class="text-bold" > 
               {{(detailsData?.budget_amount - detailsData?.used_amount) < 0 ?'Overspent' : 'Remaining' }}
             </ion-text>
           </div>
+        </div>
+
+        <div>
+          Accounts:
+          <ion-chip *ngFor="let cat of detailsData?.accounts" color="primary" outline >
+            {{ cat | titlecase }}
+          </ion-chip>
+        </div>
+        <div>
+          Categories:
+          <ion-chip *ngFor="let cat of detailsData?.budget_category" color="primary" outline >
+            {{ cat }}
+          </ion-chip>
         </div>
       </ion-card-content>
     </ion-card>
@@ -44,7 +57,11 @@
       <ion-card-content>
         <h1 class="text-bold">Trend</h1>
         <div class="chart-wrapper">
-          <ion-skeleton-text *ngIf="loading_chart" animated style="width: 100%; height: 200px"></ion-skeleton-text>
+          <ion-skeleton-text
+            *ngIf="loading_chart"
+            animated
+            style="width: 100%; height: 200px"
+          ></ion-skeleton-text>
           <canvas #lineCanvas *ngIf="!loading_chart"></canvas>
         </div>
       </ion-card-content>

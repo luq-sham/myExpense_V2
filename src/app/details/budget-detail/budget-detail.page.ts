@@ -13,7 +13,8 @@ import {
   IonBackButton,
   IonIcon,
   IonText,
-  IonButton, IonSkeletonText } from '@ionic/angular/standalone';
+  IonButton,
+  IonSkeletonText, IonChip } from '@ionic/angular/standalone';
 import { ApiService } from 'src/app/services/api.service';
 import { ActivatedRoute } from '@angular/router';
 import { Chart } from 'chart.js/auto';
@@ -23,7 +24,8 @@ import { Chart } from 'chart.js/auto';
   templateUrl: './budget-detail.page.html',
   styleUrls: ['./budget-detail.page.scss'],
   standalone: true,
-  imports: [IonSkeletonText, 
+  imports: [IonChip, 
+    IonSkeletonText,
     IonButton,
     IonText,
     IonIcon,
@@ -43,7 +45,7 @@ import { Chart } from 'chart.js/auto';
 export class BudgetDetailPage implements OnInit {
   id: any;
   detailsData: any;
-  loading_chart = true
+  loading_chart = true;
 
   @ViewChild('lineCanvas', { static: false })
   lineCanvas!: ElementRef<HTMLCanvasElement>;
@@ -62,9 +64,9 @@ export class BudgetDetailPage implements OnInit {
       };
     });
     this.api.getBudgetByID(this.id).subscribe((res) => {
-      this.loading_chart = false;
       this.detailsData = res.return_data;
       this.renderChart(this.detailsData?.budget_category, this.detailsData?.id);
+      this.loading_chart = false;
     });
   }
 
@@ -82,30 +84,107 @@ export class BudgetDetailPage implements OnInit {
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          interaction: {
+            mode: 'index',
+            intersect: false,
+          },
           plugins: {
+            title: {
+              display: true,
+              text: 'Budget Trend Over Time',
+              font: {
+                size: 20,
+                weight: 'bold',
+                family: 'Arial',
+              },
+              color: '#333',
+              padding: {
+                top: 10,
+                bottom: 30,
+              },
+            },
             legend: {
-              position: 'top',
+              display: true,
+              position: 'bottom',
+              labels: {
+                color: '#555',
+                font: {
+                  size: 12,
+                  weight: 'bold',
+                },
+                padding: 20,
+                usePointStyle: true,
+                pointStyle: 'circle',
+              },
             },
             tooltip: {
+              backgroundColor: '#f5f5f5',
+              titleColor: '#007bff',
+              bodyColor: '#333',
+              borderColor: '#ccc',
+              borderWidth: 1,
+              padding: 10,
               callbacks: {
                 label: function (context) {
                   return `${
                     context.dataset.label
-                  }: RM${context.parsed.y.toFixed(2)}`;
+                  }: RM ${context.parsed.y.toFixed(2)}`;
                 },
               },
             },
           },
           elements: {
             point: {
-              radius: 5,
-              backgroundColor: 'white',
+              radius: 6,
+              backgroundColor: '#fff',
               borderColor: '#007bff',
               borderWidth: 2,
-              hoverRadius: 7,
+              hoverRadius: 9,
             },
             line: {
-              borderWidth: 3,
+              borderWidth: 2,
+              // Smooth curve
+            },
+          },
+          scales: {
+            x: {
+              ticks: {
+                color: '#555',
+                font: {
+                  size: 12,
+                },
+                callback: function (value: any, index: number, ticks: any) {
+                  // Format x-axis label as day (Mon, Tue, etc.)
+                  const label = this.getLabelForValue
+                    ? this.getLabelForValue(value)
+                    : value;
+                  // Try to parse label as date
+                  const date = new Date(label);
+                  if (!isNaN(date.getTime())) {
+                    return date.toLocaleDateString('en-US', {
+                      weekday: 'short',
+                    });
+                  }
+                  return label;
+                },
+              },
+              grid: {
+                display: false,
+              },
+            },
+            y: {
+              ticks: {
+                callback: function (value) {
+                  return `RM ${value}`;
+                },
+                color: '#555',
+                font: {
+                  size: 12,
+                },
+              },
+              grid: {
+                color: '#eee',
+              },
             },
           },
         },

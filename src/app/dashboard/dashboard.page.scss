@@ -211,7 +211,7 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
 }
 
 .budget-list {
-  padding: 10px 12px;
+  padding: 10px 0px;
   background: transparent;
 }
 
@@ -219,7 +219,7 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
   --inner-padding-end: 8px;
   --min-height: 90px;
   align-items: flex-start;
-  border-radius: 20px;
+  border-radius: 12px;
 
   .budget-icon {
     font-size: 2rem;
