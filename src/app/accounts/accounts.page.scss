@@ -3,23 +3,38 @@
   border-radius: 12px;
   margin-bottom: 12px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-  padding: 20px;
 }
 
-.account-icon{
+.account-icon {
   font-size: 24px;
   color: #4a90e2;
   margin-left: 12px;
+  margin-right: 16px;
 }
 
-.account-name{
+.label {
+  padding: 20px 0px;
+  margin: 0px;
+}
+
+.account-name {
   font-size: 18px;
   font-weight: bold;
   color: #333333;
 }
 
-.account-balance{
+.account-balance {
   font-size: 16px;
   color: #4ae25e;
   font-weight: 600;
+}
+
+@media (max-width: 790px) {
+  .account-name {
+    font-size: 14px;
+  }
+
+  .account-balance {
+    font-size: 12px;
+  }
 }

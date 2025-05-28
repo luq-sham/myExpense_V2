@@ -81,7 +81,7 @@ export class AddComponent implements OnInit {
         this.categories = res.expense
         this.label = 'Expenses'
       });
-      this.api.postAccountByUser(param).subscribe((res)=>{
+      this.api.getAccountByUser(param).subscribe((res)=>{
         this.accounts = res.return_data
       });
     }
@@ -90,7 +90,7 @@ export class AddComponent implements OnInit {
       this.api.getCategories().subscribe((res)=>{
         this.categories = res.expense
       });
-      this.api.postAccountByUser(param).subscribe((res)=>{
+      this.api.getAccountByUser(param).subscribe((res)=>{
         this.accounts = res.return_data
       })
     }

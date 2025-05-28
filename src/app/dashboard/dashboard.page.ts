@@ -72,7 +72,7 @@ export class DashboardPage {
     };
 
     // Accounts API
-    this.api.postAccountByUser(token).subscribe({
+    this.api.getAccountByUser(token).subscribe({
       next: async (res) => {
         if (res.status_code == 200) {
           this.loading_account = false;
@@ -233,5 +233,9 @@ export class DashboardPage {
     }else{
       this.show_expenses_label = 'Show More'
     }
+  }
+
+  openAccountDetails(account: any) {
+    this.router.navigate(['/account-detail'], { queryParams: { id: account} });
   }
 }

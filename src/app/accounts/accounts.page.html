@@ -1,6 +1,6 @@
 <app-header title="Accounts"></app-header>
 
-<ion-content class="ion-padding">
+<ion-content>
 
   <ion-list lines="none">
 
@@ -25,10 +25,10 @@
     <!-- Real Data -->
     <ng-container *ngIf="!isLoading">
       <ng-container *ngIf="(accounts?.length ?? 0) > 0; else noAccounts">
-        <ion-list style="padding: 16px;">
-            <ion-item button *ngFor="let acc of accounts" class="account-card">
-            <ion-icon [name]="acc.icon" slot="start" class="account-icon"></ion-icon>
-            <ion-label>
+        <ion-list style="padding: 10px 12px;">
+            <ion-item *ngFor="let acc of accounts" class="account-card" button (click)="openAccountDetails(acc.id)">
+            <ion-icon [name]="acc.icon" slot="start" class="account-icon ion-no-margin"></ion-icon>
+            <ion-label class="label">
               <h2 class="account-name">{{ acc.account_name | titlecase }}</h2>
               <p class="account-balance">{{ acc.balance | currency:'RM ':'symbol':'1.2-2' }}</p>
             </ion-label>
@@ -37,12 +37,10 @@
         </ion-list>
       </ng-container>
       <ng-template #noAccounts>
-        <ion-item lines="none">
-          <ion-label color="medium">
-            No accounts found.
-          </ion-label>
-        </ion-item>
-      </ng-template>
+         <div class="ion-padding ion-text-center text-muted">
+           You haven't set up any accounts yet.
+         </div>
+       </ng-template>
     </ng-container>
 
   </ion-list>

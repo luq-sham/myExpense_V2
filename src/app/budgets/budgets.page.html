@@ -1,6 +1,6 @@
 <app-header title="Budget"></app-header>
 
-<ion-content class="ion-padding">
+<ion-content>
   <ng-container *ngIf="loading_budget; else loadedBudgets">
     <ion-list lines="none" class="ion-no-padding budget-list">
       <ion-item *ngFor="let i of [1, 2]" class="budget-item">

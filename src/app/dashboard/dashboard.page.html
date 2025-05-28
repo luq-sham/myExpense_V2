@@ -39,7 +39,7 @@
           <ion-row class="ion-justify-content-center">
             <ng-container *ngIf="account_list.length > 0; else noAccounts">
               <ion-col *ngFor="let item of account_list" size="6" size-sm="4" size-md="3" size-lg="3" >
-                <ion-card button="true" class="account-card ion-activatable ripple-parent" >
+                <ion-card button="true" class="account-card ion-activatable ripple-parent" (click)='openAccountDetails(item.id)'>
                   <ion-card-content class="ion-text-center">
                     <ion-icon [name]="item.icon || 'wallet'" class="account-icon" color="primary" ></ion-icon>
                     <h2 class="account-title">

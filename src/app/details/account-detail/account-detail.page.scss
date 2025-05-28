@@ -1,0 +1,195 @@
+ion-card{
+    border-radius: 0px;
+    box-shadow: none;
+}
+
+.acc-details {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+
+  .acc-avatar {
+    border-radius: 8px;
+    background: var(--ion-color-fav);
+  }
+
+  .acc-icon {
+    font-size: 40px;
+    margin: 12px;
+    color: #fff;
+  }
+
+  .acc-name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+  }
+
+  .acc-type {
+    padding: 4px 8px;
+    font-size: 16px;
+  }
+}
+
+.balance-details {
+  .balance-label {
+    font-size: 18px;
+    color: #000;
+  }
+
+  .balance-amount {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--ion-color-primary);
+  }
+}
+
+// .acc-chart {
+//   margin-top: 16px;
+//   display: flex;
+//   justify-content: center;
+// }
+
+// canvas {
+//   max-width: 90% !important;
+//   height: 50vh !important;
+// }
+
+.acc-transactions {
+  margin-top: 18px;
+  .acc-label {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+  }
+
+  .transaction-list {
+    background: transparent;
+  }
+
+  .transaction-item {
+    --inner-padding-end: 0px;
+    --min-height: 70px;
+
+    .transaction-avatar {
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+
+      &.income {
+        background-color: rgba(var(--ion-color-success-rgb), 0.15);
+        .transaction-icon {
+          color: var(--ion-color-success-shade);
+        }
+      }
+
+      &.expenses {
+        background-color: rgba(var(--ion-color-danger-rgb), 0.1);
+        .transaction-icon {
+          color: var(--ion-color-danger-shade);
+        }
+      }
+    }
+
+    .transaction-icon {
+      font-size: 1.6rem;
+    }
+
+    .transaction-category {
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 2px;
+      color: var(--ion-color-dark-tint);
+    }
+
+    .transaction-account {
+      font-size: 0.85rem;
+      color: var(--ion-color-medium-shade);
+    }
+
+    .transaction-details {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .transaction-amount {
+      font-weight: bold;
+      font-size: 1rem;
+      margin-bottom: 2px;
+
+      &.income {
+        color: var(--ion-color-success-shade);
+      }
+      &.expenses {
+        color: var(--ion-color-danger-shade);
+      }
+    }
+
+    .transaction-date {
+      font-size: 0.75rem;
+      color: var(--ion-color-medium-shade);
+    }
+  }
+}
+
+@media (max-width: 790px) {
+  .acc-details {
+    .acc-name {
+      font-size: 18px;
+    }
+
+    .acc-type {
+      font-size: 14px;
+    }
+  }
+
+  .balance-details {
+    .balance-amount {
+      font-size: 20px;
+    }
+    .balance-label {
+      font-size: 14px;
+    }
+  }
+
+  //   canvas {
+  //     max-width: 100% !important;
+  //     height: 50vh !important;
+  //   }
+
+  .acc-transactions {
+    margin-top: 18px;
+    .acc-label {
+      font-size: 14px;
+    }
+  }
+
+  .transaction-item {
+    --min-height: 65px;
+    .transaction-avatar {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+    .transaction-icon {
+      font-size: 1.4rem;
+    }
+    .transaction-category {
+      font-size: 0.9rem;
+    }
+    .transaction-account {
+      font-size: 0.8rem;
+    }
+    .transaction-amount {
+      font-size: 0.9rem;
+    }
+    .transaction-date {
+      font-size: 0.7rem;
+    }
+  }
+}
