@@ -105,7 +105,7 @@
 
       <ng-template #transactionContent>
         <ion-list *ngIf="transactions.length > 0; else noTransactions" lines="full" class="transaction-list" >
-          <ion-item *ngFor="let record of transactions" button detail="false" class="transaction-item" >
+          <ion-item *ngFor="let record of transactions" button detail="false" class="transaction-item" (click)="openTransactionDetails(record.id)">
             <ion-avatar slot="start" class="transaction-avatar" [ngClass]="record.type" >
               <ion-icon [name]="record.icon || (record.type === 'income' ? 'arrow-up' : 'arrow-down')" class="transaction-icon" ></ion-icon>
             </ion-avatar>
@@ -154,6 +154,9 @@
           </ion-list>
           <div class="ion-padding ion-text-center text-muted" style="color: #000">
             No recent transactions found.
+          </div>
+          <div class="show-link" style="margin:18px 14px">
+            <a (click)="transactionsList()">Show More</a>
           </div>
         </ng-template>
       </ng-template>
@@ -265,9 +268,12 @@
               <ion-skeleton-text style="width: 60px; height: 16px"></ion-skeleton-text>
             </ion-note>
           </ion-item>
-          <ion-item lines="none" class="ion-text-center ion-padding">
-            <ion-label color="medium">No budget data available.</ion-label>
-          </ion-item>
+          <div class="ion-padding ion-text-center text-muted" style="color: #000">
+            No budget found.
+          </div>
+          <div class="show-link">
+            <a (click)="budgetsList()">Show More</a>
+          </div>
         </ion-list>
 
         <ng-template #budgetList>

@@ -28,7 +28,7 @@
             {{ records.date | date: 'dd-MM-yyyy' }}
           </div>
         </ion-item>  
-         <ion-item *ngFor="let record of records.transactions" button detail="false" class="transaction-item">
+         <ion-item *ngFor="let record of records.transactions" button detail="false" class="transaction-item" (click)="openTransactionDetails(record.id)">
             <ion-avatar slot="start" class="transaction-avatar" [ngClass]="record.transaction_type">
                <ion-icon [name]="record.icon || (record.transaction_type === 'income' ? 'arrow-up' : 'arrow-down')" class="transaction-icon"></ion-icon>
              </ion-avatar>
@@ -52,8 +52,14 @@
 
        <ng-template #noTransactions>
          <div class="ion-padding ion-text-center text-muted">
-           No recent transactions found.
+           You haven't set up any transactions yet. Tap '+' to create one.
          </div>
        </ng-template>
      </ng-template>
 </ion-content>
+
+<ion-fab slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab-button color="secondary" (click)="addTransaction()">
+    <ion-icon name="add-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

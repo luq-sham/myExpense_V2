@@ -31,7 +31,7 @@
   <ng-template #loadedBudgets>
     <ion-list *ngIf="budgets?.length === 0; else budgetList" lines="none">
       <div class="ion-padding ion-text-center text-muted" style="color: #000">
-        You haven't set up any budgets yet.
+        You haven't set up any budgets yet. Tap '+' to create one.
       </div>
     </ion-list>
 
@@ -85,7 +85,7 @@
 
 <ion-fab slot="fixed" vertical="bottom" horizontal="end">
   <ion-fab-button color="secondary">
-    <ion-icon name="chevron-up"></ion-icon>
+    <ion-icon name="add-outline"></ion-icon>
   </ion-fab-button>
   <ion-fab-list side="top">
     <ion-fab-button (click)="addBudget()" data-desc="Add Budget" color="success" >

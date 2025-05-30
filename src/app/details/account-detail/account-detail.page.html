@@ -12,73 +12,137 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-no-padding ion-no-margin">
-  <ion-grid class="ion-no-padding">
-    <ion-row>
-      <ion-col>
-        <ion-card class="ion-no-margin">
-          <ion-card-content class="ion-padding">
-            <div class="acc-details">
-              <ion-avatar slot="start" class="acc-avatar">
-                <ion-icon [name]="accDetails?.icon" class="acc-icon"></ion-icon>
-              </ion-avatar>
-              <ion-label class="ion-margin">
-                <h2 class="acc-name">{{ accDetails?.account_name | titlecase }}</h2>
-                <ion-badge class="acc-type" color="secondary">{{accDetails?.account_type}}</ion-badge>
-              </ion-label>
-            </div>
-            <div class="balance-details">
-              <ion-label class="acc-balance">
-                <p class="balance-label">Current Balance</p>
-                <h2 class="balance-amount">{{ accDetails?.balance | currency: 'RM ' }}</h2>
-              </ion-label>
-            </div>
-            <!-- <div class="acc-chart">
+<ion-content class="ion-no-padding">
+  <ion-card class="ion-no-margin">
+    <ion-card-content class="ion-padding">
+      <div class="acc-details">
+        <ion-avatar slot="start" class="acc-avatar">
+          <ion-icon [name]="accDetails?.icon" class="acc-icon"></ion-icon>
+        </ion-avatar>
+        <ion-label class="ion-margin">
+          <h2 class="acc-name">{{ accDetails?.account_name | titlecase }}</h2>
+          <ion-badge class="acc-type" color="secondary"
+            >{{accDetails?.account_type}}</ion-badge
+          >
+        </ion-label>
+      </div>
+      <div class="balance-details">
+        <ion-label class="acc-balance">
+          <p class="balance-label">Current Balance</p>
+          <h2 class="balance-amount">
+            {{ accDetails?.balance | currency: 'RM ' }}
+          </h2>
+        </ion-label>
+      </div>
+      <!-- <div class="acc-chart">
               <canvas #lineBalance></canvas>
             </div> -->
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+    </ion-card-content>
+  </ion-card>
 
-  <ion-grid class="ion-no-padding ion-margin-top " *ngIf="transactions?.length > 0">
-    <ion-row>
-      <ion-col>
-        <ion-card class="ion-no-margin">
-          <ion-card-content>
-            <div class="acc-transactions" >
-              <h2 class="acc-label">Last Transactions Record</h2>
-              <ion-list *ngIf="transactions?.length > 0" lines="full" class="transaction-list" >
-                <ion-item *ngFor="let record of transactions" button detail="false" class="transaction-item" >
-                  <ion-avatar slot="start" class="transaction-avatar" [ngClass]="record.transaction_type" >
-                    <ion-icon [name]="record.icon || (record.transaction_type === 'income' ? 'arrow-up' : 'arrow-down')" class="transaction-icon" ></ion-icon>
-                  </ion-avatar>
-                  <ion-label>
-                    <h2 class="transaction-category">
-                      {{ record.transaction_category | titlecase }}
-                    </h2>
-                    <p class="transaction-account ion-text-capitalize">
-                      {{ record.account_name }}
-                    </p>
-                  </ion-label>
-                  <div slot="end" class="ion-text-right transaction-details">
-                    <p class="transaction-amount" [ngClass]="record.transaction_type">
-                      {{ record.transaction_type === 'income' ? '+' : '-' }}{{ record.transaction_amount | currency: 'MYR ' }}
-                    </p>
-                    <p class="transaction-date">
-                      {{ record.transaction_date | date: 'MMM d, h:mm a' }}
-                    </p>
-                  </div>
-                </ion-item>
-                <ion-button fill="clear" (click)="getTransactionsData(true)" *ngIf="displayMore" style="display: flex;justify-content: center;">
-                  Load More
-                </ion-button>
-              </ion-list>
+  <ion-card class="ion-no-margin">
+    <ion-card-content>
+      <ng-container *ngIf="loading_transaction; else transactionContent">
+        <ion-list lines="none">
+          <ion-item *ngFor="let i of [1, 2, 3]">
+            <ion-avatar
+              slot="start"
+              class="transaction-avatar placeholder-avatar"
+            >
+              <ion-skeleton-text
+                animated
+                style="width: 100%; height: 100%"
+              ></ion-skeleton-text>
+            </ion-avatar>
+            <ion-label>
+              <h2>
+                <ion-skeleton-text
+                  animated
+                  style="width: 60%; height: 16px"
+                ></ion-skeleton-text>
+              </h2>
+              <p>
+                <ion-skeleton-text
+                  animated
+                  style="width: 40%; height: 14px"
+                ></ion-skeleton-text>
+              </p>
+            </ion-label>
+            <div slot="end" class="ion-text-right placeholder-amount">
+              <ion-skeleton-text
+                animated
+                style="width: 70px; height: 16px; margin-bottom: 4px"
+              ></ion-skeleton-text>
+              <ion-skeleton-text
+                animated
+                style="width: 50px; height: 12px"
+              ></ion-skeleton-text>
             </div>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+          </ion-item>
+        </ion-list>
+      </ng-container>
+
+      <ng-template #transactionContent>
+        <div class="acc-transactions">
+          <h2 class="acc-label">Last Transactions Record</h2>
+          <ion-list
+            *ngIf="transactions?.length > 0 else noAccTracsactions"
+            lines="full"
+            class="transaction-list"
+          >
+            <ion-item
+              *ngFor="let record of transactions"
+              button
+              detail="false"
+              class="transaction-item"
+            >
+              <ion-avatar
+                slot="start"
+                class="transaction-avatar"
+                [ngClass]="record.transaction_type"
+              >
+                <ion-icon
+                  [name]="record.icon || (record.transaction_type === 'income' ? 'arrow-up' : 'arrow-down')"
+                  class="transaction-icon"
+                ></ion-icon>
+              </ion-avatar>
+              <ion-label>
+                <h2 class="transaction-category">
+                  {{ record.transaction_category | titlecase }}
+                </h2>
+                <p class="transaction-account ion-text-capitalize">
+                  {{ record.account_name }}
+                </p>
+              </ion-label>
+              <div slot="end" class="ion-text-right transaction-details">
+                <p
+                  class="transaction-amount"
+                  [ngClass]="record.transaction_type"
+                >
+                  {{ record.transaction_type === 'income' ? '+' : '-' }}{{
+                  record.transaction_amount | currency: 'MYR ' }}
+                </p>
+                <p class="transaction-date">
+                  {{ record.transaction_date | date: 'MMM d, h:mm a' }}
+                </p>
+              </div>
+            </ion-item>
+            <ion-button
+              fill="clear"
+              (click)="getTransactionsData(true)"
+              *ngIf="displayMore"
+              style="display: flex; justify-content: center"
+            >
+              Load More
+            </ion-button>
+          </ion-list>
+          <ng-template #noAccTracsactions>
+            <div class="ion-padding ion-text-center" style="color: black">
+              You haven't set up any transaction in this account.
+            </div>
+          </ng-template>
+        </div>
+      </ng-template>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

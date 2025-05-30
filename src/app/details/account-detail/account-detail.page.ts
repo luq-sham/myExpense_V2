@@ -1,17 +1,18 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton, IonIcon, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonAvatar, IonLabel, IonBadge, IonList, IonItem, } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton, IonIcon, IonCard, IonCardContent, IonAvatar, IonLabel, IonBadge, IonList, IonItem, IonSkeletonText, } from '@ionic/angular/standalone';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
-import { Chart } from 'chart.js/auto';
+import { LoadingService } from 'src/app/services/loading.service';
+// import { Chart } from 'chart.js/auto';
 
 @Component({
   selector: 'app-account-detail',
   templateUrl: './account-detail.page.html',
   styleUrls: ['./account-detail.page.scss'],
   standalone: true,
-  imports: [ IonItem, IonList, IonBadge, IonLabel, IonAvatar, IonCardContent, IonCard, IonCol, IonRow, IonGrid, IonIcon, IonButton, IonBackButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ],
+  imports: [ IonSkeletonText, IonItem, IonList, IonBadge, IonLabel, IonAvatar, IonCardContent, IonCard, IonIcon, IonButton, IonBackButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ],
 })
 export class AccountDetailPage implements OnInit {
   accountId: any;
@@ -20,11 +21,17 @@ export class AccountDetailPage implements OnInit {
   displayMore: boolean = true;
   limit: number = 5;
 
+  loading_transaction: boolean = true;
+
   @ViewChild('lineBalance', { static: false })
   lineBalance!: ElementRef<HTMLCanvasElement>;
   lineBalanceChart: any;
 
-  constructor(private router: ActivatedRoute, private api: ApiService) {}
+  constructor(
+    private router: ActivatedRoute,
+    private api: ApiService,
+    private loading: LoadingService
+  ) {}
 
   ngOnInit() {
     this.router.queryParams.subscribe((param) => {
@@ -45,6 +52,7 @@ export class AccountDetailPage implements OnInit {
   getTransactionsData(loadMore = false) {
     if (loadMore) {
       this.limit += 5;
+      this.loading.showLoading();
     }
     const params = {
       accountID: this.accountId,
@@ -54,7 +62,9 @@ export class AccountDetailPage implements OnInit {
       if (this.limit >= res.totalCount) {
         this.displayMore = false;
       }
+      this.loading.hide();
       this.transactions = res.return_data;
+      this.loading_transaction = false;
     });
   }
 

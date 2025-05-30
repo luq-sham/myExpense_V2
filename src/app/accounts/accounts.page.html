@@ -38,7 +38,7 @@
       </ng-container>
       <ng-template #noAccounts>
          <div class="ion-padding ion-text-center text-muted">
-           You haven't set up any accounts yet.
+           You haven't set up any accounts yet.Tap '+' to create one.
          </div>
        </ng-template>
     </ng-container>
@@ -46,3 +46,9 @@
   </ion-list>
 
 </ion-content>
+
+<ion-fab slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab-button color="secondary" (click)="addAccount()">
+    <ion-icon name="add-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

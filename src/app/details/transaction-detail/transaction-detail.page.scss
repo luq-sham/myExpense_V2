@@ -1,0 +1,159 @@
+:host {
+  --page-margin: 16px;
+}
+
+.transaction-header {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.icon-container {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  transition: all 0.3s ease;
+
+  &.expense {
+    background-color: var(--ion-color-danger-tint);
+    ion-icon {
+      color: var(--ion-color-danger-2);
+    }
+  }
+
+  &.income {
+    background-color: var(--ion-color-success-tint);
+    ion-icon {
+      color: var(--ion-color-success-2);
+    }
+  }
+}
+
+// Skeleton styles
+.skeleton-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  overflow: hidden;
+
+  ion-skeleton-text {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+  }
+}
+
+.transaction-info {
+  .category {
+    color: var(--ion-color-medium);
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .description {
+    font-size: 12;
+    font-size: small;
+  }
+
+  .amount {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 1rem 0;
+
+    &.expense {
+      color: var(--ion-color-danger);
+    }
+
+    &.income {
+      color: var(--ion-color-success);
+    }
+  }
+
+  .date {
+    color: var(--ion-color-medium);
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  .relative-time {
+    color: var(--ion-color-medium);
+    margin: 0.25rem 0 0;
+    font-size: 0.8rem;
+    font-style: italic;
+  }
+}
+
+.details-card {
+  margin: var(--page-margin);
+  border-radius: 16px;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+
+  ion-card-header {
+    padding-bottom: 0;
+  }
+
+  ion-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ion-color-dark);
+  }
+
+  ion-item {
+    --padding-start: 0;
+    --inner-padding-end: 0;
+
+    ion-label {
+      display: flex;
+      justify-content: space-between;
+    }
+    h3 {
+      color: var(--ion-color-dark);
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    p {
+      color: var(--ion-color-dark);
+      font-weight: 700;
+    }
+    .transaction-desc {
+      font-size: 0.9rem;
+      font-weight: 100;
+    }
+  }
+}
+
+.action-buttons {
+  padding-bottom: calc(var(--page-margin) + env(safe-area-inset-bottom));
+
+  .button-group {
+    display: grid;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  ion-skeleton-text {
+    border-radius: 4px;
+  }
+}
+
+// Background colors based on transaction type
+.expense-bg {
+  background: var(--ion-color-danger-2-tint);
+}
+
+.income-bg {
+  background: var(--ion-color-success-2-tint);
+}
+
+@media (max-width: 790px) {
+  ion-label {
+    display:flex;
+    flex-direction: column;
+  }
+}

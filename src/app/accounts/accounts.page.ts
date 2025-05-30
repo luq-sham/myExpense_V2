@@ -1,17 +1,19 @@
 import { Component, OnInit, Query } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonNote, IonList, IonCard, IonItem, IonIcon, IonLabel, IonSkeletonText, IonAvatar } from '@ionic/angular/standalone';
+import { IonContent, IonNote, IonList, IonCard, IonItem, IonIcon, IonLabel, IonSkeletonText, IonAvatar, IonFab, IonFabButton, } from '@ionic/angular/standalone';
 import { HeaderComponent } from '../components/header/header.component';
 import { ApiService } from '../services/api.service';
 import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular/standalone';
+import { AddComponent } from '../forms/add/add.component';
 
 @Component({
   selector: 'app-accounts',
   templateUrl: './accounts.page.html',
   styleUrls: ['./accounts.page.scss'],
   standalone: true,
-  imports: [IonAvatar, IonSkeletonText, IonLabel, IonIcon, IonItem, IonCard, IonList, IonNote, IonContent, CommonModule, FormsModule, HeaderComponent]
+  imports: [ IonFabButton, IonFab, IonAvatar, IonSkeletonText, IonLabel, IonIcon, IonItem, IonCard, IonList, IonNote, IonContent, CommonModule, FormsModule, HeaderComponent]
 })
 export class AccountsPage {
   accounts: any[] = [];
@@ -19,7 +21,8 @@ export class AccountsPage {
 
   constructor(
     private api: ApiService,
-    private router: Router
+    private router: Router,
+    private modal: ModalController
   ) {}
 
   ngOnInit() {
@@ -40,5 +43,22 @@ export class AccountsPage {
   openAccountDetails(account: any) {
     this.router.navigate(['/account-detail'], { queryParams: { id: account} });
   }
+
+  async addAccount() {
+      const param = {
+        formID: 1,
+        title: 'New Account',
+      };
+      const modal = await this.modal.create({
+        component: AddComponent,
+        componentProps: param,
+      });
+      await modal.present();
+      const { data } = await modal.onDidDismiss();
+  
+      if (data) {
+        this.getAccount();
+      }
+    }
 }
 

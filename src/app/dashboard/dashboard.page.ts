@@ -238,4 +238,8 @@ export class DashboardPage {
   openAccountDetails(account: any) {
     this.router.navigate(['/account-detail'], { queryParams: { id: account} });
   }
+
+  openTransactionDetails(transaction: any){
+    this.router.navigate(['/transaction-detail'], { queryParams: { id: transaction } });
+  }
 }

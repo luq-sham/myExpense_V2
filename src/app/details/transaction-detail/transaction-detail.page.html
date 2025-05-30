@@ -1,13 +1,120 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>transaction-detail</ion-title>
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar color="fav">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/transactions" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Transaction Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="pencil-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">transaction-detail</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- Skeleton Loading -->
+  <div class="transaction-header ion-padding" *ngIf="isLoading">
+    <div class="skeleton-icon">
+      <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+    </div>
+    
+    <div class="transaction-info ion-text-center">
+      <ion-skeleton-text [animated]="true" style="width: 30%; margin: 8px auto;"></ion-skeleton-text>
+      <ion-skeleton-text [animated]="true" style="width: 50%; margin: 16px auto;"></ion-skeleton-text>
+      <ion-skeleton-text [animated]="true" style="width: 70%; margin: 24px auto; height: 32px;"></ion-skeleton-text>
+      <ion-skeleton-text [animated]="true" style="width: 40%; margin: 8px auto;"></ion-skeleton-text>
+      <ion-skeleton-text [animated]="true" style="width: 25%; margin: 4px auto;"></ion-skeleton-text>
+    </div>
+  </div>
+
+  <!-- Transaction Summary Card -->
+  <div class="transaction-header ion-padding" *ngIf="!isLoading" [class]="transaction?.transaction_type === 'expenses' ? 'expense-bg' : 'income-bg'">
+    <div class="icon-container" [class]="transaction?.transaction_type === 'expenses' ? 'expense' : 'income'">
+      <ion-icon [name]="transaction?.icon" size="large"></ion-icon>
+    </div>
+    
+    <div class="transaction-info ion-text-center">
+      <h6 class="category">{{ transaction?.transaction_category }}</h6>
+      <h1 class="amount" [class]="transaction?.transaction_type === 'expenses' ? 'expense' : 'income'">
+        {{ transaction?.transaction_type === 'expenses' ? '-' : '+' }}{{ transaction?.transaction_amount | currency:'RM ' }}
+      </h1>
+      <p class="date">{{ transaction?.transaction_date | date:'MMMM d, yyyy' }} • {{ transaction?.transaction_date | date:'h:mm a'}}</p>
+      <!-- <p class="relative-time">{{ relativeTime }}</p> -->
+    </div>
+  </div>
+
+  <!-- Transaction Details Card -->
+  <ion-card class="details-card" *ngIf="!isLoading">
+    <ion-card-header>
+      <ion-card-title>Details</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list lines="none">
+        <ion-item>
+          <ion-label>
+            <h3>Account</h3>
+            <p>{{ transaction?.account_name | titlecase}}</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <h3>Category</h3>
+            <p>{{ transaction?.transaction_category | titlecase}}</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <h3>Date</h3>
+            <p>{{ transaction?.transaction_date | date:'MMMM d, yyyy' }}</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <h3>Time</h3>
+            <p>{{ transaction?.transaction_date | date:'h:mm a'}}</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <h3>Transaction ID</h3>
+            <p>{{ transaction?.id }}</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <h3>Descriptions:</h3>
+            <p class="transaction-desc">{{ transaction?.id }}</p>
+          </ion-label>
+        </ion-item>
+
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Action Buttons -->
+  <div class="action-buttons ion-padding" *ngIf="!isLoading">
+    <!-- <ion-button expand="block" color="primary">
+      <ion-icon name="receipt-outline" slot="start"></ion-icon>
+      View Receipt
+    </ion-button> -->
+
+    <div class="button-group">
+      <!-- <ion-button expand="block" fill="outline" color="medium" (click)="onShare()">
+        <ion-icon name="share-outline" slot="start"></ion-icon>
+        Share
+      </ion-button> -->
+
+      <ion-button expand="block" fill="outline" color="danger">
+        <ion-icon name="trash-outline" slot="start"></ion-icon>
+        Delete
+      </ion-button>
+    </div>
+  </div>
 </ion-content>

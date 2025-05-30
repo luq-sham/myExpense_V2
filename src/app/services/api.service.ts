@@ -77,6 +77,11 @@ export class ApiService {
     return this.http.post(api, data);
   }
 
+  getTransactionByID(id: any): Observable<any> {
+    const api = this.url + 'api/get_transaction_by_id';
+    return this.http.post(api, id);
+  }
+
   //////////////////////////////////////////////////////////////////////////////////
 
   postAddBudget(data: any): Observable<any> {
