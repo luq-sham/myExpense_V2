@@ -46,16 +46,16 @@ ion-card {
   }
 }
 
-// .acc-chart {
-//   margin-top: 16px;
-//   display: flex;
-//   justify-content: center;
-// }
+.acc-chart {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+}
 
-// canvas {
-//   max-width: 90% !important;
-//   height: 50vh !important;
-// }
+canvas {
+  max-width: 90% !important;
+  height: 50vh !important;
+}
 
 .acc-transactions {
   margin-top: 18px;
@@ -158,10 +158,10 @@ ion-card {
     }
   }
 
-  //   canvas {
-  //     max-width: 100% !important;
-  //     height: 50vh !important;
-  //   }
+    canvas {
+      max-width: 100% !important;
+      height: 50vh !important;
+    }
 
   .acc-transactions {
     margin-top: 18px;

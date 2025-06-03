@@ -59,7 +59,7 @@
           </ion-label>
         </ion-item>
 
-        <ion-item>
+        <!-- <ion-item>
           <ion-label>
             <h3>Category</h3>
             <p>{{ transaction?.transaction_category | titlecase}}</p>
@@ -78,7 +78,7 @@
             <h3>Time</h3>
             <p>{{ transaction?.transaction_date | date:'h:mm a'}}</p>
           </ion-label>
-        </ion-item>
+        </ion-item> -->
 
         <ion-item>
           <ion-label>
@@ -89,8 +89,8 @@
 
         <ion-item>
           <ion-label>
-            <h3>Descriptions:</h3>
-            <p class="transaction-desc">{{ transaction?.id }}</p>
+            <h3>Descriptions</h3>
+            <p class="transaction-desc">{{ transaction?.transaction_description }}</p>
           </ion-label>
         </ion-item>
 

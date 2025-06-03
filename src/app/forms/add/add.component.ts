@@ -35,8 +35,8 @@ export class AddComponent implements OnInit {
 
   
   now = new Date();
-  offset = this.now.getTimezoneOffset() * 60000;
-  currentDate = new Date(this.now.getTime() - this.offset).toISOString().slice(0, -1);
+  offset = new Date(this.now.getTime() - this.now.getTimezoneOffset() * 60000);
+  currentDate = new Date().toISOString() /*new Date(this.now.getTime() - this.offset).toISOString().slice(0, -1);*/
 
   types: any = [];
   income:any
@@ -176,8 +176,8 @@ export class AddComponent implements OnInit {
             ...this.transactionForm.value,
             transaction_date: fullDateTime.toISOString(), // full datetime
             user_id: localStorage.getItem('token'),
-            created_at: this.currentDate,
-            updated_at: this.currentDate,
+            created_at: fullDateTime.toISOString(),
+            updated_at: fullDateTime.toISOString(),
           };
           this.loading.showLoading()
           this.api.postAddTransaction(param).subscribe((res)=>{

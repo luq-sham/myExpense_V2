@@ -135,6 +135,10 @@ export class DashboardPage {
   }
 
   renderChart(labels: any, data: any, total_expenses: any) {
+    if (this.barChart) {
+      this.barChart.destroy();
+    }
+    
     this.barChart = new Chart(this.barCanvas.nativeElement, {
       type: 'doughnut',
       data: {
@@ -220,10 +224,6 @@ export class DashboardPage {
       event.target.complete();
       window.location.reload();
     }, 1000);
-  }
-
-  ionViewDidEnter(): void {
-    this.menu.enable(true);
   }
 
   expensesList(){
