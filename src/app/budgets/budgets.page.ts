@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonFab, IonFabButton, IonIcon, IonFabList, IonItem, IonList, IonLabel, IonSkeletonText, IonNote, IonProgressBar, IonBadge, IonChip } from '@ionic/angular/standalone';
+import { IonContent, IonFab, IonFabButton, IonIcon, IonItem, IonList, IonLabel, IonSkeletonText, IonNote, IonProgressBar, IonBadge, IonChip } from '@ionic/angular/standalone';
 import { HeaderComponent } from '../components/header/header.component';
 import { ModalController } from '@ionic/angular/standalone'
 import { AddComponent } from '../forms/add/add.component';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   selector: 'app-budgets',
   templateUrl: './budgets.page.html',
   styleUrls: ['./budgets.page.scss'],
-  imports: [IonChip, IonBadge, IonProgressBar, IonNote, IonSkeletonText, IonLabel, IonList, IonItem, IonFabList, IonIcon, IonFabButton, IonFab, IonContent, CommonModule, FormsModule, HeaderComponent]
+  imports: [IonChip, IonBadge, IonProgressBar, IonNote, IonSkeletonText, IonLabel, IonList, IonItem, IonIcon, IonFabButton, IonFab, IonContent, CommonModule, FormsModule, HeaderComponent]
 })
 export class BudgetsPage implements OnInit {
   loading_budget: boolean = true;

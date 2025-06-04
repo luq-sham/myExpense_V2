@@ -105,7 +105,7 @@ export class DashboardPage {
     });
 
     // Budgets API
-    this.api.getBudgetByUser(token).subscribe({
+    this.api.getBudgetByUserFilter(token).subscribe({
       next: async (res) => {
         if (res.status_code == 200) {
           this.loading_budget = false;

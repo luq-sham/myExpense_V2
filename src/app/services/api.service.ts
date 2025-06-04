@@ -104,6 +104,11 @@ export class ApiService {
     return this.http.post(api, data);
   }
 
+  getBudgetByUserFilter(data: any): Observable<any> {
+    const api = this.url + 'api/get_budget_by_user_filter';
+    return this.http.post(api, data);
+  }
+
   getBudgetByID(id: any): Observable<any> {
     const api = this.url + 'api/get_budget_by_id';
     return this.http.post(api, id);

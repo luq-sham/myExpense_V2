@@ -36,10 +36,10 @@ export class AddComponent implements OnInit {
 
   
   now = new Date();
-  offset = new Date(this.now.getTime() - this.now.getTimezoneOffset() * 60000);
-  currentDate = new Date().toISOString() /*new Date(this.now.getTime() - this.offset).toISOString().slice(0, -1);*/
+  currentDate = new Date(this.now.getTime() - this.now.getTimezoneOffset() * 60000).toISOString();
   minDate = this.currentDate; // or dynamically set earlier dates
   maxDate = '2040-12-31'; // or dynamically based on your needs
+
 
   types: any = [];
   income:any
@@ -63,6 +63,7 @@ export class AddComponent implements OnInit {
   ngOnInit() {
     this.formBuilder();
     this.getData();
+    console.log(this.currentDate)
   }
 
   getData() {
@@ -183,8 +184,8 @@ export class AddComponent implements OnInit {
       this.alert.customComfirmationAlert('New Transaction','Are you sure to added this transaction?').then((respons) => {
         if(respons == 'confirm'){
           const dateOnly = this.transactionForm.value.transaction_date;
-          const now = new Date();
-          const fullDateTime = new Date(dateOnly + 'T' + now.toTimeString().slice(0,8));
+          const currentTime = new Date(this.currentDate).toTimeString().slice(0,8);
+          const fullDateTime = new Date(dateOnly + 'T' + currentTime);
           const param = {
             ...this.transactionForm.value,
             transaction_date: fullDateTime.toISOString(), // full datetime

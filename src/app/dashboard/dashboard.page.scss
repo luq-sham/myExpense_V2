@@ -266,7 +266,6 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
   .budget-type {
     font-size: 0.85rem;
     color: var(--ion-color-medium-shade);
-    margin-bottom: 10px;
     text-transform: capitalize;
     word-break: break-word;
   }
@@ -276,8 +275,7 @@ ion-card[color="sub-fav"] .section-header ion-card-title {
     color: var(--ion-color-medium-shade);
 
     .budget-row {
-      display: flex;
-      justify-content: space-between;
+      text-align: right;
       margin-bottom: 4px;
       flex-wrap: wrap;
 

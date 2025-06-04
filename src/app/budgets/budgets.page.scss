@@ -101,8 +101,7 @@ ion-fab-button[data-desc]::after {
     color: var(--ion-color-medium-shade);
 
     .budget-row {
-      display: flex;
-      justify-content: space-between;
+      text-align: right;
       margin-bottom: 4px;
       flex-wrap: wrap;
 

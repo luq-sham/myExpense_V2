@@ -123,7 +123,7 @@
                 currency: 'MYR ' }}
               </p>
               <p class="transaction-date">
-                {{ record.date | date: 'MMM d, h:mm a' }}
+                {{ record.date | date: 'MMM d, h:mm a':'UTC' }}
               </p>
             </div>
           </ion-item>
@@ -295,19 +295,14 @@
                 <p class="budget-type">{{ budget.accounts }}</p>
                 <div class="budget-summary">
                   <div class="budget-row">
-                    <span>Used:</span>
-                    <span>{{ budget.used_amount | currency: 'MYR ' }}</span>
-                  </div>
-                  <div class="budget-row">
-                    <span>Remaining:</span>
                     <span [ngClass]="{'low-balance': (budget.balance_budget / budget.amount) < 0.1, 'overbudget': (budget.balance_budget / budget.amount) < 1}" >
-                      {{ budget.balance_budget | currency: 'MYR ' }}
+                      {{ 100 - (budget.balance_budget / budget.amount)*100 }}%
                     </span>
                   </div>
                   <ion-progress-bar class="budget-progress" [value]="budget.used_amount / budget.amount" [color]="getProgressColor(budget.used_amount,budget.amount)" ></ion-progress-bar>
                   <p class="update-date">
                     <ion-icon name="time-outline" class="update-icon" ></ion-icon>
-                    Updated: {{ budget.updated_at | date:'short' }}
+                    Updated: {{ budget.updated_at | date:'d/M/YY, hh:mm a':'UTC' }}
                   </p>
                 </div>
                 <div *ngIf="budget.category?.length">
