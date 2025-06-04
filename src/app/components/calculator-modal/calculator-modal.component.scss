@@ -1,0 +1,24 @@
+.calculator-modal {
+  color: white;
+
+  .calculator-display {
+    text-align: right;
+    font-size: 2em;
+    margin: 10px 0;
+    padding: 10px;
+    background: #bebebe;
+    border-radius: 8px;
+  }
+
+  .calculator-buttons {
+    ion-button {
+      font-size: 16px;
+    }
+  }
+
+}
+.modal-actions {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}

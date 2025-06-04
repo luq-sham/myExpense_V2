@@ -1,0 +1,63 @@
+.savings-card {
+  --ion-card-background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+  transition: transform 0.2s ease;
+
+  ion-card-header {
+    padding-bottom: 0;
+
+    ion-card-title {
+      font-size: 1.3em;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+  }
+
+  .savings-info {
+    margin-bottom: 12px;
+
+    .savings-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 6px 0;
+      font-size: 0.95em;
+
+      .icon {
+        font-size: 1.2em;
+        color: #6c757d;
+        margin-right: 6px;
+      }
+
+      .label {
+        flex-grow: 1;
+        color: #555;
+      }
+
+      .amount {
+        font-weight: 600;
+        color: #333;
+      }
+
+      .saved {
+        font-weight: 600;
+        color: #388e3c;
+      }
+    }
+  }
+
+  .progress-bar {
+    height: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+  }
+
+  .progress-percent {
+    text-align: right;
+    font-size: 0.85em;
+    color: #6c757d;
+    margin-top: 4px;
+  }
+}

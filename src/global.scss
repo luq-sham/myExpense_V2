@@ -43,3 +43,14 @@ ion-content {
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
 }
+
+@media (max-width: 690px) {
+  .custom-modal {
+    --background: #fff;
+    --border-radius: 20px;
+    --box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    --height: 50%;
+    --width: 90%;
+    margin: auto;
+  }
+}

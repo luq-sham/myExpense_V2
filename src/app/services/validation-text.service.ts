@@ -49,7 +49,13 @@ export class ValidationTextService {
             {label: 'Budget Account', error: 'required', message: 'Budget account is required.'}
           ],
           
-
+          //new Savings
+          savings_name:[
+            {label: 'Savings Name', error: 'required', message: 'Savings name is required.'}
+          ],
+          savings_amount:[
+            {label: 'Savings Amount', error: 'required', message: 'Savings amount is required.'}
+          ],
         }
       }
       default: {

@@ -1,0 +1,48 @@
+<ion-content class="ion-padding calculator-modal">
+  <div class="calculator-display">
+    {{ display }}
+  </div>
+
+  <div class="calculator-buttons">
+    <ion-grid>
+      <ion-row>
+        <ion-col *ngFor="let btn of ['1','2','3','+']">
+          <ion-button expand="block" class="ion-no-padding ion-no-margin" (click)="append(btn)">{{ btn }}</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col *ngFor="let btn of ['4','5','6','-']">
+          <ion-button expand="block" class="ion-no-padding ion-no-margin" (click)="append(btn)">{{ btn }}</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col *ngFor="let btn of ['7','8','9','*']">
+          <ion-button expand="block" class="ion-no-padding ion-no-margin" (click)="append(btn)">{{ btn }}</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button expand="block" class="ion-no-padding ion-no-margin" (click)="append('.')">.</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" class="ion-no-padding ion-no-margin" (click)="append('0')">0</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" class="ion-no-padding ion-no-margin" (click)="calculate()">=</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" class="ion-no-padding ion-no-margin" (click)="append('/')">/</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    
+  </div>
+</ion-content>
+<ion-footer>
+<div class="modal-actions">
+  <ion-button expand="full" fill="clear" color="danger" (click)="cancel()">CANCEL</ion-button>
+      <ion-button expand="full" fill="clear" (click)="clear()">CLEAR</ion-button>
+      <ion-button expand="full" fill="clear"  (click)="insert()">INSERT</ion-button>
+    </div>
+</ion-footer>

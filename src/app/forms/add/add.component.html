@@ -181,10 +181,79 @@
           <app-error-message *ngFor="let val of validations.budget_account" [field]="BudgetForm.get('budget_account')!" [error]="val.error" [message]="val.message" [submitted]="isSubmitted"></app-error-message>
         </div>
 
+        <!-- Budget Notice -->
+        <div class="item-container">
+          <ion-item lines="none" class="form">
+            <ion-icon name="notifications-outline" slot="start" class="icon"></ion-icon>
+            <ion-label>Notify me if I go over budget</ion-label>
+            <ion-toggle
+              formControlName="notice"
+              label="Notify me if I go over budget"
+              (ionChange)="BudgetForm.get('notice')?.setValue($event.detail.checked)">
+            </ion-toggle>
+          </ion-item>
+        </div>
+
       </ion-list>
     </form>
   </div>
 
+  <!-- New Savings -->
+  <div class="ion-padding" *ngIf="formID == 4">
+    <form [formGroup]="SavingsForm" (ngSubmit)="onSubmit()">
+      <ion-list lines="full">
+
+        <!-- Savings Name -->
+        <div class="item-container">
+          <ion-item lines="none" class="form">
+            <ion-icon name="reader-outline" slot="start" class="icon" ></ion-icon>
+            <ion-input label="Savings Name" labelPlacement="stacked" formControlName="savings_name" type="text" placeholder="Enter Savings Name"></ion-input>
+          </ion-item>
+          <app-error-message *ngFor="let val of validations.savings_name" [field]="SavingsForm.get('savings_name')!" [error]="val.error" [message]="val.message" [submitted]="isSubmitted"></app-error-message>
+        </div>
+
+        <!-- Savings Amount -->
+        <div class="item-container">
+          <ion-item lines="none" class="form">
+            <ion-icon name="cash-outline" slot="start" class="icon" ></ion-icon>
+            <ion-input label="Target Amount (RM)" labelPlacement="stacked" formControlName="savings_amount" type="number" placeholder="Enter Savings Amount"></ion-input>
+            <ion-note slot="end" color="medium">MYR</ion-note>
+          </ion-item>
+          <app-error-message *ngFor="let val of validations.savings_amount" [field]="SavingsForm.get('savings_amount')!" [error]="val.error" [message]="val.message" [submitted]="isSubmitted"></app-error-message>
+        </div>
+
+        <!-- Savings Note -->
+        <div class="item-container">
+          <ion-item lines="none" class="form">
+            <ion-icon name="document-text-outline" slot="start" class="icon" ></ion-icon>
+            <ion-textarea label="Note" labelPlacement="stacked" rows = "3" formControlName="savings_note"></ion-textarea>
+          </ion-item>
+          <app-error-message *ngFor="let val of validations.savings_note" [field]="SavingsForm.get('savings_note')!" [error]="val.error" [message]="val.message" [submitted]="isSubmitted"></app-error-message>
+        </div>
+
+        <!-- Savings Date -->
+        <div class="item-container">
+          <ion-item lines="none" class="form">
+            <ion-icon name="calendar-outline" slot="start" class="icon" ></ion-icon>
+            <ion-input label="Desired Date" labelPlacement="stacked" formControlName="savings_target" type="text" placeholder="Enter Date" readonly id="pop-date-savings"></ion-input>
+            <ion-popover trigger="pop-date-savings">
+              <ng-template>
+                <ion-datetime 
+                  presentation="date" 
+                  [value]="SavingsForm.get('savings_target')?.value" 
+                  (ionChange)="SavingsForm.get('savings_target')?.setValue($event.detail.value)" 
+                  [min]="minDate"
+                  [max]="maxDate">
+                </ion-datetime>
+              </ng-template>
+            </ion-popover>
+          </ion-item>
+          <app-error-message *ngFor="let val of validations.savings_target" [field]="SavingsForm.get('savings_target')!" [error]="val.error" [message]="val.message" [submitted]="isSubmitted"></app-error-message>
+        </div>
+        
+      </ion-list>
+    </form>
+  </div>
 </ion-content>
 
 <ion-footer>

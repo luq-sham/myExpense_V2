@@ -17,6 +17,10 @@
     <ion-card-header>
       <ion-label class="date-label">
         {{detailsData?.created_at | date:'YYYY-MMMM-dd'}}
+        <div style="display: flex; gap: 8px" class="notice-toggle">
+          <ion-label>Notify me if I go over budget</ion-label>
+          <ion-toggle (ionChange)="changeStatus($event)" [checked]="detailsData?.notice"></ion-toggle>
+        </div>
       </ion-label>
     </ion-card-header>
     <ion-card-content>

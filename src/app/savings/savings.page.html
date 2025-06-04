@@ -1,0 +1,45 @@
+<app-header title="Savings Goals"></app-header>
+
+<ion-content>
+  <div *ngFor="let savings of savingsData">
+    <ion-card class="savings-card" button>
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="lock-closed-outline" style="margin-left: 8px; vertical-align: middle;"></ion-icon>
+          {{ savings.savings_name | titlecase }}
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <div class="savings-info">
+          <div class="savings-row">
+            <ion-icon name="flag" class="icon"></ion-icon>
+            <span class="label">Target</span>
+            <span class="amount">{{ savings.savings_amount | currency:'RM ' }}</span>
+          </div>
+          <div class="savings-row">
+            <ion-icon name="wallet" class="icon"></ion-icon>
+            <span class="label">Saved</span>
+            <span class="saved">{{ savings.balance | currency:'RM ' }}</span>
+          </div>
+        </div>
+
+        <ion-progress-bar
+          [value]="(savings.used_amount || 0) / (savings.savings_amount || 1)"
+          color="success"
+          class="progress-bar"
+        ></ion-progress-bar>
+
+        <div class="progress-percent">
+          {{ ((savings.used_amount || 0) / (savings.savings_amount || 1) * 100) | number:'1.0-0' }}% saved
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+
+<ion-fab slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab-button color="secondary" (click)="addSavings()">
+    <ion-icon name="add-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

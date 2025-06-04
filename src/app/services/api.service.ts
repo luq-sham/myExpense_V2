@@ -114,6 +114,11 @@ export class ApiService {
     return this.http.post(api, data);
   }
 
+  postUpdateBudgetNotice(data: any): Observable<any> {
+    const api = this.url + 'api/post_update_budget_notice';
+    return this.http.post(api, data);
+  }
+
   //////////////////////////////////////////////////////////////////////////////////
 
   getIcons(): Observable<any> {
@@ -129,5 +134,17 @@ export class ApiService {
   getCategories(): Observable<any> {
     const api = this.url + 'api/get_categories';
     return this.http.get(api);
+  }
+
+  //////////////////////////////////////////////////////////////////////////////////
+
+  getSavings(data: any): Observable<any> {
+    const api = this.url + 'api/get_savings';
+    return this.http.post(api, data);
+  }
+
+  postAddSavings(data: any): Observable<any> {
+    const api = this.url + 'api/post_add_savings';
+    return this.http.post(api, data);
   }
 }

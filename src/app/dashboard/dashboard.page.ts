@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonCard, IonContent, IonCardContent, IonRow, IonCol, IonIcon, IonAvatar, IonSkeletonText, IonItem, IonLabel, IonNote, IonList, IonProgressBar, IonCardHeader, IonCardTitle, IonRippleEffect, IonGrid, IonRefresher, IonRefresherContent, IonBadge, IonChip } from '@ionic/angular/standalone';
+import { IonCard, IonContent, IonCardContent, IonRow, IonCol, IonIcon, IonAvatar, IonSkeletonText, IonItem, IonLabel, IonNote, IonList, IonProgressBar, IonCardHeader, IonCardTitle, IonRippleEffect, IonGrid, IonRefresher, IonRefresherContent, IonBadge, IonChip, IonFab, IonFabButton, IonFabList } from '@ionic/angular/standalone';
 import { MenuController } from '@ionic/angular/standalone';
 import { HeaderComponent } from '../components/header/header.component';
-import { FabComponent } from '../components/fab/fab.component';
 import { ApiService } from '../services/api.service';
 
 import { Router } from '@angular/router';
@@ -20,7 +19,7 @@ import { style } from '@angular/animations';
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
   standalone: true,
-  imports: [IonChip,  IonBadge, IonRefresherContent, IonRefresher, IonGrid, IonRippleEffect, IonCardTitle, IonCardHeader, IonProgressBar, IonList, IonNote, IonLabel, IonItem, IonSkeletonText, IonAvatar, IonIcon, IonCol, IonRow, IonCardContent, IonCard, IonContent, CommonModule, FormsModule, HeaderComponent, FabComponent ],
+  imports: [IonFabList, IonFabButton, IonFab, IonChip,  IonBadge, IonRefresherContent, IonRefresher, IonGrid, IonRippleEffect, IonCardTitle, IonCardHeader, IonProgressBar, IonList, IonNote, IonLabel, IonItem, IonSkeletonText, IonAvatar, IonIcon, IonCol, IonRow, IonCardContent, IonCard, IonContent, CommonModule, FormsModule, HeaderComponent,  ],
 })
 export class DashboardPage {
   doughnutChart: any;
@@ -44,6 +43,8 @@ export class DashboardPage {
   account_list: any[] = [];
   transactions: any[] = [];
   budgets: any[] = [];
+
+  private firstEnter = true;
 
   acc_id: any = '';
 
@@ -241,5 +242,33 @@ export class DashboardPage {
 
   openTransactionDetails(transaction: any){
     this.router.navigate(['/transaction-detail'], { queryParams: { id: transaction } });
+  }
+
+  async addExpensesModal(){
+    const param={
+      formID:2,
+      title:'New Transactions'
+    }
+
+    const modal = await this.modal.create({
+      component:AddComponent,
+      componentProps:param
+    })
+
+    await modal.present()
+    const {data} = await modal.onDidDismiss()
+
+    if(data){
+      this.getData();
+    }
+
+  }
+
+  ionViewWillEnter() {
+    if (this.firstEnter) {
+      this.firstEnter = false;
+      return;
+    }
+    this.getData();
   }
 }

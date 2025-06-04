@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonDatetime, IonButton, IonButtons, IonIcon, IonTextarea, IonFooter, IonNote, IonSegment, IonSegmentButton,  IonPopover  } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonDatetime, IonButton, IonButtons, IonIcon, IonTextarea, IonFooter, IonNote, IonSegment, IonSegmentButton,  IonPopover, IonToggle } from '@ionic/angular/standalone';
 import { ModalController } from '@ionic/angular/standalone';
 import { ApiService } from 'src/app/services/api.service';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -19,7 +19,7 @@ import { ValidationTextService } from 'src/app/services/validation-text.service'
   selector: 'app-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss'],
-  imports: [IonPopover, IonSegmentButton, IonSegment, IonNote, CommonModule, ReactiveFormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonButton, IonIcon, IonButtons, IonFooter, ErrorMessagePage, IonTextarea, IonDatetime ],
+  imports: [IonToggle, IonPopover, IonSegmentButton, IonSegment, IonNote, CommonModule, ReactiveFormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonButton, IonIcon, IonButtons, IonFooter, ErrorMessagePage, IonTextarea, IonDatetime ],
 })
 export class AddComponent implements OnInit {
   title: any;
@@ -29,6 +29,7 @@ export class AddComponent implements OnInit {
   AccountForm!: FormGroup;
   transactionForm!: FormGroup;
   BudgetForm!: FormGroup;
+  SavingsForm!: FormGroup;
   params: any;
   label:any
   formDisable:any
@@ -37,6 +38,8 @@ export class AddComponent implements OnInit {
   now = new Date();
   offset = new Date(this.now.getTime() - this.now.getTimezoneOffset() * 60000);
   currentDate = new Date().toISOString() /*new Date(this.now.getTime() - this.offset).toISOString().slice(0, -1);*/
+  minDate = this.currentDate; // or dynamically set earlier dates
+  maxDate = '2040-12-31'; // or dynamically based on your needs
 
   types: any = [];
   income:any
@@ -124,6 +127,16 @@ export class AddComponent implements OnInit {
         budget_amount:['', Validators.required],
         budget_category:['', Validators.required],
         budget_account:['', Validators.required],
+        notice: [false],
+      })
+    }
+
+    if(this.formID == 4){
+      this.SavingsForm = this.fb.group({
+        savings_name:['', Validators.required],
+        savings_amount:['', Validators.required],
+        savings_note:[''],
+        savings_target:[this.currentDate.split('T')[0]],
       })
     }
   }
@@ -183,8 +196,13 @@ export class AddComponent implements OnInit {
           this.api.postAddTransaction(param).subscribe((res)=>{
             this.loading.hide();
             if(res.status_code == 200){
-              this.toast.customToast('Transaction successfully been added',3000,'success');
-              this.modalController.dismiss(true);
+              if(res.overbudget == true && res.notice == true){
+                this.alert.customAlert('Over Budget','This transaction has exceed your budget limit. Please check your budget.');
+                this.modalController.dismiss(true);
+              }else{
+                this.toast.customToast('Transaction successfully been added',3000,'success');
+                this.modalController.dismiss(true);
+              }
             }else{
               this.toast.customToast('Transaction failed to been added',3000,'warning');
             }
@@ -226,6 +244,39 @@ export class AddComponent implements OnInit {
         }
       });
 
+    }
+
+    if(this.formID == 4){
+      if(this.SavingsForm.invalid){
+        console.log('Savings Form is invalid');
+        return;
+      }
+
+      this.alert.customComfirmationAlert('New Savings','Are you sure to added this savings?').then((respons) => {
+        if(respons == 'confirm'){
+          this.loading.showLoading()
+          const param = {
+            ...this.SavingsForm.value,
+            user_id: localStorage.getItem('token'),
+            created_at: this.currentDate,
+            updated_at: this.currentDate,
+          }
+          this.api.postAddSavings(param).subscribe((res)=>{
+            if(res.status_code == 200){
+              this.loading.hide();
+              this.toast.customToast('Savings successfully been added',3000,'success');
+              this.modalController.dismiss(true)
+            }else if(res.status_code == 400){
+              this.loading.hide();
+              this.toast.customToast(res.msg,3000,'warning');
+            }else{
+              this.loading.hide();
+              this.toast.customToast('Savings failed to been added',3000,'warning');
+            }
+          })
+          console.log('Savings Data',param)
+        }
+      });
     }
   }
 

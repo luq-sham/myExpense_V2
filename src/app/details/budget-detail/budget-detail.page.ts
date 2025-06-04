@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonCardContent, IonCard, IonProgressBar, IonHeader, IonToolbar, IonButtons, IonTitle, IonBackButton, IonIcon, IonText, IonButton, IonSkeletonText, IonChip, IonBadge, IonCardHeader, IonLabel, } from '@ionic/angular/standalone';
+import { IonContent, IonCardContent, IonCard, IonProgressBar, IonHeader, IonToolbar, IonButtons, IonTitle, IonBackButton, IonIcon, IonText, IonButton, IonSkeletonText, IonChip, IonBadge, IonCardHeader, IonLabel, IonToggle } from '@ionic/angular/standalone';
 import { ApiService } from 'src/app/services/api.service';
 import { ActivatedRoute } from '@angular/router';
 import { Chart } from 'chart.js/auto';
@@ -11,7 +11,7 @@ import { Chart } from 'chart.js/auto';
   templateUrl: './budget-detail.page.html',
   styleUrls: ['./budget-detail.page.scss'],
   standalone: true,
-  imports: [ IonLabel, IonCardHeader, IonBadge, IonChip, IonSkeletonText, IonButton, IonText, IonIcon, IonBackButton, IonTitle, IonButtons, IonToolbar, IonHeader, IonProgressBar, IonCard, IonCardContent, IonContent, CommonModule, FormsModule, ],
+  imports: [IonToggle,  IonLabel, IonCardHeader, IonBadge, IonChip, IonSkeletonText, IonButton, IonText, IonIcon, IonBackButton, IonTitle, IonButtons, IonToolbar, IonHeader, IonProgressBar, IonCard, IonCardContent, IonContent, CommonModule, FormsModule, ],
 })
 export class BudgetDetailPage implements OnInit {
   id: any;
@@ -168,5 +168,17 @@ export class BudgetDetailPage implements OnInit {
     if (progress < 0.5) return 'success';
     else if (progress < 0.9) return 'warning';
     else return 'danger';
+  }
+
+  changeStatus(event: any) {
+    const payload = {
+      budget_id: this.detailsData.id,
+      notice: event.detail.checked,
+    };
+    this.api.postUpdateBudgetNotice(payload).subscribe((res) => {
+      if (res.status === 'success') {
+        this.getBudgetData();
+      }
+    });
   }
 }

@@ -5,6 +5,8 @@ ion-card {
 }
 
 .date-label {
+  display: flex;
+  justify-content: space-between;
   font-size: 0.85rem;
   color: var(--ion-color-medium);
 }
@@ -83,5 +85,18 @@ canvas {
 
   ion-chip {
     font-size: 0.8rem;
+  }
+  .date-label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--ion-color-medium);
+
+    .notice-toggle{
+      display: flex;
+      justify-content: space-between;
+      gap: 4px;
+    }
   }
 }
